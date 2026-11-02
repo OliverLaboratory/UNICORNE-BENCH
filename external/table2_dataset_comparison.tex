@@ -1,0 +1,22 @@
+\begin{table}[htbp]
+\centering
+\caption{{Comparison of conformational benchmark datasets (moved from the appendix).
+``Grouping'' indicates how PDB chains are assigned to ensembles:
+single-UniProt groups all chains of the same protein,
+while PDB-pair/cluster groups structurally related chains that may span different UniProts.
+``$n_\text{gt}>2$'' is the fraction of ensembles with more than two GT conformations.
+``OOD'' indicates whether the set was designed to be out-of-distribution relative to a specific model's training data.}}
+\label{tab:dataset_comparison}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llrrrrl}
+\toprule
+Dataset & Grouping & Ensembles & Seq.\ length & $n_\text{gt}>2$ & OOD & Curation \\
+\midrule
+\dance    & PDB cluster      & 4{,}891 & 50--300 aa   & 61\% & No  & Structural clustering of PDB chains \\
+\cfold    & PDB pair          & 242     & 54--1{,}558 aa & 0\%  & No  & Curated fold-switching protein pairs \\
+\unicornebench & Single UniProt    & 839     & 60--298 aa   & 23\% & No  & UniProt-grouped, TM $< 0.85$ pre-filtered \\
+\ood    & Single UniProt    & 19      & 70--497 aa   & 0\%  & Yes & \bioemu training-set OOD by sequence \\
+\domainmotion & Single UniProt & 22     & 70--844 aa   & 0\%  & No  & DynDom-curated domain-motion pairs \\
+\bottomrule
+\end{tabular}}
+\end{table}

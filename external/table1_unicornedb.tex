@@ -1,0 +1,24 @@
+% in preamble:
+% \usepackage{booktabs,tabularx}
+
+\begin{table}[h]
+\centering
+\footnotesize
+
+\setlength{\tabcolsep}{4pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrrrrrrr}
+\hline
+Grouping Type & \# of Groups & \# of Members & \makecell{\# of\\Multi-Cluster\\Ensembles} & \makecell{\#\\with\\PCA/PA} & \makecell{Avg \\Min. TM Score} & \makecell{Avg\\PA} & \makecell{Avg Seq.\\Similarity} & \makecell{Avg\\Coverage} \\
+\hline
+UniProt Monomer  & 53,722 & 852,396 & 4,028  & 30,204 & 0.880 & --- & --- & 86.91 \\
+UniProt Oligomer & 18,360 &  66,023 & ---    &  7,015 & ---         & --- & --- & ---   \\
+Fold             &  3,511 &  62,986 & 1,977  &  1,589 & ---         & 78.40 & 37.94 & --- \\
+Domain           &  8,890 &  39,874 & ---    &  2,952 & ---         & 78.13 & 37.30 & --- \\
+\hline
+\end{tabular}}
+\caption{\unicorne database overview}
+\label{tab:UNICORNEdb}
+\end{table}
+
+

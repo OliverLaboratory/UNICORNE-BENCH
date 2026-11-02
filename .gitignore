@@ -1,0 +1,8 @@
+figures/
+__pycache__/
+*.pyc
+# Heavy artifacts: predictions, MSAs and raw TM-align output.
+data/outputs/
+data/msas/
+results/*/*/tmalign_raw/
+results/*/*/matrices_tmalign/

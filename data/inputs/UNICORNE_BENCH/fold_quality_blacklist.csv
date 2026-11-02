@@ -1,0 +1,11 @@
+uniprot,reason
+P00441,misfolded in truncated and mutant forms
+P61626,amyloid fibril (Lysozyme C)
+P04972,intrinsically disordered region
+P22943,intrinsically disordered when in aqueous solution
+P0ABN1,domain swapping only observed in solution NMR (not in xtal or solid-state NMR)
+D4GZE7,disordered under low ionic strength solutions
+Q73369,initial structure determined in 30% TFE — unrealistic 'opening' of tertiary structure
+P12506,intrinsically disordered in unbound state — no secondary structure
+O89467,structure stabilized in presence of TFE (same as Q73369)
+P86041,significant variance between NMR and crystal structures — no SS in NMR

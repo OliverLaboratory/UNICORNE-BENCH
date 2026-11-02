@@ -1,0 +1,870 @@
+ensemble_ID,protein_name
+P23904,"Beta-glucanase (EC 3.2.1.73) (1,3-1,4-beta-D-glucan 4-glucanohydrolase) (Endo-beta-1,3-1,4 glucanase) (Lichenase)"
+P54178,SCO1 protein homolog (BsSco)
+P14120,Large ribosomal subunit protein eL30 (60S ribosomal protein L30) (L32) (RP73) (YL38)
+P0A8S9,Flagellar transcriptional regulator FlhD
+P02638,Protein S100-B (S-100 protein beta chain) (S-100 protein subunit beta) (S100 calcium-binding protein B)
+P27245,Multiple antibiotic resistance protein MarR
+P08191,Type 1 fimbrin D-mannose specific adhesin (Protein FimH)
+P34174,Pheromone-binding protein (PBP)
+P00131,Cytochrome c3
+P25791,Rhombotin-2 (Cysteine-rich protein TTG-2) (LIM domain only protein 2) (LMO-2) (T-cell translocation protein 2)
+P33552,Cyclin-dependent kinases regulatory subunit 2 (CKS-2)
+P07998,Ribonuclease pancreatic (EC 4.6.1.18) (HP-RNase) (RIB-1) (RNase UpI-1) (Ribonuclease 1) (RNase 1) (Ribonuclease A) (RNase A)
+P9WGY1,Ribosome-recycling factor (RRF) (Ribosome-releasing factor)
+Q9NP97,"Dynein light chain roadblock-type 1 (Bithoraxoid-like protein) (BLP) (Dynein light chain 2A, cytoplasmic) (Dynein-associated protein Km23) (Roadblock domain-containing protein 1)"
+Q84B82,Toxin CcdB (Cytotoxic protein CcdB) (Protein LetD)
+P0A7R5,Small ribosomal subunit protein uS10 (30S ribosomal protein S10) (Transcription termination/antitermination protein NusE)
+P07839,"Ferredoxin, chloroplastic"
+O05391,Protein BofC (Bypass-of-forespore protein C)
+P35467,Protein S100-A1 (S-100 protein alpha chain) (S-100 protein subunit alpha) (S100 calcium-binding protein A1)
+P68871,Hemoglobin subunit beta (Beta-globin) (Hemoglobin beta chain) [Cleaved into: LVV-hemorphin-7
+Q13526,Peptidyl-prolyl cis-trans isomerase NIMA-interacting 1 (EC 5.2.1.8) (Peptidyl-prolyl cis-trans isomerase Pin1) (PPIase Pin1) (Rotamase Pin1)
+P62152,Calmodulin (CaM)
+P17497,Disintegrin bitistatin (Arietin) (Bitan-alpha) (Bitistatin D1) (Platelet aggregation activation inhibitor) (Venom protein CM-2)
+P03817,Protein MioC
+P0A9K9,FKBP-type peptidyl-prolyl cis-trans isomerase SlyD (PPIase) (EC 5.2.1.8) (Histidine-rich protein) (Metallochaperone SlyD) (Rotamase) (Sensitivity to lysis protein D) (WHP)
+P0A9G4,HTH-type transcriptional regulator CueR (Copper efflux regulator) (Copper export regulator)
+Q99653,Calcineurin B homologous protein 1 (Calcineurin B-like protein) (Calcium-binding protein CHP) (Calcium-binding protein p22) (EF-hand calcium-binding domain-containing protein p22)
+P0A3E0,Flavodoxin
+D3WAD3,Distal tail protein (Dit) (Gene product 15) (Gp15)
+P41016,Cold shock protein CspB
+Q930Y6,Two-component response regulator
+O43678,NADH dehydrogenase [ubiquinone] 1 alpha subcomplex subunit 2 (Complex I-B8) (CI-B8) (NADH-ubiquinone oxidoreductase B8 subunit)
+P23297,Protein S100-A1 (S-100 protein alpha chain) (S-100 protein subunit alpha) (S100 calcium-binding protein A1)
+P62157,Calmodulin (CaM)
+Q6E183,Gag protein
+O35820,5-hydroxymethyl-dUMP N-hydrolase (EC 3.2.2.-) (2'-deoxynucleoside 5'-phosphate N-hydrolase 1) (Deoxyribonucleoside 5'-monophosphate N-glycosidase) (c-Myc-responsive protein Rcl)
+Q02054,Actinorhodin polyketide synthase acyl carrier protein (ACP) (actI ORF3)
+P05112,Interleukin-4 (IL-4) (B-cell stimulatory factor 1) (BSF-1) (Binetrakin) (Lymphocyte stimulatory factor 1) (Pitrakinra)
+P61218,"DNA-directed RNA polymerases I, II, and III subunit RPABC2 (RNA polymerases I, II, and III subunit ABC2) (DNA-directed RNA polymerase II subunit F) (DNA-directed RNA polymerases I, II, and III 14.4 kDa polypeptide) (RPABC14.4) (RPB14.4) (RPB6 homolog) (RPC15)"
+Q9UBQ5,Eukaryotic translation initiation factor 3 subunit K (eIF3k) (Eukaryotic translation initiation factor 3 subunit 12) (Muscle-specific gene M9 protein) (PLAC-24) (eIF-3 p25) (eIF-3 p28)
+Q39255,SKP1-like protein 1A (SKP1-like 1) (UFO-binding protein 1)
+P55222,cAMP-activated global transcriptional regulator Vfr
+P27150,Large ribosomal subunit protein uL1 (50S ribosomal protein L1)
+P43305,"Parvalbumin, thymic CPV3 (Parvalbumin-3)"
+P62799,Histone H4
+O66530,Transcription antitermination protein NusB (Antitermination factor NusB)
+P20797,Pheromone-binding protein (PBP)
+Q8YJA2,Glutaredoxin
+P50637,Translocator protein (Mitochondrial benzodiazepine receptor) (PKBS) (Peripheral-type benzodiazepine receptor) (PBR)
+P32081,Cold shock protein CspB (Major cold shock protein)
+P22803,Thioredoxin-2 (Thioredoxin II) (TR-II) (Thioredoxin-1)
+Q00459,"Toluene-4-monooxygenase system, effector component (T4MO) (Toluene-4-monooxygenase effector protein) (Toluene-4-monooxygenase system protein D) (T4moD)"
+P82974,"1,6-anhydro-N-acetylmuramyl-L-alanine amidase AmpD (EC 3.5.1.28) (N-acetylmuramoyl-L-alanine amidase)"
+P69905,Hemoglobin subunit alpha (Alpha-globin) (Hemoglobin alpha chain) [Cleaved into: Hemopressin]
+Q39VC5,Thiamin biosynthesis sulfur carrier protein
+P03714,Head-tail connector protein FII (Head-tail joining protein) (Minor capsid protein FII)
+Q9WX76,Ribosome-recycling factor (RRF) (Ribosome-releasing factor)
+P06768,Retinol-binding protein 2 (Cellular retinol-binding protein II) (CRBP-II)
+Q7CR52,Sigma factor-binding protein Crl
+P0A7M6,Large ribosomal subunit protein uL29 (50S ribosomal protein L29)
+P07260,Eukaryotic translation initiation factor 4E (eIF-4E) (eIF4E) (eIF-4F 25 kDa subunit) (mRNA cap-binding protein)
+P06899,Histone H2B type 1-J (Histone H2B.1) (Histone H2B.r) (H2B/r)
+Q54HC2,Calcium-binding EF-hand domain-containing protein
+P00641,Endonuclease I (EC 3.1.21.2) (Gene product 3) (Gp3) (Junction-resolving enzyme gp3)
+O29280,Osmoprotection protein (ProX)
+P0A917,Outer membrane protein X
+Q9CAQ2,Acetyltransferase At1g77540 (EC 2.3.1.-) (Minimal acetyltransferase)
+P43435,V-type sodium ATPase subunit D (Na(+)-translocating ATPase subunit D) (V-type sodium pump subunit D)
+D4GUF6,Small archaeal modifier protein 1 (SAMP1) (Ubiquitin-like small archaeal modifier protein 1)
+P04552,Egg-lysin (Sperm-lysin)
+P56278,Protein p13 MTCP-1 (p13MTCP1) (Mature T-cell proliferation-1 type B1) (MTCP-1 type B1)
+P53141,Myosin light chain 1 (Calmodulin-like myosin light chain MLC1) (Myosin-2 light chain)
+P10793,Photosystem I iron-sulfur center (EC 1.97.1.12) (9 kDa polypeptide) (PSI-C) (Photosystem I subunit VII) (PsaC)
+O14907,Tax1-binding protein 3 (Glutaminase-interacting protein 3) (Tax interaction protein 1) (TIP-1) (Tax-interacting protein 1)
+P56547,Azurin-1 (AZN-1) (Azurin-I)
+P0ABN1,Diacylglycerol kinase (DAGK) (EC 2.7.1.107) (Diglyceride kinase) (DGK)
+Q47038,Protein AfaD
+Q99P58,Ras-related protein Rab-27B (EC 3.6.5.2)
+O14737,Programmed cell death protein 5 (TF-1 cell apoptosis-related protein 19) (Protein TFAR19)
+Q79V61,Circadian clock oscillator protein KaiB
+P74903,V-type ATP synthase subunit F (V-ATPase subunit F)
+Q6GMX0,Ig-like domain-containing protein
+P12506,Protein Tat (Transactivating regulatory protein)
+P9WMN1,ATP phosphoribosyltransferase (ATP-PRT) (ATP-PRTase) (EC 2.4.2.17)
+P80188,Neutrophil gelatinase-associated lipocalin (NGAL) (25 kDa alpha-2-microglobulin-related subunit of MMP-9) (Lipocalin-2) (Oncogene 24p3) (Siderocalin) (p25)
+P9WNC5,"Dihydroneopterin aldolase (DHNA) (EC 4.1.2.25) (7,8-dihydroneopterin 2'-epimerase) (7,8-dihydroneopterin aldolase) (7,8-dihydroneopterin epimerase) (EC 5.1.99.8) (7,8-dihydroneopterin hydroxylase) (EC 1.13.11.81) (Dihydroneopterin epimerase) (Dihydroneopterin hydroxylase)"
+O74049,peptidylprolyl isomerase (EC 5.2.1.8)
+P18797,Methane monooxygenase regulatory protein B
+P01241,Somatotropin (Growth hormone) (GH) (GH-N) (Growth hormone 1) (Pituitary growth hormone)
+Q3E757,Large ribosomal subunit protein uL5B (60S ribosomal protein L11-B) (L16) (RP39) (YL22)
+Q58517,Adenosylcobinamide-phosphate guanylyltransferase (AdoCbi-P guanylyltransferase) (EC 2.7.7.62)
+P08067,"Cytochrome b-c1 complex subunit Rieske, mitochondrial (EC 7.1.1.8) (Complex III subunit 5) (Rieske iron-sulfur protein) (RISP) (Ubiquinol-cytochrome c oxidoreductase iron-sulfur subunit)"
+P68466,Protein K7
+Q9X0H0,Putative anti-sigma factor antagonist TM_1081
+Q9RXJ4,Large ribosomal subunit protein uL29 (50S ribosomal protein L29)
+P05743,Large ribosomal subunit protein uL24A (60S ribosomal protein L26-A) (L33) (YL33)
+A9CHM9,Aminoacyl carrier protein
+P17726,Tick anticoagulant peptide (TAP)
+P29034,Protein S100-A2 (CAN19) (Protein S-100L) (S100 calcium-binding protein A2)
+Q5SJG6,Transcription inhibitor protein Gfh1 (Anti-cleavage anti-GreA transcription factor) (Gre factor homolog 1)
+Q13257,Mitotic spindle assembly checkpoint protein MAD2A (HsMAD2) (Mitotic arrest deficient 2-like protein 1) (MAD2-like protein 1)
+P12975,Photosystem I reaction center subunit IV (Photosystem I 8.1 kDa protein) (p30 protein)
+Q92843,Bcl-2-like protein 2 (Bcl2-L-2) (Apoptosis regulator Bcl-W)
+O60493,Sorting nexin-3 (Protein SDP3)
+P0A9I5,Chaperone NapD (NapA signal peptide-binding chaperone NapD)
+P0A355,Cold shock-like protein CspLA (CspL)
+Q6PIL8,IGK@ protein
+P0A7Y8,Ribonuclease P protein component (RNase P protein) (RNaseP protein) (EC 3.1.26.5) (Protein C5)
+P32911,Eukaryotic translation initiation factor eIF-1 (Protein translation factor SUI1)
+O96870,Mite allergen Blo t 5 (allergen Blo t 5)
+P0AG96,Protein translocase subunit SecE
+P63241,Eukaryotic translation initiation factor 5A-1 (eIF-5A-1) (eIF-5A1) (Eukaryotic initiation factor 5A isoform 1) (eIF-5A) (Rev-binding factor) (eIF-4D)
+P29394,Large ribosomal subunit protein uL10 (50S ribosomal protein L10)
+P16113,Photoactive yellow protein (PYP)
+Q8LAS7,Calcineurin B-like protein 2 (SOS3-like calcium-binding protein 1)
+P04972,"Retinal rod rhodopsin-sensitive cGMP 3',5'-cyclic phosphodiesterase subunit gamma (GMP-PDE gamma) (EC 3.1.4.35)"
+P0AGB6,ECF RNA polymerase sigma-E factor (RNA polymerase sigma-E factor) (Sigma-24)
+P73925,Group 1 truncated hemoglobin GlbN (Truncated Hb) (trHbN) (Cyanoglobin) (Hemoglobin) (Hb) (SynHb)
+P0A7M9,Large ribosomal subunit protein bL31 (50S ribosomal protein L31)
+P0A964,Chemotaxis protein CheW
+P03126,Protein E6
+Q9BUL8,Programmed cell death protein 10 (Cerebral cavernous malformations 3 protein) (TF-1 cell apoptosis-related protein 15)
+Q5F9M1,Amino acid ABC transporter substrate-binding protein
+P61960,Ubiquitin-fold modifier 1
+Q57817,Protein translocase subunit SecE (Protein transport protein Sec61 gamma subunit homolog)
+Q9HJL1,Uncharacterized protein
+P0CH43,Tau-theraphotoxin-Hs1a (Tau-TRTX-Hs1a) (Double-knot toxin) (DkTx)
+Q63245,Forkhead box protein D3 (HNF3/FH transcription factor genesis) (Hepatocyte nuclear factor 3 forkhead homolog 2) (HFH-2)
+P07678,ATP synthase epsilon chain (ATP synthase F1 sector epsilon subunit) (F-ATPase epsilon subunit)
+P0A6I0,Cytidylate kinase (CK) (EC 2.7.4.25) (Cytidine monophosphate kinase) (CMP kinase) (Protein MssA) (p25)
+P69441,Adenylate kinase (AK) (EC 2.7.4.3) (ATP-AMP transphosphorylase) (ATP:AMP phosphotransferase) (Adenylate monophosphate kinase)
+Q5SKU2,Translation initiation factor IF-3
+P03780,Inhibitor of dGTPase (Gene product 1.2) (Gp1.2) (Inhibitor of dGTPase gp1.2)
+P0A6K3,Peptide deformylase (PDF) (EC 3.5.1.88) (Polypeptide deformylase)
+P12104,"Fatty acid-binding protein, intestinal (Fatty acid-binding protein 2) (Intestinal-type fatty acid-binding protein) (I-FABP)"
+Q45782,PlcR protein (Transcriptional regulator)
+Q8VL32,CylR2 (Putative transcription regulator) (Transcriptional regulator)
+O25554,Addiction module toxin RelE
+P99999,Cytochrome c
+Q9BXW4,Microtubule-associated protein 1 light chain 3 gamma (Autophagy-related protein LC3 C) (Autophagy-related ubiquitin-like modifier LC3 C) (MAP1 light chain 3-like protein 3) (Microtubule-associated proteins 1A/1B light chain 3C) (MAP1A/MAP1B LC3 C) (MAP1A/MAP1B light chain 3 C)
+P05766,Small ribosomal subunit protein uS15 (30S ribosomal protein S15) (BS18)
+P0C0S1,Small-conductance mechanosensitive channel
+Q6QGP7,L-alanyl-D-glutamate peptidase (EC 3.4.24.-) (Endolysin) (Lysozyme)
+P61991,DNA-binding protein 7a (7 kDa DNA-binding protein a) (Endoribonuclease P2) (EC 3.1.27.-) (p7ss)
+P02309,Histone H4
+P03732,Tail tube terminator protein (TrP) (Gene product U) (gpU) (Minor tail protein U) (Tail sheath-stabilizing protein) (Tail-to-head joining protein) (THJP)
+Q76RI8,Bcl-2 (ORF 16) (ORF16)
+A0A0H2URV7,"Hydrolase, haloacid dehalogenase-like family"
+P41784,SPI-1 type 3 secretion system needle filament protein (T3SS-1 needle filament protein)
+P01468,Cytotoxin 1 (CTX-1) (Cardiotoxin gamma)
+Q8ZP25,Thiol-disulfide isomerase and thioredoxin
+D0E9M1,Pheromone-binding protein 1
+P19873,Inhibitor of trypsin and hageman factor (CMTI-V)
+Q9RSW6,Large ribosomal subunit protein bL35 (50S ribosomal protein L35)
+Q5SJH5,Ribosome maturation factor RimM
+Q9Y6G1,Transmembrane protein 14A
+Q81R22,Dihydrofolate reductase (EC 1.5.1.3)
+P63208,S-phase kinase-associated protein 1 (Cyclin-A/CDK2-associated protein p19) (p19A) (Organ of Corti protein 2) (OCP-2) (Organ of Corti protein II) (OCP-II) (RNA polymerase II elongation factor-like protein) (SIII) (Transcription elongation factor B polypeptide 1-like) (p19skp1)
+Q96FQ6,Protein S100-A16 (Aging-associated gene 13 protein) (Protein S100-F) (S100 calcium-binding protein A16)
+P71086,Peroxide operon regulator
+P58152,Cell division topological specificity factor
+P0A7M2,Large ribosomal subunit protein bL28 (50S ribosomal protein L28)
+P74367,Photosystem II lipoprotein Psb27 (Photosystem II 11 kDa protein)
+P12770,Chromosomal protein MC1
+P0ACX3,Putative monooxygenase YdhR (EC 1.-.-.-)
+Q9V0G8,Small ribosomal subunit protein eS19 (30S ribosomal protein S19e)
+P0A7F3,Aspartate carbamoyltransferase regulatory chain
+P01427,Short neurotoxin 1 (Neurotoxin II) (NT II) (NTII) (NTX II) (Neurotoxin alpha)
+P08900,Beta-mammal toxin Css2 (Css II) (CssII)
+Q5ZXE0,Outer membrane protein MIP (EC 5.2.1.8) (Macrophage infectivity potentiator) (Peptidyl-prolyl cis-trans isomerase) (PPIase) (Rotamase)
+Q56446,MerF
+P45748,Threonylcarbamoyl-AMP synthase (TC-AMP synthase) (EC 2.7.7.87) (L-threonylcarbamoyladenylate synthase) (Ribosome maturation factor TsaC) (t(6)A37 threonylcarbamoyladenosine biosynthesis protein TsaC) (tRNA threonylcarbamoyladenosine biosynthesis protein TsaC)
+Q7X506,Hemolysin II regulatory protein
+O02826,Beta-microseminoprotein (Prostate secreted seminal plasma protein) (Prostate secretory protein of 94 amino acids) (PSP-94) (PSP94) (TS507)
+Q0GY13,Sterol carrier protein 2-like 2
+P84077,ADP-ribosylation factor 1 (EC 3.6.5.2)
+O75365,Protein tyrosine phosphatase type IVA 3 (EC 3.1.3.48) (PRL-R) (Protein-tyrosine phosphatase 4a3) (Protein-tyrosine phosphatase of regenerating liver 3) (PRL-3)
+A0A0M3KKS6,Nitrogen regulation protein NR(I)
+P62877,"E3 ubiquitin-protein ligase RBX1 (EC 2.3.2.27) (EC 2.3.2.32) (E3 ubiquitin-protein transferase RBX1) (Protein ZYP) (RING finger protein 75) (RING-box protein 1) (Rbx1) (Regulator of cullins 1) (ROC1) [Cleaved into: E3 ubiquitin-protein ligase RBX1, N-terminally processed (E3 ubiquitin-protein transferase RBX1, N-terminally processed)]"
+P62306,Small nuclear ribonucleoprotein F (snRNP-F) (Sm protein F) (Sm-F) (SmF)
+Q8DLG7,"ATP synthase epsilon chain (ATP synthase F1 sector epsilon subunit) (F-ATPase epsilon subunit) [Cleaved into: ATP synthase epsilon chain, N-terminally processed]"
+P80378,Small ribosomal subunit protein uS15 (30S ribosomal protein S15)
+Q5NF33,Hypothetical lipoprotein
+P00568,Adenylate kinase isoenzyme 1 (AK 1) (EC 2.7.4.3) (EC 2.7.4.4) (EC 2.7.4.6) (ATP-AMP transphosphorylase 1) (ATP:AMP phosphotransferase) (Adenylate monophosphate kinase) (Myokinase)
+P01382,Alpha-elapitoxin-Nno2a (Alpha-EPTX-Nno2a) (Long neurotoxin 1) (Neurotoxin I) (NT I) (Ntx-1) (Toxin I) (NnoI)
+P61769,Beta-2-microglobulin [Cleaved into: Beta-2-microglobulin form pI 5.3]
+P04631,Protein S100-B (S-100 protein beta chain) (S-100 protein subunit beta) (S100 calcium-binding protein B)
+P47992,Lymphotactin (ATAC) (C motif chemokine 1) (Cytokine SCM-1) (Lymphotaxin) (SCM-1-alpha) (Small-inducible cytokine C1) (XC chemokine ligand 1)
+Q45040,Outer surface protein A
+Q9R257,Heme-binding protein 1 (p22HBP)
+P0A7S3,Small ribosomal subunit protein uS12 (30S ribosomal protein S12)
+P06787,Calmodulin (CaM)
+P0AC69,Glutaredoxin 4 (Grx4) (Monothiol glutaredoxin)
+P61914,DELTA-actitoxin-Aeq1a (DELTA-AITX-Aeq1a) (Equinatoxin II) (EqT II) (EqTII) (Equinatoxin-2)
+O05205,Mitomycin-binding protein (Mrd)
+Q5SHL2,Heavy metal binding protein
+O75368,Adapter SH3BGRL (SH3 domain-binding glutamic acid-rich-like protein 1)
+Q5W1E8,DNA-binding protein
+Q5SKH2,Probable uroporphyrinogen-III synthase
+P44815,"2-C-methyl-D-erythritol 2,4-cyclodiphosphate synthase (MECDP-synthase) (MECPP-synthase) (MECPS) (EC 4.6.1.12)"
+Q9NG96,Chemosensory protein
+Q9HJR9,Uncharacterized protein
+Q63J95,Peptidyl-prolyl cis-trans isomerase (EC 5.2.1.8)
+Q9HWW1,Outer membrane protein OprG
+Q8KFZ1,AraC effector-binding domain-containing protein
+P0A7L8,Large ribosomal subunit protein bL27 (50S ribosomal protein L27)
+O25552,Type II toxin-antitoxin system YafQ family toxin
+Q5SJV1,Ribosome-binding factor A (30S ribosome-binding protein)
+Q9X0C6,Imidazole glycerol phosphate synthase subunit HisF (EC 4.3.2.10) (IGP synthase cyclase subunit) (IGP synthase subunit HisF) (ImGP synthase subunit HisF) (IGPS subunit HisF)
+Q62625,Microtubule-associated protein 1 light chain 3 beta (Autophagy-related protein LC3 B) (Autophagy-related ubiquitin-like modifier LC3 B) (MAP1 light chain 3-like protein 2) (Microtubule-associated proteins 1A/1B light chain 3B) (MAP1A/MAP1B LC3 B) (MAP1A/MAP1B light chain 3 B)
+P61626,"Lysozyme C (EC 3.2.1.17) (1,4-beta-N-acetylmuramidase C)"
+P19753,"Parvalbumin, thymic (Avian thymic hormone) (ATH) (Thymus-specific antigen T1)"
+Q8YQN0,demerged
+P0A3C9,Ferredoxin-1 (Ferredoxin I)
+P33763,Protein S100-A5 (Protein S-100D) (S100 calcium-binding protein A5)
+P04908,Histone H2A type 1-B/E (Histone H2A.2) (Histone H2A/a) (Histone H2A/m)
+P81511,Metallocarboxypeptidase inhibitor (Leech carboxypeptidase inhibitor) (LCI)
+O00244,Copper transport protein ATOX1 (Metal transport protein ATX1)
+P0ACE3,Hemolysin expression-modulating protein Hha
+Q58L87,TetR family transcriptional repressor LfrR
+P09353,Spherulin-3A (S3A)
+Q00458,"Toluene-4-monooxygenase system, ferredoxin component (T4MO) (Toluene-4-monooxygenase system protein C) (T4moC)"
+O28185,Peptidyl-tRNA hydrolase (PTH) (EC 3.1.1.29)
+O06976,HPr-like protein Crh (Catabolite repression HPr)
+P22203,V-type proton ATPase subunit E (V-ATPase subunit E) (V-ATPase 27 kDa subunit) (Vacuolar proton pump subunit E)
+P60844,Aquaporin Z (Bacterial nodulin-like intrinsic protein) (Water channel AqpZ)
+Q5SL35,Cytidylate kinase (CK) (EC 2.7.4.25) (Cytidine monophosphate kinase) (CMP kinase)
+P00210,Ferredoxin-1 (Ferredoxin I) (FdI)
+P73213,Ssr2857 protein
+Q9ZFE7,"Acireductone dioxygenase (1,2-dihydroxy-3-keto-5-methylthiopentene dioxygenase) (DHK-MTPene dioxygenase) (Acireductone dioxygenase (Fe(2+)-requiring)) (ARD') (Fe-ARD) (EC 1.13.11.54) (Acireductone dioxygenase (Ni(2+)-requiring)) (ARD) (Ni-ARD) (EC 1.13.11.53)"
+P68919,Large ribosomal subunit protein bL25 (50S ribosomal protein L25)
+P0ABS8,DNA polymerase III subunit theta (EC 2.7.7.7)
+Q9NYG5,Anaphase-promoting complex subunit 11 (APC11) (Cyclosome subunit 11) (Hepatocellular carcinoma-associated RING finger protein)
+P27144,"Adenylate kinase 4, mitochondrial (EC 2.7.4.4) (EC 2.7.4.6) (Adenylate kinase 3-like) (GTP:AMP phosphotransferase AK4)"
+P29972,Aquaporin-1 (AQP-1) (Aquaporin-CHIP) (Channel-like integral membrane protein of 28 kDa) (Urine water channel)
+P0A6E6,ATP synthase epsilon chain (ATP synthase F1 sector epsilon subunit) (F-ATPase epsilon subunit)
+P56277,Cx9C motif-containing protein 4 (Mature T-cell proliferation 1 neighbor protein) (Mature T-cell proliferation-1 type A) (MTCP-1 type A) (Protein p8 MTCP-1) (p8MTCP1)
+P06628,Sporulation initiation phosphotransferase F (EC 2.7.-.-) (Stage 0 sporulation protein F)
+P21796,Non-selective voltage-gated ion channel VDAC1 (Outer mitochondrial membrane protein porin 1) (Plasmalemmal porin) (Porin 31HL) (Porin 31HM) (Voltage-dependent anion-selective channel protein 1) (VDAC-1) (hVDAC1)
+Q8N355,IGL@ protein
+P9WPV1,ATP synthase epsilon chain (ATP synthase F1 sector epsilon subunit) (F-ATPase epsilon subunit)
+Q9RY71,Nudix hydrolase DR_0079 (EC 3.6.1.-)
+O32163,Zinc-dependent sulfurtransferase SufU (EC 2.-.-.-) (Putative iron-sulfur cluster assembly scaffold protein SufU) (Sulfur acceptor protein SufU)
+Q4KCZ1,Peptidyl carrier protein PltL
+P25337,Pre-mRNA-splicing factor BUD31 (Bud site selection protein 31) (Complexed with CEF1 protein 14)
+Q58EU8,Igk protein
+Q5SIT5,"V-type ATP synthase, subunit (VAPC-THERM)"
+P28814,Barwin
+Q14116,Interleukin-18 (IL-18) (Iboctadekin) (Interferon gamma-inducing factor) (IFN-gamma-inducing factor) (Interleukin-1 gamma) (IL-1 gamma)
+Q12287,Cytochrome c oxidase copper chaperone
+P01123,GTP-binding protein YPT1 (Protein YP2) (Rab GTPase YPT1) (Transport GTPase YPT1)
+P02974,Type IV major pilin protein PilE1 (MS11 antigen) (Pilin)
+P01386,Long neurotoxin 2 (Neurotoxin B)
+P00720,Endolysin (EC 3.2.1.17) (Lysis protein) (Lysozyme) (Muramidase)
+Q37875,SAR-endolysin (EC 3.2.1.17) (Endolysin) (Gene product 17) (gp17) (Lysis protein) (Lysozyme) (Muramidase)
+P47822,Mediator of RNA polymerase II transcription subunit 21 (Mediator complex subunit 21) (RNAPII complex component SRB7) (Suppressor of RNA polymerase B 7)
+Q9UI95,Mitotic spindle assembly checkpoint protein MAD2B (Mitotic arrest deficient 2-like protein 2) (MAD2-like protein 2) (REV7 homolog) (hREV7)
+Q5FKC3,Putative trp repressor binding protein
+A6TF31,Ferrous iron transport protein A
+P15570,Beta-elicitin cryptogein (CRY)
+Q97Z79,Translation initiation factor 2 subunit alpha (aIF2-alpha) (eIF-2-alpha)
+P02631,Oncomodulin (OM) (Parvalbumin beta)
+P61316,Outer-membrane lipoprotein carrier protein (P20)
+Q9Y3B4,"Splicing factor 3B subunit 6 (Pre-mRNA branch site protein p14) (SF3b 14 kDa subunit) (SF3B14a) (Spliceosome-associated protein, 14-kDa) (Splicing factor 3b, subunit 6, 14kDa)"
+Q02MM2,CRISPR-associated endonuclease Cas6/Csy4 (EC 3.1.-.-)
+O66490,Adenylate kinase (AK) (EC 2.7.4.3) (ATP-AMP transphosphorylase) (ATP:AMP phosphotransferase) (Adenylate monophosphate kinase)
+Q0SXH8,Soluble cytochrome b562
+P11916,Oocytes ribonuclease (EC 3.1.27.-) (RC-RNase) (Sialic acid-binding lectin) (SBL-C)
+Q6WNK7,SAGA complex subunit SUS1 (Transcription and mRNA export factor SUS1)
+P02625,Parvalbumin alpha (Alpha-parvalbumin) (Alpha-PV)
+Q9XHH2,Dynein axonemal light chain 1 (DNAL1) (Flagellar outer arm dynein light chain 1) (ODA-LC protein LC1)
+Q8R1H0,Homeodomain-only protein (Homeobox-only protein) (Odd homeobox protein 1) (mOB1)
+P36238,Large ribosomal subunit protein uL11 (50S ribosomal protein L11)
+Q06389,Calcium-binding protein NCS-1
+P31697,Chaperone protein FimC
+P0A7J0,"3,4-dihydroxy-2-butanone 4-phosphate synthase (DHBP synthase) (DHBPS) (EC 4.1.99.12)"
+P03485,Matrix protein 1 (M1)
+Q01469,"Fatty acid-binding protein 5 (Epidermal-type fatty acid-binding protein) (E-FABP) (Fatty acid-binding protein, epidermal) (Psoriasis-associated fatty acid-binding protein homolog) (PA-FABP)"
+P02692,"Fatty acid-binding protein, liver (Fatty acid-binding protein 1) (Liver-type fatty acid-binding protein) (L-FABP) (Squalene- and sterol-carrier protein) (SCP) (Z-protein) (p14)"
+O14684,Prostaglandin E synthase (EC 5.3.99.3) (Glutathione peroxidase PTGES) (EC 1.11.1.-) (Glutathione transferase PTGES) (EC 2.5.1.18) (Microsomal glutathione S-transferase 1-like 1) (MGST1-L1) (Microsomal prostaglandin E synthase 1) (MPGES-1) (p53-induced gene 12 protein)
+P0AEM0,FKBP-type 16 kDa peptidyl-prolyl cis-trans isomerase (PPIase) (EC 5.2.1.8) (Rotamase)
+Q6QCC2,Factor H-binding protein (Lipoprotein)
+P41159,Leptin (Obese protein) (Obesity factor)
+P0CX43,Large ribosomal subunit protein uL1A (60S ribosomal protein L1-A) (L10a)
+P0A7L0,Large ribosomal subunit protein uL1 (50S ribosomal protein L1)
+P23154,Putative polyketide cyclase (WhiE ORF VI)
+P56678,Alpha-like toxin Lqh3 (Lqh III) (LqhIII)
+Q8LTJ5,RNA polymerase inhibitor p7
+A0A0H3JRL4,Scaffold protein Nfu/NifU N-terminal domain-containing protein
+P02698,Guanine nucleotide-binding protein G(T) subunit gamma-T1 (Transducin gamma chain)
+P0AE60,Cell division activator CedA
+Q71T70,Hot
+P45594,Cofilin/actin-depolymerizing factor homolog (Protein D61) (Protein twinstar)
+P63165,Small ubiquitin-related modifier 1 (SUMO-1) (GAP-modifying protein 1) (GMP1) (SMT3 homolog 3) (Sentrin) (Ubiquitin-homology domain protein PIC1) (Ubiquitin-like protein SMT3C) (Smt3C) (Ubiquitin-like protein UBL1)
+P0A3G2,Haloalkane dehalogenase (EC 3.8.1.5)
+Q8D0Z7,Outer membrane protein X
+P61823,Ribonuclease pancreatic (EC 4.6.1.18) (RNase 1) (RNase A)
+Q84BQ9,Ribosomal protein L11 methyltransferase (L11 Mtase) (EC 2.1.1.-)
+P0A8I1,Putative pre-16S rRNA nuclease (EC 3.1.-.-)
+Q48898,Superantigen
+P03612,Capsid protein (CP) (Coat protein)
+Q9D2P4,Ubiquitin-related modifier 1
+P13123,DNA-binding protein 7d (7 kDa DNA-binding protein d) (Sac7d) [Cleaved into: DNA-binding protein 7a (7 kDa DNA-binding protein a) (Sac7a)
+Q04884,Opacity protein opA60
+P01588,Erythropoietin (Epoetin)
+C9V488,Ca2+-triggered coelenterazine-binding protein 1 (Coelenterazine-binding protein ca-bound apo form) (Coelenterazine-binding protein with bound coelenterazine)
+P06703,Protein S100-A6 (Calcyclin) (Growth factor-inducible protein 2A9) (MLN 4) (Prolactin receptor-associated protein) (PRA) (S100 calcium-binding protein A6)
+Q9HVI1,Cyclic diguanosine monophosphate-binding protein PA4608 (c-di-GMP-binding protein PA4608) (Pilz domain-containing protein PA4608)
+P07148,"Fatty acid-binding protein, liver (Fatty acid-binding protein 1) (Liver-type fatty acid-binding protein) (L-FABP)"
+O85142,"ArsR family transcriptional regulator (CzrA protein) (HTH-type transcriptional repressor CzrA) (Repressor protein) (Transcriptional repressor, arsR family) (Zn(II)-responsive metalloregulatory transcriptional repressor CzrA)"
+P08523,Olfactory marker protein (Olfactory neuronal-specific protein)
+P71814,Possible two component system response transcriptional positive regulator PhoP
+O95994,Anterior gradient protein 2 homolog (AG-2) (hAG-2) (HPC8) (Secreted cement gland protein XAG-2 homolog)
+P9WN17,Putative glutaredoxin Rv3198A (EC 1.-.-.-)
+Q8NQJ3,Oxoglutarate dehydrogenase inhibitor
+Q73369,Protein Vpr (R ORF protein) (Viral protein R)
+O82040,Polcalcin Phl p 7 (Calcium-binding pollen allergen Phl p 7) (Protein P7) (allergen Phl p 7)
+A1B602,DUF1476 domain-containing protein
+Q8YSC4,demerged
+P49258,Calmodulin-related protein 97A (Protein androcam)
+P07845,DELTA-stichotoxin-She4b (DELTA-SHTX-She4b) (Cytolysin III) (Sticholysin II) (St II) (St-II) (StII) (StnII) (Sticholysin-2) (STCH2)
+Q3E7C1,General transcription and DNA repair factor IIH subunit TFB5 (TFIIH subunit TFB5) (RNA polymerase II transcription factor B subunit 5)
+P04127,Pap fimbrial major pilin protein (Pap pili)
+P29395,Large ribosomal subunit protein uL11 (50S ribosomal protein L11)
+E6N8B8,Ubiquitin-like protein
+P09919,Granulocyte colony-stimulating factor (G-CSF) (Pluripoietin) (Filgrastim) (Lenograstim)
+P02703,Colipase (Procolipase II)
+P40202,Superoxide dismutase 1 copper chaperone
+Q03071,Elongin-C
+P74712,Slr1183 protein
+P0AD49,Ribosome-associated inhibitor A (Protein Y) (pY) (Ribosome associated factor Y) (Spot Y)
+Q256S2,Major strawberry allergen Fra a 1-E (Class 10 plant pathogenesis-related protein Fra a 1.01) (PR10-related protein Fra a 1.01) (Fra a 1.01E) (allergen Fra a 1)
+P30626,Sorcin (22 kDa protein) (CP-22) (CP22) (V19)
+Q8RNV5,R.MvaI
+O25237,Uncharacterized protein HP_0495
+Q56311,Chemotaxis protein CheW
+P0A9X9,Cold shock protein CspA (CSP-A) (7.4 kDa cold shock protein) (CS7.4)
+P00154,Cytochrome c'
+Q96ZY1,MarR family transcriptional regulator
+O13563,26S proteasome regulatory subunit RPN13 (Proteasome non-ATPase subunit 13)
+Q38584,Head completion protein gp15 (HCP) (Connector protein gp15) (Gene product 15) (Gp15)
+P40676,Transcriptional regulator SlyA (Cytolysin SlyA) (Salmolysin)
+Q9KNC3,Cyclic di-GMP binding protein VCA0042
+B3EWH0,Purotoxin-2 (PT2) (OMICRON-lycotoxin-Am1b) (OMICRON-LCTX-Am1b)
+Q9FIC3,Protein BOLA2
+B9Q2C8,Actin depolymerizing factor
+P03007,DNA polymerase III subunit epsilon (EC 2.7.7.7)
+P60568,Interleukin-2 (IL-2) (T-cell growth factor) (TCGF) (Aldesleukin)
+P01837,Immunoglobulin kappa constant (Ig kappa chain C region MOPC 21)
+P02754,Beta-lactoglobulin (Beta-LG) (allergen Bos d 5)
+Q8XCU6,UPF0235 protein YggU
+P62837,Ubiquitin-conjugating enzyme E2 D2 (EC 2.3.2.23) ((E3-independent) E2 ubiquitin-conjugating enzyme D2) (EC 2.3.2.24) (E2 ubiquitin-conjugating enzyme D2) (Ubiquitin carrier protein D2) (Ubiquitin-conjugating enzyme E2(17)KB 2) (Ubiquitin-conjugating enzyme E2-17 kDa 2) (Ubiquitin-protein ligase D2) (p53-regulated ubiquitin-conjugating enzyme 1)
+P50465,"Endonuclease 8 (DNA glycosylase/AP lyase Nei) (EC 3.2.2.-, EC 4.2.99.18) (DNA-(apurinic or apyrimidinic site) lyase Nei) (Endonuclease VIII)"
+P68688,Glutaredoxin 1 (Grx1)
+P52434,"DNA-directed RNA polymerases I, II, and III subunit RPABC3 (RNA polymerases I, II, and III subunit ABC3) (DNA-directed RNA polymerase II subunit H) (DNA-directed RNA polymerases I, II, and III 17.1 kDa polypeptide) (RPB17) (RPB8 homolog) (hRPB8)"
+A1S6W5,Regulatory inactivation of DnaA Hda protein
+P98052,Cytochrome c oxidase subunit 2 (EC 7.1.1.9) (Cytochrome c ba(3) subunit II) (Cytochrome c oxidase polypeptide II) (Cytochrome cba3 subunit 2)
+Q54450,Hemophore HasA (Heme acquisition system protein A)
+Q980C1,Large ribosomal subunit protein eL14 (50S ribosomal protein L14e)
+Q9BZL1,Ubiquitin-like protein 5
+Q78P75,"Dynein light chain 2, cytoplasmic (Dynein light chain LC8-type 2)"
+P09237,Matrilysin (EC 3.4.24.23) (Matrin) (Matrix metalloproteinase-7) (MMP-7) (Pump-1 protease) (Uterine metalloproteinase)
+Q46864,Antitoxin MqsA
+P38116,ADP-ribosylation factor-like protein 1 (Arf-like GTPase 1)
+O14618,Copper chaperone for superoxide dismutase (Superoxide dismutase copper chaperone)
+Q9H5X1,Cytosolic iron-sulfur assembly component 2A (MIP18 family protein FAM96A)
+Q9CXI5,Mesencephalic astrocyte-derived neurotrophic factor (Arginine-rich protein) (Protein ARMET)
+P38182,Autophagy-related protein 8 (Autophagy-related ubiquitin-like modifier ATG8) (Cytoplasm to vacuole targeting protein 5)
+P60953,Cell division control protein 42 homolog (EC 3.6.5.2) (G25K GTP-binding protein)
+P80078,Glutamate mutase sigma subunit (EC 5.4.99.1) (Glutamate mutase S chain) (Glutamate mutase small subunit) (Methylaspartate mutase)
+Q90YK9,Parvalbumin beta 2 (Beta-parvalbumin) (Beta-PV) (Beta-parvalbumin Gad m 1) (allergen Gad m 1.0201)
+P37001,Lipid A palmitoyltransferase PagP (EC 2.3.1.251) (Lipid A acylation protein)
+A0A023GUP0,Peptidyl carrier protein
+Q2FV22,Pantothenate synthetase (PS) (EC 6.3.2.1) (Pantoate--beta-alanine ligase) (Pantoate-activating enzyme)
+Q9LUV2,Stress-response A/B barrel domain-containing protein HS1 (Pop3 family protein At3g17210) (Protein HEAT STABLE 1) (AtHS1)
+P07347,N-terminal acetyltransferase A complex catalytic subunit ARD1 (NatA complex subunit ARD1) (EC 2.3.1.255) (Arrest-defective protein 1)
+O09114,Prostaglandin-H2 D-isomerase (EC 5.3.99.2) (Glutathione-independent PGD synthase) (Lipocalin-type prostaglandin-D synthase) (Prostaglandin-D2 synthase) (L-PGDS) (PGD2 synthase) (PGDS2)
+Q5SLP7,Large ribosomal subunit protein uL1 (50S ribosomal protein L1)
+Q9Y3A5,Ribosome maturation protein SBDS (Shwachman-Bodian-Diamond syndrome protein)
+P80643,Acyl carrier protein (ACP)
+O89467,Protein Tat
+P62304,Small nuclear ribonucleoprotein E (snRNP-E) (Sm protein E) (Sm-E) (SmE)
+P40554,Ubiquitin-related modifier 1
+P0A780,Transcription antitermination protein NusB (Antitermination factor NusB) (N utilization substance protein B)
+P02945,Bacteriorhodopsin (BR) (Bacterioopsin) (BO)
+G1K3S4,RxLR effector protein
+P04527,Sliding-clamp-loader small subunit (Clamp loader gp62 subunit) (Gene product 62) (gp62)
+D0G6S1,Dynactin subunit 6
+D2YW40,Snaclec rhodocetin subunit delta
+U6C5W9,NADH dehydrogenase (Nitroreductase family protein) (Putative NAD(P)H nitroreductase YdgI (EC 1.-.-.-))
+P0AG59,Small ribosomal subunit protein uS14 (30S ribosomal protein S14)
+Q8DMA1,Tll0220 protein
+K7N5N2,"T-cell receptor, sp3.4 alpha chain (T-cell receptor, sp3.4 beta chain)"
+P49278,Mite group 2 allergen Der p 2 (Allergen Der p II) (DPX) (allergen Der p 2)
+O31806,Uncharacterized protein YndB
+D2YW39,Snaclec rhodocetin subunit gamma
+P62149,Calmodulin (CaM)
+P0A7W7,Small ribosomal subunit protein uS8 (30S ribosomal protein S8)
+P74325,sucrose-phosphate phosphatase (EC 3.1.3.24)
+P61956,Small ubiquitin-related modifier 2 (SUMO-2) (HSMT3) (SMT3 homolog 2) (SUMO-3) (Sentrin-2) (Ubiquitin-like protein SMT3B) (Smt3B)
+O41094,Histone H3K27 methylase
+Q24117,"Dynein light chain 1, cytoplasmic (8 kDa dynein light chain) (Cut up protein)"
+Q9I9P7,Extracellular fatty acid-binding protein (Ex-FABP) (Lipocalin Q83)
+P0DMV3,Sugar transporter SemiSWEET
+Q05488,Glutamate mutase sigma subunit (EC 5.4.99.1) (Glutamate mutase S chain) (Glutamate mutase small subunit) (Methylaspartate mutase)
+Q9JHS3,Ragulator complex protein LAMTOR2 (Endosomal adaptor protein p14) (Late endosomal/lysosomal Mp1-interacting protein) (Late endosomal/lysosomal adaptor and MAPK and MTOR activator 2) (Mitogen-activated protein-binding protein-interacting protein) (Roadblock domain-containing protein 3)
+P30050,Large ribosomal subunit protein uL11 (60S ribosomal protein L12)
+Q88EQ6,Flagellar brake protein YcgR (Cyclic di-GMP binding protein YcgR)
+P84751,Ig heavy chain Mem5
+Q8TZV6,Large ribosomal subunit protein eL33 (50S ribosomal protein L35Ae)
+P11632,Non-histone chromosomal protein 6A
+P01359,Trefoil factor 2 (Pancreatic spasmolytic polypeptide) (PSP) (Spasmolytic polypeptide) (SP)
+P60033,CD81 antigen (26 kDa cell surface protein TAPA-1) (Target of the antiproliferative antibody 1) (Tetraspanin-28) (Tspan-28) (CD antigen CD81)
+Q9X1T8,Probable transcription repressor NiaR
+P55769,"NHP2-like protein 1 (High mobility group-like nuclear protein 2 homolog 1) (OTK27) (SNU13 homolog) (hSNU13) (U4/U6.U5 small nuclear ribonucleoprotein SNU13) (U4/U6.U5 tri-snRNP 15.5 kDa protein) [Cleaved into: NHP2-like protein 1, N-terminally processed]"
+P47076,DNA-directed RNA polymerase III subunit RPC9 (RNA polymerase III subunit C9) (RNA polymerase III subunit C17)
+E1C9K8,"Photosystem I reaction center subunit II, chloroplastic"
+Q5SLP8,Small ribosomal subunit protein bS6 (30S ribosomal protein S6) (TS9)
+P01391,Alpha-cobratoxin (Alpha-CT) (Alpha-CbT) (Alpha-Cbtx) (Alpha-Ctx) (Alpha-elapitoxin-Nk2a) (Alpha-EPTX-Nk2a) (Long neurotoxin 1) (Siamensis 3)
+Q93573,Translationally-controlled tumor protein homolog (TCTP)
+P53178,UDP-N-acetylglucosamine transferase subunit ALG13 (EC 2.4.1.141) (Asparagine-linked glycosylation protein 13)
+P62857,Small ribosomal subunit protein eS28 (40S ribosomal protein S28)
+P59220,Calmodulin-7 (CaM-7)
+P60624,Large ribosomal subunit protein uL24 (50S ribosomal protein L24)
+P02693,"Fatty acid-binding protein, intestinal (Fatty acid-binding protein 2) (Intestinal-type fatty acid-binding protein) (I-FABP)"
+Q58235,Long-type peptidyl-prolyl cis-trans isomerase (Long-type PPIase) (EC 5.2.1.8) (FKBP-type peptidyl-prolyl cis-trans isomerase) (FKBP-type PPIase) (FKBP26) (Rotamase)
+O43504,Ragulator complex protein LAMTOR5 (Hepatitis B virus X-interacting protein) (HBV X-interacting protein) (HBX-interacting protein) (Late endosomal/lysosomal adaptor and MAPK and MTOR activator 5)
+P15454,Guanylate kinase (EC 2.7.4.8) (GMP kinase)
+P27359,SAR-endolysin (EC 3.2.1.17) (Endolysin) (Lysis protein) (Lysozyme) (Muramidase)
+A0A0M3KKV8,"Sensory transduction regulatory protein, Anti-anti-sigma factor PhyR"
+Q79PF5,Circadian clock oscillator protein KaiB
+Q9AZ42,Coat protein
+P23534,Phosphocarrier protein HPr (Histidine-containing protein)
+Q9UUB7,Mating-type switching protein swi5 (DNA repair protein swi5)
+S6C4S0,IgG H chain
+A2NUT2,Lambda-chain (AA -20 to 215)
+P61024,Cyclin-dependent kinases regulatory subunit 1 (CKS-1)
+Q99278,Mediator of RNA polymerase II transcription subunit 11 (Mediator complex subunit 11)
+P00847,"ATP synthase F(0) complex subunit a (F-ATPase protein 6) (Proton-conducting channel, ATP synthase F(0) complex subunit a)"
+Q72KM1,Uroporphyrinogen-III synthase (EC 4.2.1.75)
+O04841,"Diadenosine 5',5'''-P1,P4-tetraphosphate hydrolase (EC 3.6.1.17)"
+P18510,Interleukin-1 receptor antagonist protein (IL-1RN) (IL-1ra) (IRAP) (ICIL-1RA) (IL1 inhibitor) (Anakinra)
+P9WJG3,RNA polymerase-binding transcription factor CarD
+Q97ZL0,Acylphosphatase (EC 3.6.1.7) (Acylphosphate phosphohydrolase)
+P0A6P1,Elongation factor Ts (EF-Ts) (Bacteriophage Q beta RNA-directed RNA polymerase subunit IV)
+P0A937,Outer membrane protein assembly factor BamE
+P54512,HTH-type transcriptional regulator MntR (Manganese transport regulator) (Manganese(II) metalloregulatory protein MntR)
+Q00855,Mite group 2 allergen Der f 2 (Allergen Der f II) (allergen Der f 2)
+P17838,Fimbrial protein (Pilin)
+Q9WZ62,"Amino acid ABC transporter, periplasmic amino acid-binding protein"
+E1C9L3,"Photosystem I reaction center subunit psaK, chloroplastic (PSI-K) (Photosystem I subunit X)"
+P83940,Elongin-C (EloC) (Elongin 15 kDa subunit) (RNA polymerase II transcription factor SIII subunit C) (SIII p15) (Stromal membrane-associated protein SMAP1B homolog) (Transcription elongation factor B polypeptide 1)
+Q970D9,Small heat shock protein StHsp14.0
+Q1GBI8,Energy-coupling factor transporter transmembrane protein EcfT (ECF transporter T component EcfT)
+Q8CWB9,Common pilus major fimbrillin subunit EcpA (MatB fimbrillin)
+P38247,Protein SLM4 (EGO complex subunit 3) (GSE complex subunit 1)
+P0A7R9,Small ribosomal subunit protein uS11 (30S ribosomal protein S11)
+Q8R910,Phosphocarrier protein HPr
+Q5JER9,Endonuclease NucS (EC 3.1.-.-)
+Q03708,Colicin-E7 immunity protein (ImmE7) (Microcin-E7 immunity protein)
+Q9K0P4,DNA mimic protein DMP19 (DNA mimic protein 19 kDa) (Neisseria conserved protein DMP19)
+Q9UHA4,Ragulator complex protein LAMTOR3 (Late endosomal/lysosomal adaptor and MAPK and MTOR activator 3) (MEK-binding partner 1) (Mp1) (Mitogen-activated protein kinase kinase 1-interacting protein 1) (Mitogen-activated protein kinase scaffold protein 1)
+P48589,Small ribosomal subunit protein eS12 (40S ribosomal protein S12)
+P22943,12 kDa heat shock protein (Glucose and lipid-regulated protein)
+Q9RT80,Copper chaperone PCu(A)C
+P81658,Kunitz-type serine protease inhibitor homolog calcicludine (CAC) (L-type calcium channel blocker)
+P0A4U6,Global nitrogen regulator (DNA-binding protein VF1) (Nitrogen-responsive regulatory protein)
+O32583,Sulfur carrier protein ThiS (Thiamine biosynthesis protein ThiS)
+A0A1L1QJZ7,Galectin
+P20436,"DNA-directed RNA polymerases I, II, and III subunit RPABC3 (RNA polymerases I, II, and III subunit ABC3) (ABC14.4) (ABC14.5) (DNA-directed RNA polymerases I, II, and III 14.5 kDa polypeptide)"
+P0ABE7,Soluble cytochrome b562 (Cytochrome b-562)
+G3FT00,Flagellar brake protein YcgR (PilZ domain-containing protein) (Pilus assembly protein PilZ) (Transcriptional activator MrkH) (Type 3 fimbriae transcription activator) (Type IV pilus assembly family protein)
+Q9RSS7,Large ribosomal subunit protein uL11 (50S ribosomal protein L11)
+Q04ML5,Adenylate kinase (AK) (EC 2.7.4.3) (ATP-AMP transphosphorylase) (ATP:AMP phosphotransferase) (Adenylate monophosphate kinase)
+P32570,Mediator of RNA polymerase II transcription subunit 22 (Mediator complex subunit 22) (Suppressor of RNA polymerase B 6)
+Q7AKG8,Anti-sigma factor RsrA (Regulator of SigR) (Sigma-R anti-sigma factor RsrA)
+P0A7U7,Small ribosomal subunit protein bS20 (30S ribosomal protein S20)
+G0YP42,Anti-human Langerin 2G3 lambda chain
+P08118,Beta-microseminoprotein (Immunoglobulin-binding factor) (IGBF) (PN44) (Prostate secreted seminal plasma protein) (Prostate secretory protein of 94 amino acids) (PSP-94) (PSP94) (Seminal plasma beta-inhibin)
+P10289,Gastrotropin (GT) (Fatty acid-binding protein 6) (Ileal lipid-binding protein) (ILBP) (Porcine ileal peptide) (PIP)
+P05750,Small ribosomal subunit protein uS3 (40S ribosomal protein S3) (RP13) (YS3)
+Q5U925,2-hydroxyisocaproyl-CoA dehydratase activator (EC 3.-.-.-)
+Q9NZD4,Alpha-hemoglobin-stabilizing protein (Erythroid differentiation-related factor) (Erythroid-associated factor)
+Q05776,"Protein UPS1, mitochondrial (Unprocessed MGM1 protein 1)"
+P10599,Thioredoxin (Trx) (ATL-derived factor) (ADF) (Surface-associated sulphydryl protein) (SASP) (allergen Hom s Trx)
+Q8N5F4,IGL@ protein
+P0A7S9,Small ribosomal subunit protein uS13 (30S ribosomal protein S13)
+P84089,Enhancer of rudimentary homolog (Mer)
+P0A0K6,Thioredoxin (Trx)
+P07515,Phosphocarrier protein HPr (Histidine-containing protein)
+E1C9L2,"Chlorophyll a-b binding protein, chloroplastic"
+P0ADZ0,Large ribosomal subunit protein uL23 (50S ribosomal protein L23)
+Q81HW2,Potassium channel protein
+Q07817,Bcl-2-like protein 1 (Bcl2-L-1) (Apoptosis regulator Bcl-X)
+P0DP29,Calmodulin-1
+P02359,Small ribosomal subunit protein uS7 (30S ribosomal protein S7)
+P0AG86,Protein-export protein SecB (Chaperone SecB)
+P02302,Histone H3.3C
+Q1R2J4,Type 1 fimbiral adhesin FimH
+O00299,Chloride intracellular channel protein 1 (Chloride channel ABP) (Glutaredoxin-like oxidoreductase CLIC1) (EC 1.8.-.-) (Glutathione-dependent dehydroascorbate reductase CLIC1) (EC 1.8.5.1) (Nuclear chloride ion channel 27) (NCC27) (Regulatory nuclear chloride ion channel protein) (hRNCC)
+Q14061,Cytochrome c oxidase copper chaperone
+P09056,Leukemia inhibitory factor (LIF) (Differentiation-stimulating factor) (D factor)
+Q9X074,DsrH family protein
+P00845,ATP synthase subunit c (ATP synthase F(0) sector subunit c) (F-type ATPase subunit c) (F-ATPase subunit c) (Lipid-binding protein)
+P0ACD4,Iron-sulfur cluster assembly scaffold protein IscU (Sulfur acceptor protein IscU)
+P08708,Small ribosomal subunit protein eS17 (40S ribosomal protein S17)
+P0ADZ4,Small ribosomal subunit protein uS15 (30S ribosomal protein S15)
+P52141,Antitoxin YfjZ
+P0AB65,Acylphosphatase (EC 3.6.1.7) (Acylphosphate phosphohydrolase)
+A0A0P0DZ84,Myroilysin
+P39476,DNA-binding protein 7d (7 kDa DNA-binding protein d) (Sso7d)
+Q4X158,Gliotoxin thiomethyltransferase GtmA (EC 2.1.1.9) (Thiol methyltransferase tmtA) (S-MT tmtA)
+Q2VJ58,Immunity factor for SPN (NAD glycohydrolase inhibitor) (SPN immunity factor)
+P68082,Myoglobin (Nitrite reductase MB) (EC 1.7.-.-) (Pseudoperoxidase MB) (EC 1.11.1.-)
+P0AFG0,Transcription termination/antitermination protein NusG
+P00259,Putidaredoxin (PDX)
+Q57254,Afimbrial adhesin AFA-III
+Q7M4T6,Serine proteinase inhibitor IA-1 (Proteinase A inhibitor 1)
+P08337,"8-oxo-dGTP diphosphatase (8-oxo-dGTPase) (EC 3.6.1.55) (7,8-dihydro-8-oxoguanine-triphosphatase) (Mutator protein MutT) (dGTP pyrophosphohydrolase)"
+Q9LNF2,Pectinesterase inhibitor 1 (Pectin methylesterase inhibitor 1) (AtPMEI1)
+P40029,Peptide methionine sulfoxide reductase (EC 1.8.4.11) (Peptide-methionine (S)-S-oxide reductase) (Peptide Met(O) reductase) (Protein-methionine-S-oxide reductase)
+O60200,Mitochondrial distribution and morphology protein 35
+O81223,Calcineurin B-like protein 4 (Protein SALT OVERLY SENSITIVE 3)
+P0A7V8,Small ribosomal subunit protein uS4 (30S ribosomal protein S4)
+P80226,"Fatty acid-binding protein, liver (Fatty acid-binding protein 1) (Liver basic FABP) (LB-FABP) (Liver bile acid-binding protein) (L-BABP) (Liver-type fatty acid-binding protein) (L-FABP)"
+Q07879,Ubiquitin-like-conjugating enzyme ATG10 (EC 2.3.2.-) (Autophagy-related protein 10)
+O48448,Tail completion protein gp17 (Gene product 17) (gp17) (Head-tail joining protein gp17) (Tail-to-head joining protein)
+P12873,Large ribosomal subunit protein uL29 (50S ribosomal protein L29)
+P0A7W1,Small ribosomal subunit protein uS5 (30S ribosomal protein S5)
+P02925,Ribose import binding protein RbsB
+P0A6A8,Acyl carrier protein (ACP) (Cytosolic-activating factor) (CAF) (Fatty acid synthase acyl carrier protein)
+P25638,TPR repeat-containing protein associated with Hsp90
+P45923,Uncharacterized protein YqbG
+P0A7V0,Small ribosomal subunit protein uS2 (30S ribosomal protein S2)
+P74564,Photosystem I reaction center subunit PsaK 2 (Photosystem I subunit X 2)
+P00126,"Cytochrome b-c1 complex subunit 6, mitochondrial (Complex III subunit 6) (Complex III subunit VIII) (Cytochrome c1 non-heme 11 kDa protein) (Mitochondrial hinge protein) (Ubiquinol-cytochrome c reductase complex 11 kDa protein)"
+Q9B6E9,NADH-ubiquinone oxidoreductase chain 6 (EC 7.1.1.2) (NADH dehydrogenase subunit 6)
+Q9I420,Carboxypeptidase regulatory-like domain-containing protein
+P80371,Small ribosomal subunit protein uS2 (30S ribosomal protein S2)
+E1C9L1,"Photosystem I reaction center subunit XI, chloroplastic (PSI subunit V)"
+Q9CHR1,Transcriptional regulator
+P60058,Protein transport protein Sec61 subunit gamma
+P38505,Calcium-binding protein 1 (EhCaBP1)
+P16495,Nucleoprotein (Nucleocapsid protein) (Protein N)
+Q9BV57,Acireductone dioxygenase (Acireductone dioxygenase (Fe(2+)-requiring)) (ARD') (Fe-ARD) (EC 1.13.11.54) (Acireductone dioxygenase (Ni(2+)-requiring)) (ARD) (Ni-ARD) (EC 1.13.11.53) (Membrane-type 1 matrix metalloproteinase cytoplasmic tail-binding protein 1) (MTCBP-1) (Submergence-induced protein-like factor) (Sip-L)
+P71079,Enoyl-[acyl-carrier-protein] reductase [NADPH] FabL (ENR) (EC 1.3.1.104) (Enoyl-acyl carrier protein reductase III) (NADPH-dependent enoyl-ACP reductase)
+Q58610,Uncharacterized protein MJ1213
+Q9RSL2,Large ribosomal subunit protein uL18 (50S ribosomal protein L18)
+Q9AJW7,IpgB2
+P0A7X3,Small ribosomal subunit protein uS9 (30S ribosomal protein S9)
+P0ABA4,ATP synthase subunit delta (ATP synthase F(1) sector subunit delta) (F-type ATPase subunit delta) (F-ATPase subunit delta)
+P54155,Peptide methionine sulfoxide reductase MsrB (EC 1.8.4.12) (Peptide-methionine (R)-S-oxide reductase)
+P02633,"Protein S100-G (Calbindin-D9k) (S100 calcium-binding protein G) (Vitamin D-dependent calcium-binding protein, intestinal) (CABP)"
+P04080,Cystatin-B (CPI-B) (Liver thiol proteinase inhibitor) (Stefin-B)
+Q8P4Q6,Peptide methionine sulfoxide reductase MsrB (EC 1.8.4.12) (Peptide-methionine (R)-S-oxide reductase)
+P0A7T3,Small ribosomal subunit protein bS16 (30S ribosomal protein S16)
+P00592,"Phospholipase A2, major isoenzyme (EC 3.1.1.4) (Group IB phospholipase A2) (Phosphatidylcholine 2-acylhydrolase 1B)"
+P09860,"Troponin C, slow skeletal and cardiac muscles (TN-C)"
+Q15388,Mitochondrial import receptor subunit TOM20 homolog (Mitochondrial 20 kDa outer membrane protein) (Outer mitochondrial membrane receptor Tom20)
+Q06253,Antitoxin phd (Addiction protein pdh) (Prevent host death protein)
+Q9RY65,Large ribosomal subunit protein bL27 (50S ribosomal protein L27)
+P09850,"Endo-1,4-beta-xylanase (Xylanase) (EC 3.2.1.8) (1,4-beta-D-xylan xylanohydrolase)"
+P01848,T cell receptor alpha chain constant
+P02588,"Troponin C, skeletal muscle"
+P81782,Bucandin
+O35486,Gamma-crystallin S (Beta-crystallin S) (Gamma-S-crystallin)
+Q99181,Protein HSH49
+P28635,D-methionine-binding lipoprotein MetQ
+P0CX53,Large ribosomal subunit protein uL11A (60S ribosomal protein L12-A) (L15) (YL23)
+P54030,Large ribosomal subunit protein uL11 (50S ribosomal protein L11)
+P0A7U3,Small ribosomal subunit protein uS19 (30S ribosomal protein S19)
+P70974,Large ribosomal subunit protein uL13 (50S ribosomal protein L13)
+Q06162,Inner kinetochore subunit NKP2 (Constitutive centromere-associated network protein NKP2) (Non-essential kinetochore protein 2)
+L7P7M1,Uncharacterized protein
+A0A059PIQ0,Green fluorescent protein
+Q9CQI6,Coactosin-like protein
+Q5JS54,Proteasome assembly chaperone 4 (PAC-4) (hPAC4) (Proteasome chaperone homolog 4) (Pba4)
+G1U0Q2,Small ribosomal subunit protein uS19 (40S ribosomal protein S15)
+Q57074,Iron-sulfur cluster assembly scaffold protein IscU (Sulfur acceptor protein IscU)
+P77072,Alkylmercury lyase (EC 4.99.1.2) (Organomercurial lyase)
+Q8JZL3,Thiamine-triphosphatase (ThTPase) (EC 3.6.1.28)
+P72393,Acyl carrier protein (ACP)
+Q9CIP3,Transcriptional coactivator p15 (PC4) C-terminal domain-containing protein
+P69544,DNA-Binding protein G5P (G5P) (GPV) (Single-stranded DNA-binding protein) (pV)
+Q64339,Ubiquitin-like protein ISG15 (Interferon-induced 15 kDa protein) (Interferon-induced 17 kDa protein) (IP17) (Ubiquitin cross-reactive protein)
+A0A6L7HJC4,ESAT-6-like protein
+Q8X974,Prepilin peptidase-dependent pilin
+Q9PFB1,Biofilm growth-associated repressor
+Q9ZEE0,Thioredoxin (Trx)
+P27999,DNA-directed RNA polymerase II subunit RPB9 (RNA polymerase II subunit B9) (B12.6) (DNA-directed RNA polymerase II 14.2 kDa polypeptide) (DNA-directed RNA polymerase II subunit 9)
+P63172,Dynein light chain Tctex-type 1 (Protein CW-1) (T-complex testis-specific protein 1 homolog)
+E3PPC4,CFA/I fimbrial subunit B (CFA/I antigen) (CFA/I pilin) (Colonization factor antigen I subunit B)
+A0A0D3RJT7,TetR family transcription regulator (TetR/AcrR family transcriptional regulator)
+Q9I740,Immune protein Tsi6
+P86041,Scytovirin (SVN)
+Q9KQU8,Fatty acid metabolism regulator protein
+P0AG63,Small ribosomal subunit protein uS17 (30S ribosomal protein S17)
+O41026,DNA ligase
+P0DOY3,Immunoglobulin lambda constant 3 (Ig lambda chain C region DOT) (Ig lambda chain C region NEWM) (Ig lambda-3 chain C regions)
+P0A1J7,Flagella synthesis protein FlgN
+P08515,Glutathione S-transferase class-mu 26 kDa isozyme (GST 26) (EC 2.5.1.18) (Sj26 antigen) (SjGST)
+P22139,"DNA-directed RNA polymerases I, II, and III subunit RPABC5 (RNA polymerases I, II, and III subunit ABC5) (ABC10-beta) (ABC8) (DNA-directed RNA polymerases I, II, and III 8.3 kDa polypeptide)"
+Q12493,Inner kinetochore subunit NKP1 (Constitutive centromere-associated network protein NKP1) (Non-essential kinetochore protein 1)
+Q9DBB5,Eukaryotic translation initiation factor 4E type 3 (eIF-4E type 3) (eIF-4E3) (eIF4E type 3) (eIF4E-3)
+A6L9X6,Peptide chain release factor 2
+P0C093,Nucleoid occlusion factor SlmA (Protein Ttk) (Synthetically lethal with a defective Min system protein A)
+P0CI78,Large ribosomal subunit protein uL24 (12 kDa DNA-binding protein) (50S ribosomal protein L24) (BL23) (HPB12)
+P33285,Small ribosomal subunit protein eS28 (40S ribosomal protein S28) (S33)
+P68696,Profilin-1A (Acidic profilin IA) (Profilin IA)
+P0DP24,Calmodulin-2
+F9RBV9,Sugar transporter SemiSWEET
+P83346,Bucain
+Q96B02,Ubiquitin-conjugating enzyme E2 W (EC 2.3.2.23) (E2 ubiquitin-conjugating enzyme W) (N-terminal E2 ubiquitin-conjugating enzyme) (EC 2.3.2.25) (N-terminus-conjugating E2) (Ubiquitin carrier protein W) (Ubiquitin-conjugating enzyme 16) (UBC-16) (Ubiquitin-protein ligase W)
+O26010,Phosphopantetheine adenylyltransferase (EC 2.7.7.3) (Dephospho-CoA pyrophosphorylase) (Pantetheine-phosphate adenylyltransferase) (PPAT)
+Q9I169,MbtH-like domain-containing protein
+P83876,Thioredoxin-like protein 4A (DIM1 protein homolog) (Spliceosomal U5 snRNP-specific 15 kDa protein) (Thioredoxin-like U5 snRNP protein U5-15kD)
+P35120,Nopaline-binding periplasmic protein
+Q9KMA5,Antitoxin HigA-2
+P00044,Cytochrome c isoform 1 (Iso-1-cytochrome c) (Cytochrome c aerobic isoform)
+Q0KKI6,Immunoblobulin light chain
+P0ADF8,Acetolactate synthase isozyme 1 small subunit (EC 2.2.1.6) (Acetohydroxy-acid synthase I small subunit) (AHAS-I) (ALS-I)
+O34817,HTH-type transcriptional repressor NagR (N-acetylglucosamine utilization regulator)
+Q6Q0L4,A223 penton protein C-terminal domain-containing protein
+Q70LC6,Major capsid protein 1 (MCP1)
+Q9KMA6,Toxin HigB-2
+O32221,Copper chaperone CopZ (Copper-ion-binding protein)
+Q0VGL1,"Ragulator complex protein LAMTOR4 (Late endosomal/lysosomal adaptor and MAPK and MTOR activator 4) [Cleaved into: Ragulator complex protein LAMTOR4, N-terminally processed]"
+O94376,Mediator of RNA polymerase II transcription subunit 21 (Mediator complex subunit 21) (Suppressor of RNA polymerase B 7)
+O33289,Amino-acid acetyltransferase (EC 2.3.1.1) (N-acetylglutamate synthase) (AGS) (NAGS)
+A0A069PXX1,Small ribosomal subunit protein uS9
+Q6P1K2,Polyamine-modulated factor 1 (PMF-1)
+P0A800,DNA-directed RNA polymerase subunit omega (RNAP omega subunit) (EC 2.7.7.6) (RNA polymerase omega subunit) (Transcriptase subunit omega)
+P84051,Histone H2A
+Q5DL43,"2,3,4,5-tetrahydropyridine-2,6-dicarboxylate N-succinyltransferase (EC 2.3.1.117) (Tetrahydrodipicolinate N-succinyltransferase) (THDP succinyltransferase) (THP succinyltransferase) (Tetrahydropicolinate succinylase)"
+P28074,Proteasome subunit beta type-5 (EC 3.4.25.1) (Macropain epsilon chain) (Multicatalytic endopeptidase complex epsilon chain) (Proteasome chain 6) (Proteasome epsilon chain) (Proteasome subunit MB1) (Proteasome subunit X) (Proteasome subunit beta-5) (beta-5)
+P0DP25,Calmodulin-3
+P27320,Ferredoxin-1 (Ferredoxin I)
+P69326,Ubiquitin
+Q9XAM6,Transcriptional regulator
+E1C9K6,Photosystem I reaction center subunit IV
+A0A0U5BC76,MAb 6H10 light chain
+P05745,Large ribosomal subunit protein eL36A (60S ribosomal protein L36-A) (L39) (YL39)
+Q9SU14,Nudix hydrolase 7 (AtNUDT7) (EC 3.6.1.-) (ADP-ribose pyrophosphatase) (EC 3.6.1.13) (NADH pyrophosphatase) (EC 3.6.1.22) (Protein GROWTH FACTOR GENE 1)
+P23968,V-type proton ATPase subunit c'' (V-ATPase subunit c'') (V-ATPase 22 kDa proteolipid subunit) (Vacuolar proton pump c'' subunit)
+Q12330,Small nuclear ribonucleoprotein E (snRNP-E) (Sm protein E) (Sm-E) (SmE)
+P30902,"ATP synthase subunit d, mitochondrial"
+P03182,Apoptosis regulator BHRF1 (Early antigen protein R) (EA-R) (Nuclear antigen)
+Q57818,Transcription elongation factor Spt5
+Q966X9,Chagasin (Cysteine protease inhibitor)
+Q15370,Elongin-B (EloB) (Elongin 18 kDa subunit) (RNA polymerase II transcription factor SIII subunit B) (SIII p18) (Transcription elongation factor B polypeptide 2)
+P67701,Antitoxin HigA
+G1T2G4,Eukaryotic translation initiation factor 2 subunit 1 (Eukaryotic translation initiation factor 2 subunit alpha)
+Q3AB29,Carbon monoxide oxidation system transcription regulator CooA-1
+Q03020,"Iron sulfur cluster assembly protein 1, mitochondrial (Iron sulfur cluster scaffold protein 1)"
+Q06796,Large ribosomal subunit protein uL11 (50S ribosomal protein L11) (BL11)
+G1TU13,Small ribosomal subunit protein eS17 (40S ribosomal protein S17)
+P01087,Alpha-amylase/trypsin inhibitor (RBI) (RATI)
+Q9Y2Y1,DNA-directed RNA polymerase III subunit RPC10 (RNA polymerase III subunit C10) (DNA-directed RNA polymerase III subunit K) (RNA polymerase III 12.5 kDa subunit) (RPC12.5) (RNA polymerase III subunit C11) (HsC11p) (RPC11) (hRPC11)
+Q2FW22,Large ribosomal subunit protein uL18 (50S ribosomal protein L18)
+D5ANZ2,Ubiquinol-cytochrome c reductase iron-sulfur subunit (EC 7.1.1.8) (Rieske iron-sulfur protein) (RISP)
+P0A805,Ribosome-recycling factor (RRF) (Ribosome-releasing factor)
+G3ECR3,CRISPR-associated endoribonuclease Cas2 (EC 3.1.-.-)
+Q97EM8,Thioredoxin reductase
+Q5SJ76,Small ribosomal subunit protein uS15 (30S ribosomal protein S15)
+P25637,Protein IMPACT homolog
+O18423,Lysenin (Beta-barrel pore-forming toxin) (Beta-PFT) (Invertebrate cytolysin pore) (efL1)
+Q86WV5,CST complex subunit TEN1 (Protein telomeric pathways with STN1 homolog) (Telomere length regulation protein TEN1 homolog)
+Q0IIM2,ADP-ribosylation factor-like protein 6
+A0A0M5MQR7,ATP synthase epsilon chain (ATP synthase F1 sector epsilon subunit) (F-ATPase epsilon subunit)
+Q8DKZ3,NAD(P)H-quinone oxidoreductase subunit L (EC 7.1.1.-) (NAD(P)H dehydrogenase I subunit L) (NDH-1 subunit L) (NDH-L)
+G3XD64,Antiactivator FleN
+A0A0R4I978,Hemoglobin
+A0A2H1G421,Cyanovirin-N domain-containing protein
+O97725,NADH dehydrogenase [ubiquinone] 1 alpha subcomplex subunit 12 (Complex I-B17.2) (CI-B17.2) (CIB17.2) (NADH-ubiquinone oxidoreductase subunit B17.2)
+Q06259,Protein kinase doc (EC 2.7.11.1) (Death on curing protein) (Toxin doc)
+P42924,Large ribosomal subunit protein uL23 (50S ribosomal protein L23)
+B8H4R9,UPF0335 protein CCNA_03428
+P01426,Short neurotoxin 1 (Neurotoxin alpha) (Toxin alpha)
+Q5ZYR7,Type 4 apparatus protein DotY
+P19946,Large ribosomal subunit protein uL15 (50S ribosomal protein L15)
+P32529,DNA-directed RNA polymerase I subunit RPA12 (A12) (A12.2) (DNA-directed RNA polymerase I 13.7 kDa polypeptide)
+Q99627,COP9 signalosome complex subunit 8 (SGN8) (Signalosome subunit 8) (COP9 homolog) (hCOP9) (JAB1-containing signalosome subunit 8)
+A0A0H2ZNA4,Copper-sensing transcriptional repressor CsoR
+P23828,Small ribosomal subunit protein uS17 (30S ribosomal protein S17) (BS16)
+Q2FY41,Elongation factor P (EF-P)
+Q9CDU5,Zinc transport transcriptional regulator
+O75817,Ribonuclease P protein subunit p20 (RNaseP protein p20) (Ribonucleases P/MRP protein subunit POP7 homolog) (hPOP7)
+P37574,Ribosome-associated endoribonuclease 1 (EC 3.1.-.-)
+Q93TP7,CadR (Cd(II)/Pb(II)-responsive transcriptional regulator)
+P67703,Antitoxin HigA
+A0A2V3GYK0,Large ribosomal subunit protein uL11
+Q52884,CheY2 (Response regulator)
+A0A1G2XP69,demerged
+P46899,Large ribosomal subunit protein uL18 (50S ribosomal protein L18) (BL16)
+P42013,Phosphocarrier protein HPr (Histidine-containing protein)
+P56790,Photosystem II reaction center protein Z (PSII-Z)
+O69052,Probable phosphite transport system-binding protein PtxB
+A0A5C2G1U0,IG c168_light_IGKV4-1_IGKJ4 (IGL c2410_light_IGKV4-1_IGKJ4) (IGL c2520_light_IGKV4-1_IGKJ4)
+P9WKF5,Adenylate kinase (AK) (EC 2.7.4.3) (ATP-AMP transphosphorylase) (ATP:AMP phosphotransferase) (Adenylate monophosphate kinase)
+Q97P33,Tryptophan synthase alpha chain (EC 4.2.1.20)
+Q9GTP0,Thermal hysteresis protein
+A0A7U3ZK32,Probable RNA 2'-phosphotransferase (EC 2.7.1.-)
+A0A125RN64,Uncharacterized protein
+A4TVL0,Cereblon isoform 4
+P02407,Small ribosomal subunit protein eS17A (40S ribosomal protein S17-A) (RP51A)
+Q6TM72,Anti-CRISPR protein 30 (Gene product 30) (gp30)
+O07315,Ferric uptake regulation protein (Ferric uptake regulator)
+Q5SHP2,Small ribosomal subunit protein uS19 (30S ribosomal protein S19)
+Q9L132,HTH-type transcriptional repressor NsrR
+Q9KFX8,CRISPR-associated endonuclease Cas2 (EC 3.1.-.-)
+Q2FW39,Small ribosomal subunit protein uS9 (30S ribosomal protein S9)
+Q01519,"Cytochrome c oxidase subunit 12, mitochondrial (Cytochrome c oxidase polypeptide VIb)"
+P0AFW0,Transcription antitermination protein RfaH
+D4GZE7,Small archaeal modifier protein 2 (SAMP2) (Ubiquitin-like small archaeal modifier protein 2)
+A0QQQ1,Superoxide dismutase [Cu-Zn] (EC 1.15.1.1)
+Q9US45,Mediator of RNA polymerase II transcription subunit 6 (Mediator complex subunit 6) (RNA polymerase II mediator complex protein pmc5)
+P0AEQ3,Glutamine-binding periplasmic protein (GlnBP)
+A0A247D711,Anti-CRISPR protein AcrIIA4 (Associated protein)
+P0AEF0,Replicative helicase loader DnaC (EC 3.6.4.-) (DNA replication protein DnaC)
+P07435,Odorant-binding protein (OBP) (Olfactory mucosa pyrazine-binding protein)
+A0A2V3F2U6,Small ribosomal subunit protein uS7
+P00147,Cytochrome c'
+P42060,Large ribosomal subunit protein uL22 (50S ribosomal protein L22)
+Q3IY09,Ubiquinol-cytochrome c reductase iron-sulfur subunit (EC 7.1.1.8)
+A0A0B4J277,T cell receptor alpha variable 22
+G1TFE8,Small ribosomal subunit protein eS26 (40S ribosomal protein S26)
+P0A7J3,Large ribosomal subunit protein uL10 (50S ribosomal protein L10) (50S ribosomal protein L8)
+P0A4F8,Octopine-binding periplasmic protein
+O78753,NADH-ubiquinone oxidoreductase chain 3 (EC 7.1.1.2) (NADH dehydrogenase subunit 3)
+E1C9K9,Photosystem I reaction center subunit VI (PSI-H)
+A0A125YJ71,Programmed cell death 5 protein
+P12877,Large ribosomal subunit protein uL5 (50S ribosomal protein L5) (BL6)
+A0A3B6UER2,4-hydroxy-tetrahydrodipicolinate reductase (HTPA reductase) (EC 1.17.1.8)
+A0A8J7ZFD1,demerged
+Q15369,Elongin-C (EloC) (Elongin 15 kDa subunit) (RNA polymerase II transcription factor SIII subunit C) (SIII p15) (Transcription elongation factor B polypeptide 1)
+P40131,Flagella basal body P-ring formation protein FlgA
+V9H5N5,Uncharacterized protein
+A8K0B5,merged
+G1TZ76,Small ribosomal subunit protein eS27 (40S ribosomal protein S27)
+Q9BS16,Centromere protein K (CENP-K) (Interphase centromere complex protein 37) (Protein AF-5alpha) (p33)
+P9WG19,Cell division protein FtsX
+G1SFR8,Small ribosomal subunit protein eS12 (40S ribosomal protein S12)
+P06730,Eukaryotic translation initiation factor 4E (eIF-4E) (eIF4E) (eIF-4F 25 kDa subunit) (mRNA cap-binding protein)
+A0A0K1H313,TxnO9
+G1TPG3,Small ribosomal subunit protein uS13 (40S ribosomal protein S18)
+A0A072ZMU2,Large ribosomal subunit protein uL5
+A0A0U3H1E6,Glycine transporter domain-containing protein
+O31742,Large ribosomal subunit protein bL19 (50S ribosomal protein L19)
+O48504,MOR
+A0A0Q9HY32,demerged
+Q980F8,DNA-binding protein SSO0352
+Q9H3R5,Centromere protein H (CENP-H) (Interphase centromere complex protein 35)
+A0A068N1Y0,demerged
+Q799U3,Mercuric resistance operon regulatory protein
+P00441,Superoxide dismutase [Cu-Zn] (EC 1.15.1.1) (EC 1.8.-.-) (Hydrogen sulfide oxidase) (Superoxide dismutase 1) (hSod1)
+Q9GV45,Oplophorus-luciferin 2-monooxygenase catalytic subunit (19kOLase) (EC 1.13.12.13)
+O35011,DNA-directed RNA polymerase subunit omega (RNAP omega subunit) (EC 2.7.7.6) (RNA polymerase omega 2 subunit) (Transcriptase subunit omega)
+P15248,Interleukin-9 (IL-9) (Cytokine P40) (T-cell growth factor P40)
+E3CNF6,HTH cro/C1-type domain-containing protein
+Q00595,Outer membrane protein AlkL
+Q5W265,Probable acyl carrier protein PigG (Peptidyl carrier protein) (PCP)
+Q39580,"Dynein 8 kDa light chain, flagellar outer arm"
+P00004,Cytochrome c
+Q9B6C7,NADH-ubiquinone oxidoreductase chain 3 (EC 7.1.1.2) (NADH dehydrogenase subunit 3)
+Q2G285,Antitoxin
+P03856,Replication initiation protein (Protein E) (Protein rep) (Protein F4)
+P21457,Recoverin (p26)
+Q4JIX5,PhlH
+P37277,Photosystem I reaction center subunit XI (PSI subunit V) (PSI-L)
+Q99471,Prefoldin subunit 5 (Myc modulator 1) (c-Myc-binding protein Mm-1)
+P69801,PTS system mannose-specific EIIC component (EII-P-Man) (EIIC-Man) (Mannose permease IIC component)
+P9WHN7,Peptidyl-tRNA hydrolase (Pth) (EC 3.1.1.29)
+Q99KD6,"Cytochrome c oxidase subunit 7A2-like, mitochondrial (Supercomplex assembly factor 1)"
+Q2FW30,Small ribosomal subunit protein uS13 (30S ribosomal protein S13)
+D0KNS6,Heat shock protein Hsp20
+O35228,Interleukin-27 subunit beta (IL-27 subunit beta) (IL-27B) (Epstein-Barr virus-induced gene 3 protein homolog)
+O60925,Prefoldin subunit 1
+Q2HJE8,Coiled-coil-helix-coiled-coil-helix domain containing 1
+Q5SHY0,Recombination protein RecR
+E1C9K7,"Photosystem I reaction center subunit N, chloroplastic"
+P75171,Large ribosomal subunit protein bL28 (50S ribosomal protein L28)
+D3DIV8,RNA-free ribonuclease P (RNA-free RNase P) (EC 3.1.26.5) (Protein-only RNase P)
+Q2GHP2,Thioredoxin
+Q6INL9,HAUS augmin like complex subunit 2 L homeolog (MGC82377 protein)
+O87131,Chemotaxis protein methyltransferase 1 (EC 2.1.1.80)
+P29373,Cellular retinoic acid-binding protein 2 (Cellular retinoic acid-binding protein II) (CRABP-II)
+P33187,Cadmium-metallothionein (CD-MT)
+A0A0H3FR62,Dephospho-CoA kinase (EC 2.7.1.24) (Dephosphocoenzyme A kinase)
+M1R9H3,Csy4
+Q8EGW2,Extradiol ring-cleavage dioxygenase LigAB LigA subunit domain-containing protein
+P0A8A8,Ribosome maturation factor RimP
+Q54J50,Large ribosomal subunit protein uL11 (60S ribosomal protein L12)
+Q31PX7,Uncharacterized protein
+Q4JAT2,Conserved Archaeal protein
+Q9JPG4,Lipoprotein
+E2RXU3,Small ribosomal subunit protein uS13
+P01563,Interferon alpha-2 (IFN-alpha-2) (Interferon alpha-A) (LeIF A)
+E2RXT2,Small ribosomal subunit protein uS19
+P0A0H0,Small ribosomal subunit protein uS12 (30S ribosomal protein S12)
+Q99828,Calcium and integrin-binding protein 1 (CIB) (Calcium- and integrin-binding protein) (CIBP) (Calmyrin) (DNA-PKcs-interacting protein) (Kinase-interacting protein) (KIP) (SNK-interacting protein 2-28) (SIP2-28)
+P32267,10 kDa anti-sigma factor (10 kDa RNA polymerase-associated protein) (Audrey Stevens' inhibitor)
+Q6CI02,"Cytochrome b-c1 complex subunit Rieske, mitochondrial (EC 7.1.1.8)"
+Q6NLH0,"DNA-directed RNA polymerases II, IV and V subunit 9A"
+P63317,"Troponin C, slow skeletal and cardiac muscles (TN-C)"
+P9WFZ9,Oligopeptide transport system permease protein OppC
+O95563,Mitochondrial pyruvate carrier 2 (Brain protein 44)
+A0A0E2IV13,Bacterial microcompartment shell protein CutR (Bacterial microcompartment protein homohexamer) (BMC-H) (Propanediol utilization protein CutR)
+Q9P086,Mediator of RNA polymerase II transcription subunit 11 (Mediator complex subunit 11)
+Q9SWR4,Major allergen Cor a 1.0401
+O31718,DNA-directed RNA polymerase subunit epsilon (RNAP epsilon subunit) (EC 2.7.7.6) (DNA-directed RNA polymerase subunit omega 1) (RNA polymerase epsilon subunit) (RNA polymerase omega 1 subunit) (Transcriptase subunit epsilon) (Transcriptase subunit omega 1)
+P0A7J7,Large ribosomal subunit protein uL11 (50S ribosomal protein L11)
+C4QY79,DNA-directed RNA polymerase subunit
+Q2G2Q4,Ribosome-binding factor A
+S5LAD9,Mannose/fructose/sorbose family PTS transporter subunit IIC (PTS mannose/fructose/sorbose transporter subunit IIC) (PTS system sorbose-specific EIIC component)
+O69061,Probable phosphite transport system-binding protein HtxB
+P62399,Large ribosomal subunit protein uL5 (50S ribosomal protein L5)
+Q85FY0,Photosystem I reaction center subunit II
+M1R2X3,Csy1
+P62820,Ras-related protein Rab-1A (EC 3.6.5.2) (YPT1-related protein)
+P0A223,Type 3 secretion system needle filament protein (T3SS needle filament protein)
+P9WF43,Transcriptional regulator WhiB1
+Q9CXU0,Mediator of RNA polymerase II transcription subunit 10 (Mediator complex subunit 10)
+P97457,"Myosin regulatory light chain 11 (Fast skeletal myosin light chain 2) (MLC2F) (Myosin light chain 11) (Myosin regulatory light chain 2, skeletal muscle isoform)"
+P0A7Q1,Large ribosomal subunit protein bL35 (50S ribosomal protein L35) (Ribosomal protein A)
+P62166,Neuronal calcium sensor 1 (NCS-1) (Frequenin homolog) (Frequenin-like protein) (Frequenin-like ubiquitous protein)
+Q9H944,Mediator of RNA polymerase II transcription subunit 20 (Mediator complex subunit 20) (TRF-proximal protein homolog) (hTRFP)
+P0A3M7,Lactococcin-A immunity protein
+C6SUZ2,AT15141p
+Q2G111,Small ribosomal subunit protein bS18 (30S ribosomal protein S18)
+P04271,Protein S100-B (S-100 protein beta chain) (S-100 protein subunit beta) (S100 calcium-binding protein B)
+Q8CJW1,Two-component system response regulator
+P02586,"Troponin C, skeletal muscle"
+P60059,Protein transport protein Sec61 subunit gamma
+O55038,C-X-C motif chemokine 13 (B lymphocyte chemoattractant) (CXC chemokine BLC) (Small-inducible cytokine B13)
+P24032,"Myosin regulatory light chain 2, smooth muscle minor isoform (MLC-2) (DTNB) (G1) (Isoform L20-B1)"
+P19123,"Troponin C, slow skeletal and cardiac muscles (TN-C)"
+A0AA82WPG9,Ntox15 domain-containing protein
+P02911,Lysine/arginine/ornithine-binding periplasmic protein (LAO-binding protein)
+Q8BGM4,Methyltransferase like 27 (Williams-Beuren syndrome critical region protein 27) (Williams-Beuren syndrome critical region protein 27 isoform beta)
+M1FPN0,demerged
+P60723,Large ribosomal subunit protein uL4 (50S ribosomal protein L4)
+P75540,Large ribosomal subunit protein bL9 (50S ribosomal protein L9)
+P02391,Large ribosomal subunit protein uL6 (50S ribosomal protein L6) (BL10)
+Q9ZHD1,Copper ABC transporter substrate-binding protein
+P80511,Protein S100-A12 (CGRP) (Calcium-binding protein in amniotic fluid 1) (CAAF1) (Calgranulin-C) (CAGC) (Extracellular newly identified RAGE-binding protein) (EN-RAGE) (Migration inhibitory factor-related protein 6) (MRP-6) (p6) (Neutrophil S100 protein) (S100 calcium-binding protein A12) [Cleaved into: Calcitermin]
+P75550,Large ribosomal subunit protein uL11 (50S ribosomal protein L11)
+Q9HZR6,CifR
+Q2FW10,Small ribosomal subunit protein uS19 (30S ribosomal protein S19)
+Q5MAC8,Guanylyl cyclase-activating protein 1 (Guanylate cyclase activator 1A)
+Q8YZ77,demerged
+P02766,Transthyretin (ATTR) (Prealbumin) (TBPA)
+P02413,Large ribosomal subunit protein uL15 (50S ribosomal protein L15)
+Q9D8C6,Mediator of RNA polymerase II transcription subunit 11 (Mediator complex subunit 11)
+P22301,Interleukin-10 (IL-10) (Cytokine synthesis inhibitory factor) (CSIF)
+Q9BTT4,Mediator of RNA polymerase II transcription subunit 10 (Mediator complex subunit 10) (Transformation-related gene 17 protein) (TRG-17) (Transformation-related gene 20 protein) (TRG-20)
+P89116,Caspase-1 (EC 3.4.22.-) [Cleaved into: Caspase-1 subunit p19/18
+P00918,Carbonic anhydrase 2 (EC 4.2.1.1) (Carbonate dehydratase II) (Carbonic anhydrase C) (CAC) (Carbonic anhydrase II) (CA-II) (Cyanamide hydratase CA2) (EC 4.2.1.69)
+L0TEV4,Probable dipeptide-transport integral membrane protein ABC transporter DppC
+P0C018,Large ribosomal subunit protein uL18 (50S ribosomal protein L18)
+P47064,"AP-3 complex subunit sigma (AP-3 complex sigma3A subunit) (Adaptor-related protein complex 3 subunit sigma) (Clathrin-associated/assembly/adaptor protein, small 3) (Sigma-adaptin 3A) (Sigma3-adaptin)"
+Q9NQT5,Exosome complex component RRP40 (Exosome component 3) (Ribosomal RNA-processing protein 40) (p10)
+P0A7K6,Large ribosomal subunit protein bL19 (50S ribosomal protein L19)
+Q9Y3B2,Exosome complex component CSL4 (Exosome component 1)
+P05230,Fibroblast growth factor 1 (FGF-1) (Acidic fibroblast growth factor) (aFGF) (Endothelial cell growth factor) (ECGF) (Heparin-binding growth factor 1) (HBGF-1)
+P0AG48,Large ribosomal subunit protein bL21 (50S ribosomal protein L21)
+P63316,"Troponin C, slow skeletal and cardiac muscles (TN-C)"
+A0A377JKY9,Uncharacterized protein
+P04482,Colicin-E2 immunity protein (ImmE2) (Microcin-E2 immunity protein)
+P0A7R1,Large ribosomal subunit protein bL9 (50S ribosomal protein L9)

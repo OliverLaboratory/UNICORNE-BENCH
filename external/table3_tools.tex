@@ -1,0 +1,25 @@
+\begin{table}[htbp]
+\centering
+\caption{Sequence-conditioned ensemble prediction tools evaluated.}
+\label{tab:tools}
+\small
+\begin{tabularx}{\textwidth}{@{}l X@{}}
+\toprule
+Tool & Description \\
+\midrule
+\textit{Generative} & \\
+\specialrule{\lightrulewidth}{0pt}{0pt}
+\bioemu \cite{Lewis2025BioEmu}            & Boltzmann emulator producing equilibrium ensemble samples directly from sequence. \\
+\esmflow \cite{Jing2024AlphaFlow}         & ESMFold-based flow matching; single-sequence (no MSA).  Originally \alphaflow-ESM-PDB. \\
+\alphaflow \cite{Jing2024AlphaFlow}       & AlphaFold-based flow matching; requires an MSA.  Originally \alphaflow-PDB. \\
+\esmdiff \cite{Lu2025ESMDiff}             & ESM-based diffusion model over protein backbones. \\
+\midrule
+\textit{MSA perturbation} & \\
+\specialrule{\lightrulewidth}{0pt}{0pt}
+\cfrandom \cite{Lee2025CFrandom}          & ColabFold with random MSA subsampling to expose alternative AlphaFold2 modes. \\
+\afsampletwo \cite{Kalakoti2025AFsample2} & AlphaFold2 sampler with stratified MSA depth subsampling and dropout. \\
+\afsamplethree \cite{kalakoti2026afsample3} & AlphaFold3 sampler with MSA column masking and seed sampling. \\
+\speachaf \cite{Stein2022SPEACHAF}        & AF2 with in silico alanine substitution of MSA residues. \\
+\bottomrule
+\end{tabularx}
+\end{table}
