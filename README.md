@@ -94,8 +94,10 @@ reproduce_figures.sh        stage 04 end to end
 | `results/<DATASET>/gt_matrices_tmalign/` | GT x GT TM and maximum-displacement matrices |
 | `results/UNICORNE_BENCH/_mode_count_cache.npz` | Per-ensemble effective mode counts (Fig. 4a) |
 | `results/runtime_benchmark*.csv` | Wall-clock measurements for the runtime figure |
+| `results/tm_rmsd/tm_rmsd_scatter_points.csv` | Every point in Fig. 2: best prediction per GT conformation, with its TM and RMSD |
+| `results/tm_rmsd/tm_rmsd_sample_counts.csv` | Scored predictions per OOD60 / DOMAINMOTION ensemble and tool (78–1,000, median 250) |
 
-`per_gt_summary.csv` and `_mode_count_cache.npz` are condensed from the full GT x prediction TM-align output (about 85 GB). The figure scripts read the full output when it is present and fall back to these files otherwise; both give identical results. `pipeline/03_compute_results/export_per_gt_summary.py` and `fig_mode_count.py --rebuild` regenerate them from the full output.
+`per_gt_summary.csv` and `_mode_count_cache.npz` are condensed from the full GT x prediction TM-align output (about 85 GB). The figure scripts read the full output when it is present and fall back to these files otherwise; both give identical results. `pipeline/03_compute_results/export_per_gt_summary.py` and `fig_mode_count.py --rebuild` regenerate them from the full output. `export_tm_rmsd_points.py` regenerates `results/tm_rmsd/` the same way.
 
 ### Not included
 
