@@ -5,9 +5,9 @@ Code and data to reproduce the benchmark results in
 > **Benchmarking sequence-to-ensemble predictors on UNICORNEdb, a UniProt-grouped database of PDB-derived conformational ensembles.**
 > W. F. Vanderbilt-Fried, L. Butskhrikidze, B. P. Brown, H. S. Mchaourab, C. Oliver. *NeurIPS 2026, Evaluations & Datasets Track.*
 
-UNICORNE-BENCH is a set of 839 multi-conformation proteins (829 after a fold-quality review), each a single UniProt entry with at least two experimentally resolved conformations. Eight sequence-to-ensemble predictors are scored on it: four generative models (BioEMU, ESMFlow, ESMDiff, AlphaFlow) and four MSA-perturbation methods (CFrandom, AFsample2, AFsample3, SPEACH_AF).
+UNICORNE-BENCH-1 is a set of 839 multi-conformation proteins (829 after a fold-quality review), each a single UniProt entry with at least two experimentally resolved conformations. Eight sequence-to-ensemble predictors are scored on it: four generative models (BioEMU, ESMFlow, ESMDiff, AlphaFlow) and four MSA-perturbation methods (CFrandom, AFsample2, AFsample3, SPEACH_AF). The `-1` marks the first release of the benchmark; later releases will be numbered as the PDB grows. In paths and command-line arguments the dataset is called `UNICORNE_BENCH`.
 
-The database itself is browsable at <https://unicornedb.org>.
+The benchmark data, including the ground-truth structures, is archived at <https://doi.org/10.5281/zenodo.23928693>. The database itself is browsable at <https://unicornedb.org>.
 
 ## Reproduce the paper's figures and tables
 
@@ -98,6 +98,12 @@ reproduce_figures.sh        stage 04 end to end
 | `results/tm_rmsd/tm_rmsd_sample_counts.csv` | Scored predictions per OOD60 / DOMAINMOTION ensemble and tool (78–1,000, median 250) |
 
 `per_gt_summary.csv` and `_mode_count_cache.npz` are condensed from the full GT x prediction TM-align output (about 85 GB). The figure scripts read the full output when it is present and fall back to these files otherwise; both give identical results. `pipeline/03_compute_results/export_per_gt_summary.py` and `fig_mode_count.py --rebuild` regenerate them from the full output. `export_tm_rmsd_points.py` regenerates `results/tm_rmsd/` the same way.
+
+The ground-truth structures for UNICORNE-BENCH-1 (`data/inputs/UNICORNE_BENCH/input_pdbs/`, 116 MB) are not in git. They are in the benchmark archive at <https://doi.org/10.5281/zenodo.23928693>, which unpacks into this layout:
+
+```bash
+tar -xzf UNICORNE-BENCH-1.tar.gz --strip-components=1
+```
 
 ### Not included
 
