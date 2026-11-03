@@ -1,6 +1,8 @@
 #!/bin/bash
-# Install TM-align C++ executable (required for MMD and TM-score metrics).
-# Source: https://aideepmed.com/TM-align/TMalign.cpp
+# Install TM-align C++ executable (required for all TM-score metrics).
+# Compiles third_party/TMalign/TMalign.cpp: TM-align version 20220412, the
+# exact source that produced the published scores
+# (upstream: https://aideepmed.com/TM-align/TMalign.cpp).
 #
 # Usage:
 #   ./tool_scripts/install_tmalign.sh [DEST_DIR]
@@ -11,13 +13,10 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 DEST="${1:-$HOME/bin}"
 mkdir -p "$DEST"
-cd "$DEST"
 
 echo "=== Installing TM-align to $DEST ==="
-if [[ ! -f TMalign.cpp ]]; then
-    echo "Downloading TMalign.cpp..."
-    curl -sL -o TMalign.cpp "https://aideepmed.com/TM-align/TMalign.cpp"
-fi
+cp "$SCRIPT_DIR/../third_party/TMalign/TMalign.cpp" "$DEST/TMalign.cpp"
+cd "$DEST"
 
 # macOS: malloc.h not available, use stdlib.h
 if [[ "$(uname)" == "Darwin" ]]; then

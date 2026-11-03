@@ -109,6 +109,24 @@ tar -xzf UNICORNE-BENCH-1.tar.gz --strip-components=1
 
 Predicted structures (1,000 per tool per ensemble, 6M+ in total) and the raw TM-align output. A sample with the GT inputs and the AFsample2 and BioEMU predictions is archived at <https://zenodo.org/records/20069060>.
 
+## Tests
+
+The tests check the evaluation from structure files to the published numbers:
+
+```bash
+bash tool_scripts/install_tmalign.sh ~/bin && export TMALIGN_EXE=~/bin/TMalign
+python -m pytest
+```
+
+| File | Checks |
+|---|---|
+| `tests/test_tmalign_scoring.py` | Re-running TM-align on the shipped GT and prediction structures reproduces the stored scores (both normalizations, RMSD, lengths) exactly. Chain 1 is the GT, so the benchmark's TM-score is normalized by GT length; an independent C-alpha reader and the TM-score formula recompute both normalizations from TM-align's superposition. |
+| `tests/test_metrics_from_structures.py` | Recall@0.9, full recovery and mean best TM recomputed from the fixture structures equal the published `results.csv` rows, including best TMs of 0.8996 (missed) and 0.9004 (recovered). |
+| `tests/test_metric_definitions.py` | The metric definitions on hand-built TM matrices: inclusive 0.9 threshold, full recovery, failed pairs, recall@k, EMD. |
+| `tests/test_headline_results.py` | Table 4 (N, Recall@0.9, FRR, TM-bar, EMD for all eight tools) from the shipped results, including the 8.2% full-recovery rate (68 of 828 ensembles for AFsample2 and AFsample3), and agreement between `results.csv` and the per-GT best scores for all 829 evaluated ensembles. |
+
+`tests/data/` holds six ensembles chosen to cover full recovery, partial recall, best TMs on either side of 0.9, mixed mmCIF/PDB ground truths, and GTs shorter than the predictions (where normalizing by GT or prediction length changes which states count as recovered). For every tool it keeps each GT's best prediction from the full run, with the stored TM-align output for every GT x prediction pair; `tests/build_fixtures.py` regenerates it from the full output. Tests that need TM-align are skipped when it is not installed. TM-align is built from `third_party/TMalign/TMalign.cpp` (version 20220412), the source that produced the published scores.
+
 ## Running the full pipeline
 
 The stages below rebuild everything from the curated benchmark CSV. Stages 01 and 03 need the TM-align binary; stage 02 needs GPUs and each tool's own installation.

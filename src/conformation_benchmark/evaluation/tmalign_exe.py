@@ -63,7 +63,7 @@ def _coords_to_pdb(coords: np.ndarray, sequence: str, path: Path) -> None:
 def _run_tmalign(pdb1: Path, pdb2: Path) -> Tuple[float, float, float]:
     """
     Run TMalign on two PDB files. Returns (TM1, TM2, RMSD).
-    TM1 = normalized by chain2, TM2 = normalized by chain1.
+    TM1 = normalized by the length of chain1 (pdb1), TM2 = by chain2 (pdb2).
     """
     exe = _get_tmalign_exe()
     result = subprocess.run(
@@ -78,7 +78,7 @@ def _run_tmalign(pdb1: Path, pdb2: Path) -> Tuple[float, float, float]:
         )
 
     # -outfmt 2: tab-separated line after header
-    # Format: name1  name2  TM2  TM1  RMSD  ID1  ID2  IDali  L1  L2  Lali
+    # Format: name1  name2  TM1  TM2  RMSD  ID1  ID2  IDali  L1  L2  Lali
     lines = result.stdout.strip().split("\n")
     for line in lines:
         if line.startswith("#"):
@@ -86,8 +86,8 @@ def _run_tmalign(pdb1: Path, pdb2: Path) -> Tuple[float, float, float]:
         parts = line.split("\t")
         if len(parts) >= 5:
             try:
-                tm2 = float(parts[2])  # TM normalized by chain1
-                tm1 = float(parts[3])  # TM normalized by chain2
+                tm1 = float(parts[2])  # TM normalized by chain1
+                tm2 = float(parts[3])  # TM normalized by chain2
                 rmsd = float(parts[4])
                 return tm1, tm2, rmsd
             except ValueError:
