@@ -32,6 +32,7 @@ run $F/fig_pa_heatmaps.py
 run $F/fig_unicorne_gold_standard.py --output figures/unicorne_gold_standard.png
 run $F/fig_unicorne_gold_standard.py --metric tm_bar --ood-only --output figures/unicorne_gold_standard_ood.png
 run $F/fig_ood_boxplot.py
+run $F/fig_case_study.py
 echo "+ tab_unicorne_gold_standard.py"
 python $F/tab_unicorne_gold_standard.py > figures/tab_unicorne_gold_standard.tex
 python $F/tab_unicorne_gold_standard.py --tools bioemu afsample2 > figures/tab_unicorne_gold_standard_reduced.tex

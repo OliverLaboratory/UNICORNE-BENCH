@@ -1,0 +1,22 @@
+{
+ "4EHT_A-aligned.cif": {
+  "bioemu": {
+   "pred": "output_0597.pdb",
+   "tm": 0.97142
+  },
+  "afsample2": {
+   "pred": "unrelaxed_model_4_pred_25_rand0.05_dropout_r0.pdb",
+   "tm": 0.97154
+  }
+ },
+ "4EIA_A-aligned.cif": {
+  "bioemu": {
+   "pred": "output_0518.pdb",
+   "tm": 0.84988
+  },
+  "afsample2": {
+   "pred": "unrelaxed_model_1_pred_23_rand0.3_dropout_r5.pdb",
+   "tm": 0.77026
+  }
+ }
+}

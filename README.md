@@ -118,6 +118,7 @@ No GPU, TM-align binary or large download is needed for this step. The repositor
 | Fig. 5: free-energy landscapes, high vs. low principal angle | `fig_pa_heatmaps.py` | `pa_heatmaps.*` |
 | Fig. 6a: best TM on AF2-OOD ensembles | `fig_unicorne_gold_standard.py --ood-only` | `unicorne_gold_standard_ood.*` |
 | Fig. 6b: gold-standard panel (BioEMU, AFsample2) | `tab_unicorne_gold_standard.py --tools bioemu afsample2` | `tab_unicorne_gold_standard_reduced.tex` |
+| Fig. 7: Q5U925 case study | `fig_case_study.py` (re-render: `pymol -cq fig_case_study.py -- --render`) | `case_study_unicorne.*` |
 | Tables 11–12: OOD60 / DOMAINMOTION per protein | `tab_ood60_domainmotion.py` | `tab_{ood60,domainmotion}_full.tex` |
 | Fig. 8: dataset characterization | `fig_dataset_characterization.py` | `fig_dataset_characterization.*` |
 | Fig. 9: sample efficiency | `fig_dr_at_k.py`, `fig_at_k_gain.py` | `dr_at_k_*` |
@@ -139,7 +140,6 @@ These paper items come from outside this pipeline. Their final versions are in `
 |---|---|
 | Fig. 1: curation diagram | Drawn by hand |
 | Fig. 4b: P49258 UMAP | Needs the predicted structures. The script (`plot_kde_gt_callouts.py`) is included and runs once the predictions are in `data/outputs/` |
-| Fig. 7: Q5U925 case study | Rendered in PyMOL |
 | Table 1: UNICORNEdb statistics | Produced by the UNICORNEdb database pipeline |
 | Table 2: dataset comparison | Compiled from the cited datasets' publications |
 | Table 3: prediction tools | Written by hand |
@@ -297,6 +297,7 @@ reproduce_figures.sh        stage 04 end to end
 | `results/tm_rmsd/tm_rmsd_scatter_points.csv` | Every point in Fig. 2: best prediction per GT conformation, with its TM and RMSD |
 | `results/tm_rmsd/tm_rmsd_sample_counts.csv` | Scored predictions per OOD60 / DOMAINMOTION ensemble and tool (78–1,000, median 250) |
 | `results/pa_heatmaps/` | Fig. 5: TM-scores of each tool's predictions to the two GTs for the four example ensembles, with their principal angles |
+| `results/case_study/` | Fig. 7: PyMOL renders of Q5U925's two GT states with the best BioEMU and AFsample2 predictions superposed, and their TM-scores |
 
 `per_gt_summary.csv` and `_mode_count_cache.npz` are condensed from the full GT x prediction TM-align output (about 85 GB). The figure scripts read the full output when it is present and fall back to these files otherwise; both give identical results. `pipeline/03_compute_results/export_per_gt_summary.py` and `fig_mode_count.py --rebuild` regenerate them from the full output. `export_tm_rmsd_points.py` regenerates `results/tm_rmsd/` the same way.
 
