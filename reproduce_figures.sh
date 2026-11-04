@@ -8,6 +8,9 @@ mkdir -p figures
 F=pipeline/04_build_figures
 run() { echo "+ $*"; python "$@"; }
 
+# Section 2: curation diagram (labels on the hand-drawn artwork)
+run $F/fig_curation_diagram.py
+
 # Section 4.1: TM threshold from natural motions; OOD60 / DOMAINMOTION tables
 run $F/fig_tm_vs_rmsd_scatter.py --output figures/tm_vs_rmsd_scatter.png
 run $F/tab_ood60_domainmotion.py

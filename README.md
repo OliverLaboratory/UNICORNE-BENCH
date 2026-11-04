@@ -110,6 +110,7 @@ No GPU, TM-align binary or large download is needed for this step. The repositor
 
 | Paper item | Script (`pipeline/04_build_figures/`) | Output (`figures/`) |
 |---|---|---|
+| Fig. 1: curation diagram (artwork drawn by hand in `external/curation_diagram/`; labels redrawn) | `fig_curation_diagram.py` | `curation_diagram.*` |
 | Fig. 2: TM vs. RMSD, TM ≥ 0.9 threshold | `fig_tm_vs_rmsd_scatter.py` | `tm_vs_rmsd_scatter.{png,pdf}` |
 | Table 5: overall performance | `tab_overall_performance.py` | `tab_overall_performance.tex` |
 | Fig. 3a–b: recall vs. diversity, ensemble size | `fig_dr_boxplots.py` | `dr_lineplot_{tm,ngt}_UNICORNE_BENCH.*` |
@@ -138,7 +139,6 @@ These paper items come from outside this pipeline. Their final versions are in `
 
 | Item | Why |
 |---|---|
-| Fig. 1: curation diagram | Drawn by hand |
 | Fig. 4b: P49258 UMAP | Needs the predicted structures. The script (`plot_kde_gt_callouts.py`) is included and runs once the predictions are in `data/outputs/` |
 | Table 1: UNICORNEdb statistics | Produced by the UNICORNEdb database pipeline |
 | Table 2: dataset comparison | Compiled from the cited datasets' publications |
