@@ -89,7 +89,7 @@ Similarity between a ground-truth conformation (GT) and a sample is the TM-score
 |---|---|---|
 | Recall@0.9 | `dr` (`recall_at_tm_0.9`) | Fraction of GTs whose best sample has TM ≥ 0.9 |
 | Full recovery (FRR is its mean) | `cr` | 1 if every GT is recovered at TM ≥ 0.9, else 0 |
-| TM-bar | `eu` | Mean over GTs of the best sample's TM |
+| TM-bar | `tm_bar` | Mean over GTs of the best sample's TM |
 | EMD | `emd` | Optimal-transport cost between the GTs and the samples, cost 1 − TM rescaled from [0.3, 1] to [0, 1] |
 | Recall at k samples | `recall_09_at_k_<k>_{mean,std}` | Recall@0.9 over random subsets of k samples (50 bootstraps) |
 

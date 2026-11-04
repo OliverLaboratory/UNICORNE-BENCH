@@ -59,14 +59,14 @@ K_VALUES = list(range(5, 1001, 5))   # match compute_metrics.py
 METRIC_COLUMN = {
     "dr": "recall_09_at_k_{k}_mean",
     "cr": "cr_at_k_{k}_mean",
-    "eu": "eu_at_k_{k}_mean",
+    "tm_bar": "tm_bar_at_k_{k}_mean",
 }
 METRIC_TITLE = {
     "dr": "Recall — % gain at each budget step",
     "cr": "FRR — % gain at each budget step",
-    "eu": "TM-best — % gain at each budget step",
+    "tm_bar": "TM-best — % gain at each budget step",
 }
-METRIC_DISPLAY = {"dr": "Recall", "cr": "FRR", "eu": "TM-best"}
+METRIC_DISPLAY = {"dr": "Recall", "cr": "FRR", "tm_bar": "TM-best"}
 
 
 def load_filter(dataset: str) -> set[str] | None:

@@ -501,7 +501,7 @@ _METRIC_CACHE: dict[tuple[str, str], dict[str, float]] = {}
 
 
 def _ensemble_metric(eid: str, tool: str, metric: str = "emd") -> float | None:
-    """Look up a per-ensemble metric (emd / dr / cr / eu / ...) from a tool's
+    """Look up a per-ensemble metric (emd / dr / cr / tm_bar / ...) from a tool's
     results.csv. Cached per (tool, metric) so repeat lookups are free."""
     import csv as _csv, math
     key = (tool, metric)

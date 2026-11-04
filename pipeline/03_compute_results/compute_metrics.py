@@ -116,7 +116,7 @@ def metrics_for_ensemble(
     Aggregate quality scores (paper Table 3):
       dr   = recall_at_tm_0.9                (Discovery Rate, per-ensemble)
       cr   = 1.0 if dr == 1.0 else 0.0       (Complete Recovery indicator)
-      eu   = mean over GT rows of max-pred-TM (Ensemble Utility)
+      tm_bar   = mean over GT rows of max-pred-TM (TM-bar)
       emd  = optimal-transport cost (lower is better)
     """
     out: dict[str, float] = {}
@@ -129,7 +129,7 @@ def metrics_for_ensemble(
         for k in K_VALUES:
             out[f"recall_09_at_k_{k}_mean"] = np.nan
             out[f"recall_09_at_k_{k}_std"] = np.nan
-        out.update(dr=np.nan, cr=np.nan, eu=np.nan, emd=np.nan)
+        out.update(dr=np.nan, cr=np.nan, tm_bar=np.nan, emd=np.nan)
         return out
 
     # NaN-safe max (treat missing pairs as 0 — never recovered)
@@ -150,13 +150,13 @@ def metrics_for_ensemble(
     for k in K_VALUES:
         kk = min(k, n_pred)
         if kk <= 0:
-            for prefix in ("recall_09_at_k", "cr_at_k", "eu_at_k"):
+            for prefix in ("recall_09_at_k", "cr_at_k", "tm_bar_at_k"):
                 out[f"{prefix}_{k}_mean"] = np.nan
                 out[f"{prefix}_{k}_std"] = np.nan
             continue
         recalls = np.empty(n_bootstrap, dtype=np.float64)
         crs = np.empty(n_bootstrap, dtype=np.float64)
-        eus = np.empty(n_bootstrap, dtype=np.float64)
+        tm_bars = np.empty(n_bootstrap, dtype=np.float64)
         for b in range(n_bootstrap):
             idx = rng.choice(n_pred, size=kk, replace=False)
             sub = Mfilled[:, idx]
@@ -164,19 +164,19 @@ def metrics_for_ensemble(
             r = float((sub_max >= 0.90).mean())
             recalls[b] = r
             crs[b] = 1.0 if r == 1.0 else 0.0
-            eus[b] = float(sub_max.mean())
+            tm_bars[b] = float(sub_max.mean())
         out[f"recall_09_at_k_{k}_mean"] = float(recalls.mean())
         out[f"recall_09_at_k_{k}_std"] = float(recalls.std())
         out[f"cr_at_k_{k}_mean"] = float(crs.mean())
         out[f"cr_at_k_{k}_std"] = float(crs.std())
-        out[f"eu_at_k_{k}_mean"] = float(eus.mean())
-        out[f"eu_at_k_{k}_std"] = float(eus.std())
+        out[f"tm_bar_at_k_{k}_mean"] = float(tm_bars.mean())
+        out[f"tm_bar_at_k_{k}_std"] = float(tm_bars.std())
 
     # Aggregate quality scores
     dr = out["recall_at_tm_0.9"]
     out["dr"] = dr
     out["cr"] = 1.0 if dr == 1.0 else 0.0
-    out["eu"] = float(gt_max.mean())
+    out["tm_bar"] = float(gt_max.mean())
     out["emd"] = _emd_from_tm(Mfilled)
 
     return out
@@ -184,15 +184,15 @@ def metrics_for_ensemble(
 
 def column_order() -> list[str]:
     cols = ["ensemble_ID", "n_gt", "n_pred"]
-    cols += ["dr", "cr", "eu", "emd"]
+    cols += ["dr", "cr", "tm_bar", "emd"]
     cols += [f"recall_at_tm_{t}" for t in TM_THRESHOLDS]
     cols += [f"precision_at_tm_{t}" for t in TM_THRESHOLDS]
     cols += [f"recall_09_at_k_{k}_mean" for k in K_VALUES]
     cols += [f"recall_09_at_k_{k}_std" for k in K_VALUES]
     cols += [f"cr_at_k_{k}_mean" for k in K_VALUES]
     cols += [f"cr_at_k_{k}_std" for k in K_VALUES]
-    cols += [f"eu_at_k_{k}_mean" for k in K_VALUES]
-    cols += [f"eu_at_k_{k}_std" for k in K_VALUES]
+    cols += [f"tm_bar_at_k_{k}_mean" for k in K_VALUES]
+    cols += [f"tm_bar_at_k_{k}_std" for k in K_VALUES]
     return cols
 
 

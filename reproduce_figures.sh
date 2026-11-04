@@ -27,7 +27,7 @@ run $F/fig_at_k_gain.py --metric dr --doubling --absolute
 
 # Section 4.6: gold-standard panel and AF2-OOD
 run $F/fig_unicorne_gold_standard.py --output figures/unicorne_gold_standard.png
-run $F/fig_unicorne_gold_standard.py --metric eu --ood-only --output figures/unicorne_gold_standard_ood.png
+run $F/fig_unicorne_gold_standard.py --metric tm_bar --ood-only --output figures/unicorne_gold_standard_ood.png
 run $F/fig_ood_boxplot.py
 echo "+ tab_unicorne_gold_standard.py"
 python $F/tab_unicorne_gold_standard.py > figures/tab_unicorne_gold_standard.tex

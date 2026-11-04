@@ -152,7 +152,7 @@ def _recall_from_xy(sim_xy: np.ndarray, threshold: float = 0.9) -> float:
     return float(np.mean(sim_xy.max(axis=1) >= threshold))
 
 
-def _eu_from_xy(sim_xy: np.ndarray) -> float:
+def _tm_bar_from_xy(sim_xy: np.ndarray) -> float:
     """Ensemble Union: mean best-match TM across GT conformations."""
     if sim_xy.shape[0] == 0 or sim_xy.shape[1] == 0:
         return 0.0
@@ -212,9 +212,9 @@ _METRIC_CACHE: dict[tuple[str, str], dict[str, float]] = {}
 
 
 def _load_metric_csv(tool: str, base: Path,
-                      metric: str = "eu") -> dict[str, float]:
+                      metric: str = "tm_bar") -> dict[str, float]:
     """Read pre-computed per-ensemble metric values from results.csv.
-    metric ∈ {eu, dr, cr, emd}. Cached per (tool, metric)."""
+    metric ∈ {tm_bar, dr, cr, emd}. Cached per (tool, metric)."""
     key = (tool, metric)
     if key in _METRIC_CACHE:
         return _METRIC_CACHE[key]
@@ -238,7 +238,7 @@ def _load_metric_csv(tool: str, base: Path,
 
 
 def _metric_from_csv(eid: str, tool: str, base: Path,
-                      metric: str = "eu") -> float | None:
+                      metric: str = "tm_bar") -> float | None:
     return _load_metric_csv(tool, base, metric).get(eid)
 
 
@@ -292,7 +292,7 @@ def _load_max_disp(eid_dir: Path) -> float | None:
     return float(vals.max()) if vals.size else None
 
 
-def collect_data(diversity: str = "min_tm", metric: str = "eu", tools=None):
+def collect_data(diversity: str = "min_tm", metric: str = "tm_bar", tools=None):
     """Collect GT diversity and per-tool recall for all ensembles.
 
     diversity: 'min_tm' (default, original) or 'max_disp' (Å, max CA
@@ -364,23 +364,23 @@ def collect_data(diversity: str = "min_tm", metric: str = "eu", tools=None):
             mask = ~np.eye(xx.shape[0], dtype=bool)
             div_val = float(xx[mask].min())
 
-        # Per-tool metric value (eu / dr / cr) from canonical results.csv.
+        # Per-tool metric value (tm_bar / dr / cr) from canonical results.csv.
         tool_val: dict[str, float] = {}
         for tool in (tools or TOOLS):
             v = _metric_from_csv(uid, tool, base, metric=metric)
-            if v is None and metric == "eu":
+            if v is None and metric == "tm_bar":
                 # Legacy fallback: recompute EU from xy matrices for tools
                 # that don't ship results.csv yet.
                 mat_dir = base / tool / "matrices_tmalign" / uid
                 sim_xy = _load_sim(mat_dir, "xy", combine=TM_COMBINE)
                 if sim_xy is not None:
-                    v = _eu_from_xy(sim_xy)
+                    v = _tm_bar_from_xy(sim_xy)
             if v is not None:
                 tool_val[tool] = v
         if not tool_val:
             continue
 
-        # "Best" = max for higher-is-better metrics (eu/dr/cr), min for emd.
+        # "Best" = max for higher-is-better metrics (tm_bar/dr/cr), min for emd.
         if metric == "emd":
             best_tool = min(tool_val, key=tool_val.get)
         else:
@@ -389,9 +389,9 @@ def collect_data(diversity: str = "min_tm", metric: str = "eu", tools=None):
         records.append({
             "uid": uid,
             "diversity": div_val,
-            "best_eu": best_val,           # legacy field name; reused for any metric
+            "best_value": best_val,           # the chosen --metric
             "best_tool": best_tool,
-            "tool_eu": tool_val,
+            "tool_value": tool_val,
             "n_gt": int(info["num_clusters"]),
             "seq_len": int(info.get("seqlength", info.get("length", 0))),
             "highlight": uid in HIGHLIGHT_PROTEINS,
@@ -402,12 +402,12 @@ def collect_data(diversity: str = "min_tm", metric: str = "eu", tools=None):
 
 
 def plot_scatter(records, output_path=None, diversity: str = "min_tm",
-                 metric: str = "eu", ood_only: bool = False):
+                 metric: str = "tm_bar", ood_only: bool = False):
     """Scatter: GT diversity vs best per-tool metric.
 
     diversity='min_tm': x-axis is min pairwise TM (normalized to shorter chain).
     diversity='max_disp': x-axis is max CA displacement after Kabsch (Å).
-    metric ∈ {eu, dr, cr}: y-axis metric (best across tools).
+    metric ∈ {tm_bar, dr, cr}: y-axis metric (best across tools).
     """
     import matplotlib.pyplot as plt
     from matplotlib.lines import Line2D
@@ -418,7 +418,7 @@ def plot_scatter(records, output_path=None, diversity: str = "min_tm",
     # stable across runs.
     import hashlib as _hl
     def _y_with_jitter(r):
-        y = r["best_eu"]
+        y = r["best_value"]
         if metric == "cr":
             h = int(_hl.md5(r["uid"].encode()).hexdigest()[:6], 16)
             return y + (h / 0xFFFFFF - 0.5) * 0.08
@@ -489,7 +489,7 @@ def plot_scatter(records, output_path=None, diversity: str = "min_tm",
             continue
         ox, oy = offsets.get(r["uid"], (15, 0))
         ax.annotate(
-            r["name"], (r["diversity"], r["best_eu"]),
+            r["name"], (r["diversity"], r["best_value"]),
             xytext=(ox, oy), textcoords="offset points",
             fontsize=13, color="#222222",
             bbox=dict(boxstyle="round,pad=0.25", facecolor="#fffde7",
@@ -525,7 +525,7 @@ def plot_scatter(records, output_path=None, diversity: str = "min_tm",
             ox, oy = ood_offsets.get(r["uid"], (28, 10))
             ax.annotate(
                 OOD_HIGHLIGHT_PROTEINS[r["uid"]],
-                (r["diversity"], r["best_eu"]),
+                (r["diversity"], r["best_value"]),
                 xytext=(ox, oy), textcoords="offset points",
                 fontsize=13, color="#222222",
                 bbox=dict(boxstyle="round,pad=0.25", facecolor="#fffde7",
@@ -540,7 +540,7 @@ def plot_scatter(records, output_path=None, diversity: str = "min_tm",
             )
 
     # Per-metric y-axis label, range, and reference lines.
-    if metric == "eu":
+    if metric == "tm_bar":
         ax.axhspan(0.9, 1.02, facecolor="#e8f5e9", edgecolor="none",
                    alpha=1.0, zorder=0)
         ax.axhline(0.9, ls=":", color="#888888", lw=0.6, alpha=0.6)
@@ -631,7 +631,7 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser()
     p.add_argument("--diversity", choices=["min_tm", "max_disp"], default="min_tm",
                    help="X-axis diversity metric")
-    p.add_argument("--metric", choices=["eu", "dr", "cr", "emd"], default="eu",
+    p.add_argument("--metric", choices=["tm_bar", "dr", "cr", "emd"], default="tm_bar",
                    help="Y-axis metric (best across tools)")
     p.add_argument("--ood-only", action="store_true",
                    help="Restrict the scatter to AF2-OOD ensembles only "
@@ -653,7 +653,7 @@ if __name__ == "__main__":
     out = args.output
     if out is None:
         suffix = "_max_disp" if args.diversity == "max_disp" else ""
-        metric_tag = "" if args.metric == "eu" else f"_{args.metric}"
+        metric_tag = "" if args.metric == "tm_bar" else f"_{args.metric}"
         ood_tag = "_ood" if args.ood_only else ""
         out = FIGURES / f"unicorne_gold_standard{metric_tag}{ood_tag}{suffix}.png"
     plot_scatter(records, output_path=out, diversity=args.diversity,

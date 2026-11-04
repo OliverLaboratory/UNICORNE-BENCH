@@ -78,9 +78,9 @@ def _load_filter(ds):
 
 
 def compute_metrics(ds, tool):
-    """Macro-average dr/cr/eu/emd from the per-ensemble results.csv.
+    """Macro-average dr/cr/tm_bar/emd from the per-ensemble results.csv.
 
-    The new compute_metrics.py emits dr/cr/eu/emd as columns directly, so we
+    The new compute_metrics.py emits dr/cr/tm_bar/emd as columns directly, so we
     just average them. Falls back to the old recompute-from-matrix path when
     the new columns are absent (legacy results.csv from compute_results.py).
     """
@@ -89,17 +89,17 @@ def compute_metrics(ds, tool):
         return None
     keep_ids = _load_filter(ds)
 
-    drs, crs, eus, emds = [], [], [], []
+    drs, crs, tm_bars, emds = [], [], [], []
     # Per-ensemble dicts so we can run paired tests across tools later.
     drs_eid: dict[str, float] = {}
     crs_eid: dict[str, float] = {}
-    eus_eid: dict[str, float] = {}
+    tm_bars_eid: dict[str, float] = {}
     emds_eid: dict[str, float] = {}
     have_new_cols = None  # set by inspecting the first row
     rows = list(csv.DictReader(open(csv_path)))
     if not rows:
         return None
-    have_new_cols = all(k in rows[0] for k in ("dr", "cr", "eu", "emd"))
+    have_new_cols = all(k in rows[0] for k in ("dr", "cr", "tm_bar", "emd"))
 
     if have_new_cols:
         for row in rows:
@@ -122,9 +122,9 @@ def compute_metrics(ds, tool):
             cr = _f("cr")
             cr_v = cr if cr is not None else 0.0
             crs.append(cr_v); crs_eid[eid] = cr_v
-            eu = _f("eu")
-            if eu is not None:
-                eus.append(eu); eus_eid[eid] = eu
+            tm_bar = _f("tm_bar")
+            if tm_bar is not None:
+                tm_bars.append(tm_bar); tm_bars_eid[eid] = tm_bar
             emd = _f("emd")
             if emd is not None:
                 emds.append(emd); emds_eid[eid] = emd
@@ -139,14 +139,14 @@ def compute_metrics(ds, tool):
                 "cr": float(np.mean(crs)),
                 "cr_sd": _sd(crs),
                 "cr_eid": crs_eid,
-                "eu": float(np.mean(eus)) if eus else float("nan"),
-                "eu_sd": _sd(eus) if eus else float("nan"),
-                "eu_eid": eus_eid,
+                "tm_bar": float(np.mean(tm_bars)) if tm_bars else float("nan"),
+                "tm_bar_sd": _sd(tm_bars) if tm_bars else float("nan"),
+                "tm_bar_eid": tm_bars_eid,
                 "emd": float(np.mean(emds)) if emds else float("nan"),
                 "emd_sd": _sd(emds) if emds else float("nan"),
                 "emd_eid": emds_eid}
 
-    # Legacy path: recompute eu/emd from on-disk matrices_tmalign npy
+    # Legacy path: recompute tm_bar/emd from on-disk matrices_tmalign npy
     mat_dir = PROJECT_ROOT / "results" / ds / tool / MAT_SUBDIR
     for row in rows:
         eid = row.get("ensemble_ID", "").strip()
@@ -163,7 +163,7 @@ def compute_metrics(ds, tool):
             p = mat_dir / eid / name
             if p.exists():
                 tm = np.load(p)
-                eus.append(float(tm.max(axis=1).mean()))
+                tm_bars.append(float(tm.max(axis=1).mean()))
                 try:
                     import ot
                     floor = 0.3
@@ -184,8 +184,8 @@ def compute_metrics(ds, tool):
     return {"n": len(drs),
             "dr": float(np.mean(drs)), "dr_sd": _sd(drs),
             "cr": float(np.mean(cr_indicators)), "cr_sd": _sd(cr_indicators),
-            "eu": float(np.mean(eus)) if eus else float("nan"),
-            "eu_sd": _sd(eus) if eus else float("nan"),
+            "tm_bar": float(np.mean(tm_bars)) if tm_bars else float("nan"),
+            "tm_bar_sd": _sd(tm_bars) if tm_bars else float("nan"),
             "emd": float(np.mean(emds)) if emds else float("nan"),
             "emd_sd": _sd(emds) if emds else float("nan")}
 
@@ -213,7 +213,7 @@ def main():
     # remaining tools (p ≥ alpha / k).  Underline = best mean among the
     # not-bold-tied set.
     from scipy.stats import wilcoxon
-    METRIC_KEYS = [("dr", "max"), ("cr", "max"), ("eu", "max"), ("emd", "min")]
+    METRIC_KEYS = [("dr", "max"), ("cr", "max"), ("tm_bar", "max"), ("emd", "min")]
     ALPHA = 0.05  # before Bonferroni
     rank_by_ds = {}
     pvals_by_ds: dict[str, dict[str, dict[str, float]]] = {}
@@ -333,7 +333,7 @@ def main():
                     print(f"  {m['n']:>6d} "
                           f"{m['dr']*100:>5.1f}±{m['dr_sd']*100:>5.1f} "
                           f"{m['cr']*100:>5.1f}±{m['cr_sd']*100:>5.1f} "
-                          f"{m['eu']:>5.3f}±{m['eu_sd']:>5.3f} "
+                          f"{m['tm_bar']:>5.3f}±{m['tm_bar_sd']:>5.3f} "
                           f"{m['emd']:>5.3f}±{m['emd_sd']:>5.3f}", end="")
                     row_parts.append(fmt_n(m['n']))
                     row_parts.append(fmt_pm(m['dr']*100,  m['dr_sd']*100,  tool, ds, "dr",  ".1f"))
@@ -341,7 +341,7 @@ def main():
                     # uninformative, so report just the mean.
                     row_parts.append(fmt(m['cr']*100, tool, ds, "cr", ".1f"))
                     # TM-bar reported as a fraction (0–1), three decimals.
-                    row_parts.append(fmt_pm(m['eu'],       m['eu_sd'],      tool, ds, "eu",  ".3f"))
+                    row_parts.append(fmt_pm(m['tm_bar'],       m['tm_bar_sd'],      tool, ds, "tm_bar",  ".3f"))
                     row_parts.append(fmt_pm(m['emd'],      m['emd_sd'],     tool, ds, "emd", ".3f"))
                 else:
                     print(f"  {'--':>6s} {'--':>6s} {'--':>6s} {'--':>6s} {'--':>6s}", end="")

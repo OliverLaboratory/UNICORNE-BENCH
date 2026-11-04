@@ -97,7 +97,7 @@ def main():
                 "pred_indices": sel,
                 "best_pred_per_gt": [sel.index(b) for b in best],
                 "pairs": sub,
-                "results_csv": {k: float(row[k]) for k in ("n_gt", "n_pred", "dr", "cr", "eu", "emd")},
+                "results_csv": {k: float(row[k]) for k in ("n_gt", "n_pred", "dr", "cr", "tm_bar", "emd")},
             }
         for name in ens["gt_files"]:
             shutil.copy2(gt_src / name, gt_dst / name)

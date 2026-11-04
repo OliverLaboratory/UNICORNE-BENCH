@@ -117,20 +117,20 @@ def load_seq_len(dataset: str) -> dict[str, int]:
 METRIC_FALLBACKS = {
     "dr": ("dr", "recall_at_tm_0.9"),
     "cr": ("cr",),
-    "eu": ("eu",),
+    "tm_bar": ("tm_bar",),
     "emd": ("emd",),
 }
 
 METRIC_LABEL = {
     "dr": "Recall",
     "cr": "Full-Recall Rate (FRR)",
-    "eu": "Mean best-match TM",
+    "tm_bar": "Mean best-match TM",
     "emd": "Earth Mover's Distance (EMD, lower = better)",
 }
 
 
 def load_tool_metric(dataset: str, tool: str, metric: str = "dr") -> dict[str, tuple[float, int]]:
-    """Return {eid: (metric_value, n_gt)} for one tool. NaN → 0.0 for dr/cr/eu;
+    """Return {eid: (metric_value, n_gt)} for one tool. NaN → 0.0 for dr/cr/tm_bar;
     NaN for emd is left as NaN (skipped downstream)."""
     csv_path = PROJECT_ROOT / "results" / dataset / tool / "results.csv"
     if not csv_path.exists():
@@ -156,7 +156,7 @@ def load_tool_metric(dataset: str, tool: str, metric: str = "dr") -> dict[str, t
             if val is None:
                 if metric == "emd":
                     continue            # skip; can't impute
-                val = 0.0                # dr/cr/eu treat NaN as zero
+                val = 0.0                # dr/cr/tm_bar treat NaN as zero
             try:
                 n_gt = int(row.get("n_gt") or 0)
             except (TypeError, ValueError):
@@ -332,9 +332,9 @@ def main():
     ap.add_argument("--tools", nargs="+", default=TOOLS_DEFAULT)
     ap.add_argument(
         "--metric",
-        choices=["dr", "cr", "eu", "emd"],
-        default="eu",
-        help="Per-ensemble metric column to plot (default: eu)",
+        choices=["dr", "cr", "tm_bar", "emd"],
+        default="tm_bar",
+        help="Per-ensemble metric column to plot (default: tm_bar)",
     )
     ap.add_argument("--filtered-only", action="store_true", default=True)
     ap.add_argument("--no-filtered", dest="filtered_only", action="store_false")
@@ -468,7 +468,7 @@ def main():
     # ------------------------------------------------------------------
     # Plot — one line plot per x-axis dimension, written to separate files
     # ------------------------------------------------------------------
-    metric_short = {"dr": "Recall", "cr": "FRR", "eu": "TM-best",
+    metric_short = {"dr": "Recall", "cr": "FRR", "tm_bar": "TM-best",
                     "emd": "EMD"}.get(args.metric, args.metric.upper())
     fig_dir = PROJECT_ROOT / "figures"
     fig_dir.mkdir(parents=True, exist_ok=True)

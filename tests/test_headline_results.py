@@ -68,8 +68,8 @@ def test_table4(table, tool):
     assert round(m["dr"] * 100, 1) == rec
     assert round(m["dr_sd"] * 100, 1) == rec_sd
     assert round(m["cr"] * 100, 1) == frr
-    assert round(m["eu"], 3) == tm
-    assert round(m["eu_sd"], 3) == tm_sd
+    assert round(m["tm_bar"], 3) == tm
+    assert round(m["tm_bar_sd"], 3) == tm_sd
     assert round(m["emd"], 3) == emd
     assert round(m["emd_sd"], 3) == emd_sd
 
@@ -94,7 +94,7 @@ def test_table4_only_uses_evaluated_ensembles(table, evaluated, tool):
 
 @pytest.mark.parametrize("tool", TABLE4)
 def test_results_match_per_gt_best_scores(evaluated, tool):
-    """dr, cr and eu in results.csv equal what the per-GT best-prediction TM
+    """dr, cr and tm_bar in results.csv equal what the per-GT best-prediction TM
     (normalized by GT length) implies, for every evaluated ensemble."""
     best = {}
     with open(REPO / "results" / DATASET / tool / "per_gt_summary.csv") as fh:
@@ -109,6 +109,6 @@ def test_results_match_per_gt_best_scores(evaluated, tool):
         dr = float((tm >= 0.9).mean())
         assert float(r["dr"]) == pytest.approx(dr, abs=1e-12), eid
         assert float(r["cr"]) == (1.0 if dr == 1.0 else 0.0), eid
-        assert float(r["eu"]) == pytest.approx(tm.mean(), abs=1e-9), eid
+        assert float(r["tm_bar"]) == pytest.approx(tm.mean(), abs=1e-9), eid
         checked += 1
     assert checked == TABLE4[tool][0]

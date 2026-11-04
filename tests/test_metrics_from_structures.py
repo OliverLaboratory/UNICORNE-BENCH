@@ -4,7 +4,7 @@ End to end on the fixture ensembles: structure files -> TM-align -> metrics.
 The fixtures hold, for every tool, each GT's best prediction in the full
 1,000-sample run. The row-wise max over that sub-matrix therefore equals the
 row-wise max over the full matrix, and Recall@0.9 (dr), full recovery (cr) and
-mean best TM (eu) recomputed here must equal the published results.csv rows.
+mean best TM (tm_bar) recomputed here must equal the published results.csv rows.
 """
 from __future__ import annotations
 
@@ -27,7 +27,7 @@ def test_fixture_holds_each_gts_best_prediction(expected, fresh):
             assert list(M.argmax(axis=1)) == t["best_pred_per_gt"], (eid, tool)
 
 
-@pytest.mark.parametrize("metric", ["dr", "cr", "eu"])
+@pytest.mark.parametrize("metric", ["dr", "cr", "tm_bar"])
 def test_metrics_match_results_csv(expected, fresh, metric):
     rng = np.random.default_rng(0)
     for eid, ens in expected["ensembles"].items():

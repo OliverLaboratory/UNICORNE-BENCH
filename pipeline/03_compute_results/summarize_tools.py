@@ -54,7 +54,7 @@ def main():
             print(f"{tool:<20s} no results/{args.dataset}/{tool}/results.csv")
             continue
         print(f"{tool:<20s} {m['n']:>4d}  {m['dr'] * 100:>5.1f} ± {m['dr_sd'] * 100:>4.1f}  "
-              f"{m['cr'] * 100:>5.1f}  {m['eu']:.3f} ± {m['eu_sd']:.3f}  {m['emd']:.3f} ± {m['emd_sd']:.3f}")
+              f"{m['cr'] * 100:>5.1f}  {m['tm_bar']:.3f} ± {m['tm_bar_sd']:.3f}  {m['emd']:.3f} ± {m['emd_sd']:.3f}")
     print(f"\nN < {n_eval}: ensembles missing from the tool's results.csv are left out of its averages.")
 
 

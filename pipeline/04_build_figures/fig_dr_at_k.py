@@ -92,17 +92,17 @@ def load_filter(dataset: str) -> set[str] | None:
 METRIC_COLUMN = {
     "dr": "recall_09_at_k_{k}_mean",
     "cr": "cr_at_k_{k}_mean",
-    "eu": "eu_at_k_{k}_mean",
+    "tm_bar": "tm_bar_at_k_{k}_mean",
 }
 METRIC_LABEL = {
     "dr": "Recall@k  (fraction of GT states recovered at TM ≥ 0.9, top-k preds)",
     "cr": "FRR@k  (fraction of ensembles with Recall=1 at top-k)",
-    "eu": "TM@k  (mean best-match TM, top-k preds)",
+    "tm_bar": "TM@k  (mean best-match TM, top-k preds)",
 }
 METRIC_TITLE = {
     "dr": "Recall vs sample budget",
     "cr": "Full-Recall Rate vs sample budget",
-    "eu": "Mean best-match TM vs sample budget",
+    "tm_bar": "Mean best-match TM vs sample budget",
 }
 
 
@@ -137,7 +137,7 @@ def main():
     ap.add_argument("--dataset", default="UNICORNE_BENCH")
     ap.add_argument("--tools", nargs="+", default=TOOLS_DEFAULT)
     ap.add_argument("--metric", choices=list(METRIC_COLUMN.keys()), default="dr",
-                    help="Which @k metric to plot (dr | cr | eu)")
+                    help="Which @k metric to plot (dr | cr | tm_bar)")
     ap.add_argument("--y-lim", type=float, nargs=2, default=None,
                     metavar=("YMIN", "YMAX"))
     ap.add_argument("--xmax", type=int, default=None,
@@ -200,7 +200,7 @@ def main():
         ax.set_ylim(*args.y_lim)
     else:
         # Pick a reasonable default per metric
-        ax.set_ylim(0.0, {"dr": 0.5, "cr": 0.15, "eu": 1.0}[args.metric])
+        ax.set_ylim(0.0, {"dr": 0.5, "cr": 0.15, "tm_bar": 1.0}[args.metric])
     ax.grid(True, linestyle=":", alpha=0.5, which="both")
     # `loc="best"` auto-picks the quadrant with the fewest overlaps with
     # plotted data — works well for these monotone-rising @k curves where

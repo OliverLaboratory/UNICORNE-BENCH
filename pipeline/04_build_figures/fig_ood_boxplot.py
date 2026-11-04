@@ -39,9 +39,9 @@ OOD_COLOR      = "#f3c8b3"
 
 
 def main():
-    records = collect_data(metric="eu", tools=AF2_OOD_TOOLS)
-    in_train = [r["best_eu"] for r in records if not r["af2_ood"]]
-    ood      = [r["best_eu"] for r in records if r["af2_ood"]]
+    records = collect_data(metric="tm_bar", tools=AF2_OOD_TOOLS)
+    in_train = [r["best_value"] for r in records if not r["af2_ood"]]
+    ood      = [r["best_value"] for r in records if r["af2_ood"]]
     print(f"in AF2 train: n={len(in_train)}  median={np.median(in_train):.3f}  "
           f"mean={np.mean(in_train):.3f}")
     print(f"AF2-OOD:      n={len(ood)}  median={np.median(ood):.3f}  "

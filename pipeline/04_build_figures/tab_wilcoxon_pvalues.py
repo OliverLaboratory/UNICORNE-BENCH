@@ -41,7 +41,7 @@ TOOL_DISPLAY = {
 METRICS = [
     ("dr",  r"$\text{Recall}_{0.9}$"),
     ("cr",  r"$\text{FRR}_{0.9}$"),
-    ("eu",  r"$\overline{\text{TM}}$"),
+    ("tm_bar",  r"$\overline{\text{TM}}$"),
     ("emd", r"EMD"),
 ]
 
@@ -168,7 +168,7 @@ def main():
     out_path = PROJECT_ROOT / "figures" / "tab_wilcoxon_pvalues.tex"
     sections: list[str] = []
     for key, label in METRICS:
-        col = {"dr": "dr", "cr": "cr", "eu": "eu", "emd": "emd"}[key]
+        col = {"dr": "dr", "cr": "cr", "tm_bar": "tm_bar", "emd": "emd"}[key]
         data = {t: load_per_ensemble(t, col, keep) for t in TOOLS}
         ns = {t: len(data[t]) for t in TOOLS}
         print(f"  {key}: per-tool n = {ns}")

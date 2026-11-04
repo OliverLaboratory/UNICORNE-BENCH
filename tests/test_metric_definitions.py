@@ -3,7 +3,7 @@ Metric definitions on hand-built GT x prediction TM matrices (no TM-align).
 
   dr   Recall@0.9: fraction of GT conformations whose best prediction has TM >= 0.9
   cr   full recovery: 1 if every GT is recovered, else 0 (FRR is its mean)
-  eu   mean over GTs of the best prediction's TM (TM-bar)
+  tm_bar   mean over GTs of the best prediction's TM (TM-bar)
   emd  optimal-transport cost between uniform GT and prediction distributions
 """
 from __future__ import annotations
@@ -25,7 +25,7 @@ def test_recall_full_recovery_and_mean_best_tm():
     m = metrics(M)
     assert m["dr"] == pytest.approx(2 / 3)
     assert m["cr"] == 0.0
-    assert m["eu"] == pytest.approx((0.95 + 0.89 + 0.91) / 3)
+    assert m["tm_bar"] == pytest.approx((0.95 + 0.89 + 0.91) / 3)
 
 
 def test_full_recovery_needs_every_gt():
@@ -48,7 +48,7 @@ def test_recall_uses_best_prediction_per_gt_not_per_prediction():
 def test_failed_pairs_count_as_unrecovered():
     m = metrics([[np.nan, 0.92], [np.nan, np.nan]])
     assert m["dr"] == 0.5
-    assert m["eu"] == pytest.approx(0.92 / 2)
+    assert m["tm_bar"] == pytest.approx(0.92 / 2)
 
 
 def test_recall_at_k_equals_recall_when_k_covers_all_predictions():
