@@ -3,7 +3,7 @@
 Figure 1 (curation diagram): redraw the labels of the hand-drawn diagram in
 the paper's serif font at a readable size.
 
-The artwork (external/curation_diagram/curation_diagram_unlabeled_source.png,
+The artwork (external/curation_diagram/curation_diagram_source.png,
 the Inkscape export) is kept; each label box listed in label_boxes.json (pixel
 box, fill and edge color, text) and each ensemble label is cleared and redrawn
 at the same place. The small ensemble thumbnails are moved outward so the
@@ -32,7 +32,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 SRC = PROJECT_ROOT / "external" / "curation_diagram"
 OUT = PROJECT_ROOT / "figures" / "curation_diagram.png"
 BOX_PT, LABEL_PT = 6.0, 6.0
-img = np.asarray(Image.open(SRC / "curation_diagram_unlabeled_source.png").convert("RGB")).copy()
+img = np.asarray(Image.open(SRC / "curation_diagram_source.png").convert("RGB")).copy()
 H, W = img.shape[:2]
 boxes = json.loads((SRC / "label_boxes.json").read_text())
 # Ensemble thumbnails moved outward to make room for the larger labels:
