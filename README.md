@@ -1,6 +1,6 @@
 # UNICORNE-BENCH
 
-Code and data to reproduce the benchmark results in
+Code and data for the benchmark in
 
 > **Benchmarking sequence-to-ensemble predictors on UNICORNEdb, a UniProt-grouped database of PDB-derived conformational ensembles.**
 > W. F. Vanderbilt-Fried, L. Butskhrikidze, B. P. Brown, H. S. Mchaourab, C. Oliver. *NeurIPS 2026, Evaluations & Datasets Track.*
@@ -9,12 +9,99 @@ UNICORNE-BENCH-1 is a set of 839 multi-conformation proteins (829 after a fold-q
 
 The benchmark data, including the ground-truth structures, is archived at <https://doi.org/10.5281/zenodo.23928693>. The database itself is browsable at <https://unicornedb.org>.
 
-## Reproduce the paper's figures and tables
+This README has two parts:
+
+1. [Evaluating your own model](#1-evaluating-your-own-model) on UNICORNE-BENCH-1 and comparing it with the published tools.
+2. [Reproducing the paper's results](#2-reproducing-the-papers-results): every figure and table from the shipped scores, the tests that check the evaluation, and the full pipeline.
+
+## Setup
+
+```bash
+git clone https://github.com/OliverLaboratory/UNICORNE-BENCH && cd UNICORNE-BENCH
+pip install -r requirements.txt
+```
+
+Scoring predictions also needs TM-align and the ground-truth structures:
+
+```bash
+bash tool_scripts/install_tmalign.sh ~/bin       # builds third_party/TMalign/TMalign.cpp
+export TMALIGN_EXE=~/bin/TMalign
+
+# Ground-truth structures (116 MB) into data/inputs/UNICORNE_BENCH/input_pdbs/
+curl -L -o UNICORNE-BENCH-1.tar.gz \
+  "https://zenodo.org/records/23928693/files/UNICORNE-BENCH-1.tar.gz?download=1"
+tar -xzf UNICORNE-BENCH-1.tar.gz --strip-components=1
+```
+
+TM-align is built from version 20220412, the exact source that produced the published scores.
+
+# 1. Evaluating your own model
+
+### Inputs
+
+Run your model on the 829 evaluated sequences in `data/inputs/UNICORNE_BENCH/UNICORNE-BENCH-1.fasta` (60–300 residues; headers are UniProt accessions). Each is the UniProt reference sequence of one ensemble. The same sequences are in `input_dataset.csv` (columns `ensemble_ID`, `ref_sequence`), which also lists the candidates removed by the benchmark filters.
+
+### Output layout
+
+Write one structure file per sample:
+
+```
+data/outputs/<your_model>/UNICORNE_BENCH/output_pdbs/<UniProt>/<any_name>.pdb    # or .cif
+```
+
+- Single-chain protein models of the full reference sequence. Only C-alpha atoms are used.
+- The paper uses 1,000 samples per sequence. Recall rises with the number of samples (paper Fig. 9), so compare tools at the same budget.
+- Ensembles with fewer than 250 samples are skipped by default (`compute_metrics.py --min-preds`).
+
+### Score
+
+```bash
+python pipeline/03_compute_results/compute_tmalign_raw.py UNICORNE_BENCH <your_model> --workers 32 --resume
+python pipeline/03_compute_results/compute_metrics.py UNICORNE_BENCH <your_model> --filtered-only
+```
+
+`compute_tmalign_raw.py` aligns every ground-truth conformation to every sample with TM-align and stores the full output under `results/UNICORNE_BENCH/<your_model>/tmalign_raw/` (about 80 minutes for 1,000 samples on 32 cores). `compute_metrics.py` writes one row per ensemble to `results/UNICORNE_BENCH/<your_model>/results.csv`.
+
+### Compare with the published tools
+
+```bash
+python pipeline/03_compute_results/summarize_tools.py <your_model>
+```
+
+prints Table 4's metrics for your model next to the eight published tools:
+
+```
+Tool                    N   Recall@0.9 %  FRR %         TM-bar            EMD
+my_model              829   ...
+-- published --
+bioemu                823   30.1 ± 29.2    6.1  0.814 ± 0.099  0.384 ± 0.170
+...
+afsample3_biorxiv     828   34.0 ± 30.0    8.2  0.819 ± 0.101  0.342 ± 0.170
+```
+
+Means and standard deviations are across ensembles. N counts the ensembles your model was scored on; missing ensembles are left out of its averages rather than counted as failures, so report N alongside the metrics. For paired Wilcoxon tests against the published tools, add your model to `TOOLS` and `TOOL_DISPLAY` in `pipeline/04_build_figures/tab_wilcoxon_pvalues.py`.
+
+### Metrics
+
+Similarity between a ground-truth conformation (GT) and a sample is the TM-score normalized by the GT's length (TM-align run as `TMalign <GT> <sample>`, chain 1 normalization). Per ensemble:
+
+| Paper | `results.csv` column | Definition |
+|---|---|---|
+| Recall@0.9 | `dr` (`recall_at_tm_0.9`) | Fraction of GTs whose best sample has TM ≥ 0.9 |
+| Full recovery (FRR is its mean) | `cr` | 1 if every GT is recovered at TM ≥ 0.9, else 0 |
+| TM-bar | `eu` | Mean over GTs of the best sample's TM |
+| EMD | `emd` | Optimal-transport cost between the GTs and the samples, cost 1 − TM rescaled from [0.3, 1] to [0, 1] |
+| Recall at k samples | `recall_09_at_k_<k>_{mean,std}` | Recall@0.9 over random subsets of k samples (50 bootstraps) |
+
+Precision (`precision_at_tm_<T>`) and recall at TM 0.85 and 0.95 are also reported. Pairs that TM-align fails on count as TM 0.
+
+# 2. Reproducing the paper's results
+
+### Figures and tables
 
 Everything in the paper's results section rebuilds from this repository in a few minutes on a CPU:
 
 ```bash
-pip install -r requirements.txt
 bash reproduce_figures.sh        # writes figures/
 ```
 
@@ -42,9 +129,7 @@ No GPU, TM-align binary or large download is needed for this step. The repositor
 
 AF2-OOD panels (Fig. 6a and the in-train vs. AF2-OOD boxplot) leave out AFsample3: they are defined by AlphaFold2's training cutoff (2018-05-01), and AFsample3 runs AlphaFold3.
 
-Metric names in the code differ from the paper: `dr` is Recall@0.9, `cr` is the full-recall rate (FRR), and `eu` is the mean best-match TM ($\overline{\mathrm{TM}}$).
-
-### Not regenerated here
+#### Not regenerated here
 
 These paper items come from outside this pipeline. Their final versions are in `external/` for reference.
 
@@ -59,62 +144,11 @@ These paper items come from outside this pipeline. Their final versions are in `
 | Table 3: prediction tools | Written by hand |
 | Table 5: training-set overlap | Computed separately (release-date and sequence-identity partitions) |
 
-## Repository layout
+### Tests
 
-```
-pipeline/
-  00_build_source/          curated CSV -> data/inputs/<DATASET>/input_pdbs/
-  01_build_benchmark/       GT x GT TM-align, filtering, max displacement, OOD60/DOMAINMOTION setup
-  02_compute_predictions/   one launcher per tool, MSA generation, runtime benchmark
-  03_compute_results/       GT x prediction TM-align, per-ensemble metrics, per-GT summaries
-  04_build_figures/         every figure and table above
-src/conformation_benchmark/ structure parsing and TM-align helpers used by stages 01-03
-tool_scripts/               tool installers (TM-align, AlphaFlow, BioEMU, ESMDiff, AFsample2)
-data/inputs/                benchmark definitions (CSV) and OOD60 / DOMAINMOTION structures
-results/                    per-ensemble scores and per-GT summaries for every tool
-external/                   paper assets this pipeline does not produce
-reproduce_figures.sh        stage 04 end to end
-```
-
-## Data
-
-### Included
-
-| Path | Contents |
-|---|---|
-| `data/inputs/UNICORNE_BENCH/benchmarking-dataset-13.csv` | The benchmark: UniProt, reference sequence, representative GT structures |
-| `data/inputs/UNICORNE_BENCH/filtered_ensembles{,_v2}.csv` | Ensembles kept by the stage-01 filters, with GT diversity and length |
-| `data/inputs/UNICORNE_BENCH/fold_quality_blacklist.csv` | The 10 ensembles excluded by manual fold-quality review, with reasons |
-| `data/inputs/UNICORNE_BENCH/uniprot_pdb_ids.csv` | Every deposited PDB entry per UniProt (for the AF2-OOD flag) |
-| `data/inputs/{OOD60,DOMAINMOTION}/` | The two-state calibration sets, including GT structures |
-| `data/pdb_deposition_dates.json` | PDB deposition dates (for the AF2-OOD flag) |
-| `data/unicorne_training_overlap.csv` | Per-UniProt training-set membership (gold-standard ★) |
-| `results/UNICORNE_BENCH/<tool>/results.csv` | Per-ensemble scores: recall, FRR, mean best-match TM, EMD, recall@k |
-| `results/<DATASET>/<tool>/per_gt_summary.csv` | Per GT conformation: best prediction's TM and RMSD, and max TM |
-| `results/<DATASET>/gt_matrices_tmalign/` | GT x GT TM and maximum-displacement matrices |
-| `results/UNICORNE_BENCH/_mode_count_cache.npz` | Per-ensemble effective mode counts (Fig. 4a) |
-| `results/runtime_benchmark*.csv` | Wall-clock measurements for the runtime figure |
-| `results/tm_rmsd/tm_rmsd_scatter_points.csv` | Every point in Fig. 2: best prediction per GT conformation, with its TM and RMSD |
-| `results/tm_rmsd/tm_rmsd_sample_counts.csv` | Scored predictions per OOD60 / DOMAINMOTION ensemble and tool (78–1,000, median 250) |
-
-`per_gt_summary.csv` and `_mode_count_cache.npz` are condensed from the full GT x prediction TM-align output (about 85 GB). The figure scripts read the full output when it is present and fall back to these files otherwise; both give identical results. `pipeline/03_compute_results/export_per_gt_summary.py` and `fig_mode_count.py --rebuild` regenerate them from the full output. `export_tm_rmsd_points.py` regenerates `results/tm_rmsd/` the same way.
-
-The ground-truth structures for UNICORNE-BENCH-1 (`data/inputs/UNICORNE_BENCH/input_pdbs/`, 116 MB) are not in git. They are in the benchmark archive at <https://doi.org/10.5281/zenodo.23928693>, which unpacks into this layout:
+The tests check the evaluation from structure files to the published numbers. With TM-align installed (see [Setup](#setup)):
 
 ```bash
-tar -xzf UNICORNE-BENCH-1.tar.gz --strip-components=1
-```
-
-### Not included
-
-Predicted structures (1,000 per tool per ensemble, 6M+ in total) and the raw TM-align output. A sample with the GT inputs and the AFsample2 and BioEMU predictions is archived at <https://zenodo.org/records/20069060>.
-
-## Tests
-
-The tests check the evaluation from structure files to the published numbers:
-
-```bash
-bash tool_scripts/install_tmalign.sh ~/bin && export TMALIGN_EXE=~/bin/TMalign
 python -m pytest
 ```
 
@@ -125,18 +159,13 @@ python -m pytest
 | `tests/test_metric_definitions.py` | The metric definitions on hand-built TM matrices: inclusive 0.9 threshold, full recovery, failed pairs, recall@k, EMD. |
 | `tests/test_headline_results.py` | Table 4 (N, Recall@0.9, FRR, TM-bar, EMD for all eight tools) from the shipped results, including the 8.2% full-recovery rate (68 of 828 ensembles for AFsample2 and AFsample3), and agreement between `results.csv` and the per-GT best scores for all 829 evaluated ensembles. |
 
-`tests/data/` holds six ensembles chosen to cover full recovery, partial recall, best TMs on either side of 0.9, mixed mmCIF/PDB ground truths, and GTs shorter than the predictions (where normalizing by GT or prediction length changes which states count as recovered). For every tool it keeps each GT's best prediction from the full run, with the stored TM-align output for every GT x prediction pair; `tests/build_fixtures.py` regenerates it from the full output. Tests that need TM-align are skipped when it is not installed. TM-align is built from `third_party/TMalign/TMalign.cpp` (version 20220412), the source that produced the published scores.
+`tests/data/` holds six ensembles chosen to cover full recovery, partial recall, best TMs on either side of 0.9, mixed mmCIF/PDB ground truths, and GTs shorter than the predictions (where normalizing by GT or prediction length changes which states count as recovered). For every tool it keeps each GT's best prediction from the full run, with the stored TM-align output for every GT x prediction pair; `tests/build_fixtures.py` regenerates it from the full output. Tests that need TM-align are skipped when it is not installed.
 
-## Running the full pipeline
+### Running the full pipeline
 
-The stages below rebuild everything from the curated benchmark CSV. Stages 01 and 03 need the TM-align binary; stage 02 needs GPUs and each tool's own installation.
+The stages below rebuild everything from the curated benchmark CSV. Stages 01 and 03 need TM-align; stage 02 needs GPUs and each tool's own installation.
 
-```bash
-bash tool_scripts/install_tmalign.sh ~/bin
-export TMALIGN_EXE=~/bin/TMalign
-```
-
-### 00 - Inputs
+#### 00 - Inputs
 
 ```bash
 python pipeline/00_build_source/build_inputs_from_csv.py \
@@ -145,9 +174,9 @@ python pipeline/00_build_source/build_inputs_from_csv.py \
 python pipeline/01_build_benchmark/setup_bioemu_benchmarks.py --datasets OOD60 DOMAINMOTION
 ```
 
-`--source-root` points at the UNICORNEdb structure tree (one directory of aligned PDB/mmCIF files per UniProt).
+`--source-root` points at the UNICORNEdb structure tree (one directory of aligned PDB/mmCIF files per UniProt). The Zenodo archive already contains the result of this step for UNICORNE-BENCH-1.
 
-### 01 - Benchmark construction
+#### 01 - Benchmark construction
 
 ```bash
 python pipeline/01_build_benchmark/compute_gt_matrices.py UNICORNE_BENCH --workers 16
@@ -158,7 +187,7 @@ python pipeline/01_build_benchmark/flag_fibril_like.py UNICORNE_BENCH   # candid
 
 The filters keep sequences of at most 300 residues, merge GT structures at TM ≥ 0.85 (complete linkage, one medoid per cluster), and require at least two distinct conformations and 80% coverage of the UniProt reference sequence.
 
-### 02 - Predictions
+#### 02 - Predictions
 
 Every tool writes `data/outputs/<tool>/UNICORNE_BENCH/output_pdbs/<UniProt>/*.pdb` with 1,000 samples per ensemble. All launchers accept `--resume` and `--gpu-shard i/N`. The MSA-based tools read ColabFold a3m files from `data/msas/<DATASET>/<UniProt>/a3m/`; generate them with
 
@@ -184,7 +213,7 @@ Notes:
 - Default tool locations (virtual environments, checkpoints, containers under `~`) are listed in each launcher's header and can be overridden by flags or environment variables.
 - `runtime/` holds the inference-timing benchmark behind the runtime figure.
 
-### 03 - Scoring
+#### 03 - Scoring
 
 ```bash
 for t in bioemu esmflow_pdb esmdiff alphaflow_pdb cfrandom afsample2 afsample3_biorxiv speach_af; do
@@ -197,12 +226,62 @@ python pipeline/04_build_figures/fig_mode_count.py --rebuild
 
 `compute_tmalign_raw.py` stores every GT x prediction TM-align result as JSON (about 80 minutes per tool on 32 cores). `compute_metrics.py` turns these into `results.csv`. Similarity between a GT and a prediction is TM-score normalized by GT length; the gold-standard table uses the larger of the two normalizations.
 
-### 04 - Figures and tables
+#### 04 - Figures and tables
 
 ```bash
 bash reproduce_figures.sh
 ```
 
-## License
+# Repository layout
 
-MIT (see `LICENSE`).
+```
+pipeline/
+  00_build_source/          curated CSV -> data/inputs/<DATASET>/input_pdbs/
+  01_build_benchmark/       GT x GT TM-align, filtering, max displacement, OOD60/DOMAINMOTION setup
+  02_compute_predictions/   one launcher per tool, MSA generation, runtime benchmark
+  03_compute_results/       GT x prediction TM-align, per-ensemble metrics, per-GT summaries, tool summary
+  04_build_figures/         every figure and table above
+src/conformation_benchmark/ structure parsing and TM-align helpers used by stages 01-03
+tests/                      evaluation tests and their fixture structures
+third_party/TMalign/        TM-align source (version 20220412)
+tool_scripts/               tool installers (TM-align, AlphaFlow, BioEMU, ESMDiff, AFsample2)
+data/inputs/                benchmark definitions (CSV, FASTA) and OOD60 / DOMAINMOTION structures
+results/                    per-ensemble scores and per-GT summaries for every tool
+external/                   paper assets this pipeline does not produce
+reproduce_figures.sh        stage 04 end to end
+```
+
+# Data
+
+### Included
+
+| Path | Contents |
+|---|---|
+| `data/inputs/UNICORNE_BENCH/UNICORNE-BENCH-1.fasta` | The 829 evaluated reference sequences |
+| `data/inputs/UNICORNE_BENCH/benchmarking-dataset-13.csv` | All 869 candidate ensembles: UniProt, reference sequence, representative GT structures |
+| `data/inputs/UNICORNE_BENCH/input_dataset.csv` | The candidates' reference sequences, in the format the prediction launchers read |
+| `data/inputs/UNICORNE_BENCH/filtered_ensembles{,_v2}.csv` | The 839 ensembles kept by the stage-01 filters, with GT diversity and length |
+| `data/inputs/UNICORNE_BENCH/fold_quality_blacklist.csv` | The 10 ensembles excluded by manual fold-quality review, with reasons |
+| `data/inputs/UNICORNE_BENCH/uniprot_pdb_ids.csv` | Every deposited PDB entry per UniProt (for the AF2-OOD flag) |
+| `data/inputs/{OOD60,DOMAINMOTION}/` | The two-state calibration sets, including GT structures |
+| `data/pdb_deposition_dates.json` | PDB deposition dates (for the AF2-OOD flag) |
+| `data/unicorne_training_overlap.csv` | Per-UniProt training-set membership (gold-standard ★) |
+| `results/UNICORNE_BENCH/<tool>/results.csv` | Per-ensemble scores: recall, FRR, mean best-match TM, EMD, recall@k |
+| `results/<DATASET>/<tool>/per_gt_summary.csv` | Per GT conformation: best prediction's TM and RMSD, and max TM |
+| `results/<DATASET>/gt_matrices_tmalign/` | GT x GT TM and maximum-displacement matrices |
+| `results/UNICORNE_BENCH/_mode_count_cache.npz` | Per-ensemble effective mode counts (Fig. 4a) |
+| `results/runtime_benchmark*.csv` | Wall-clock measurements for the runtime figure |
+| `results/tm_rmsd/tm_rmsd_scatter_points.csv` | Every point in Fig. 2: best prediction per GT conformation, with its TM and RMSD |
+| `results/tm_rmsd/tm_rmsd_sample_counts.csv` | Scored predictions per OOD60 / DOMAINMOTION ensemble and tool (78–1,000, median 250) |
+
+`per_gt_summary.csv` and `_mode_count_cache.npz` are condensed from the full GT x prediction TM-align output (about 85 GB). The figure scripts read the full output when it is present and fall back to these files otherwise; both give identical results. `pipeline/03_compute_results/export_per_gt_summary.py` and `fig_mode_count.py --rebuild` regenerate them from the full output. `export_tm_rmsd_points.py` regenerates `results/tm_rmsd/` the same way.
+
+The ground-truth structures for UNICORNE-BENCH-1 (`data/inputs/UNICORNE_BENCH/input_pdbs/`, 116 MB) are not in git; they are in the Zenodo archive (see [Setup](#setup)), which also contains a copy of everything in the table above.
+
+### Not included
+
+Predicted structures (1,000 per tool per ensemble, 6M+ in total) and the raw TM-align output. A sample with the GT inputs and the AFsample2 and BioEMU predictions is archived at <https://zenodo.org/records/20069060>.
+
+# License
+
+Code: MIT (see `LICENSE`). Benchmark data on Zenodo: CC BY 4.0.
