@@ -32,29 +32,12 @@ from pathlib import Path
 import numpy as np
 
 # Add project root for imports
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+# Shared helpers (02_compute_predictions/prediction_helpers.py).
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from prediction_helpers import load_input_csv
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
-
-
-def load_input_csv(path: Path) -> list[dict]:
-    """Load input_dataset.csv, normalizing column names."""
-    rows = []
-    with open(path, newline="") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            eid = (
-                row.get("ensemble_ID")
-                or row.get("ensemble_id")
-                or row.get("uniprot", "")
-            ).strip()
-            seq = (
-                row.get("ref_sequence")
-                or row.get("sequence", "")
-            ).strip()
-            if eid and seq:
-                rows.append({"ensemble_ID": eid, "ref_sequence": seq})
-    return rows
 
 
 def split_multimodel_pdb(pdb_path: Path) -> list[str]:

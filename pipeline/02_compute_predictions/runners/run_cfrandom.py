@@ -40,7 +40,10 @@ import numpy as np
 os.environ.setdefault("TF_FORCE_UNIFIED_MEMORY", "1")
 os.environ.setdefault("XLA_PYTHON_CLIENT_MEM_FRACTION", "4.0")
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+# Shared helpers (02_compute_predictions/prediction_helpers.py).
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from prediction_helpers import count_existing_pdbs, load_a3m, load_input_csv
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
 sys.path.insert(0, str(PROJECT_ROOT / "pipeline"))
 try:
@@ -56,18 +59,6 @@ logging.basicConfig(level=logging.INFO, format="%(message)s")
 # ---------------------------------------------------------------------------
 # MSA helpers
 # ---------------------------------------------------------------------------
-
-def load_a3m(msa_dir: Path, eid: str) -> str | None:
-    """Read an A3M file from the MSA directory.  Returns raw text or None."""
-    for candidate in [
-        msa_dir / eid / "a3m" / f"{eid}.a3m",
-        msa_dir / f"{eid}-search" / "0.a3m",
-        msa_dir / eid / "0.a3m",
-    ]:
-        if candidate.exists():
-            return candidate.read_text()
-    return None
-
 
 def truncate_a3m(a3m_text: str, max_sequences: int) -> str:
     """Keep only the first *max_sequences* entries in an A3M string."""
@@ -256,26 +247,6 @@ def sample_ensemble(
 # CLI & main loop
 # ---------------------------------------------------------------------------
 
-def load_input_csv(path: Path) -> list[dict]:
-    rows = []
-    with open(path, newline="") as f:
-        for row in csv.DictReader(f):
-            eid = (
-                row.get("ensemble_ID") or row.get("ensemble_id")
-                or row.get("uniprot", "")
-            ).strip()
-            seq = (
-                row.get("ref_sequence") or row.get("sequence", "")
-            ).strip()
-            if eid and seq:
-                rows.append({"ensemble_ID": eid, "ref_sequence": seq})
-    return rows
-
-
-def count_existing(d: Path) -> int:
-    return len(list(d.glob("output_*.pdb"))) if d.exists() else 0
-
-
 def main():
     parser = argparse.ArgumentParser(
         description="Run CF-random with direct ColabFold API (AF2 loaded once).")
@@ -391,7 +362,7 @@ def main():
         seq_len = len(seq)
 
         ensemble_out = pdbs_dir / eid
-        existing = count_existing(ensemble_out)
+        existing = count_existing_pdbs(ensemble_out, "output_*.pdb")
 
         if args.resume and existing >= args.num_samples:
             log(f"  [{i+1}/{len(rows)}] {eid}: skip (already {existing} samples)")

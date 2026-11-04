@@ -25,7 +25,10 @@ import time
 from pathlib import Path
 
 # Add project root for imports
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+# Shared helpers (02_compute_predictions/prediction_helpers.py).
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from prediction_helpers import load_input_csv, report_gpu
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
 try:
@@ -34,46 +37,6 @@ except ImportError:
     print("mdtraj is required. Install with: pip install mdtraj")
     sys.exit(1)
 
-
-
-def report_gpu() -> None:
-    """Print GPU utilization and memory via nvidia-smi."""
-    try:
-        out = subprocess.run(
-            ["nvidia-smi", "--query-gpu=index,name,utilization.gpu,memory.used,memory.total", "--format=csv,noheader,nounits"],
-            capture_output=True,
-            text=True,
-            timeout=5,
-        )
-        if out.returncode == 0 and out.stdout.strip():
-            for line in out.stdout.strip().split("\n"):
-                parts = [p.strip() for p in line.split(",")]
-                if len(parts) >= 5:
-                    print(f"  GPU {parts[0]}: {parts[1]} | util {parts[2]}% | mem {parts[3]}/{parts[4]} MiB")
-        else:
-            print("  (nvidia-smi not available)")
-    except (FileNotFoundError, subprocess.TimeoutExpired):
-        print("  (nvidia-smi not available)")
-
-
-def load_input_csv(path: Path) -> list[dict]:
-    """Load input_dataset.csv, normalizing column names to ensemble_ID, ref_sequence."""
-    rows = []
-    with open(path, newline="") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            eid = (
-                row.get("ensemble_ID")
-                or row.get("ensemble_id")
-                or row.get("uniprot", "")
-            ).strip()
-            seq = (
-                row.get("ref_sequence")
-                or row.get("sequence", "")
-            ).strip()
-            if eid and seq:
-                rows.append({"ensemble_ID": eid, "ref_sequence": seq})
-    return rows
 
 
 def run_bioemu(

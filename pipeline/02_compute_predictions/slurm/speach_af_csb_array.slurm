@@ -49,7 +49,7 @@ echo "=== SPEACH_AF top-up to 1000 on $DATASET (MSA=$MSA_DATASET) ==="
 echo "Shard: $SHARD_IDX / $SHARD_TOT  (array_id=$SLURM_ARRAY_TASK_ID, offset=$SHARD_OFFSET)"
 echo "Node : $(hostname) -- GPU: ${CUDA_VISIBLE_DEVICES:-unset}"
 
-"$PIXI_PY" pipeline/02_compute_predictions/run_speach_af.py \
+"$PIXI_PY" pipeline/02_compute_predictions/runners/run_speach_af.py \
   "data/inputs/$DATASET" \
   "$DATASET" \
   --msa-dir "$PROJECT_ROOT/data/msas/$MSA_DATASET" \

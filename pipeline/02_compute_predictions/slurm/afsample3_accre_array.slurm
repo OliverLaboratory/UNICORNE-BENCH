@@ -85,4 +85,4 @@ fi
 # Unquoted on purpose: MSA_FRACTIONS is a space-separated list for nargs="+".
 [[ -n "$MSA_FRACTIONS" ]] && ARGS+=(--msa-fractions ${MSA_FRACTIONS})
 
-exec "$PYTHON" pipeline/02_compute_predictions/run_afsample3.py "${ARGS[@]}"
+exec "$PYTHON" pipeline/02_compute_predictions/runners/run_afsample3.py "${ARGS[@]}"

@@ -28,7 +28,10 @@ import sys
 import time
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+# Shared helpers (02_compute_predictions/prediction_helpers.py).
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from prediction_helpers import load_input_csv, report_gpu
 ESMDIFF_ROOT = Path.home() / "esmdiff"
 ESMDIFF_CKPT = ESMDIFF_ROOT / "data" / "ckpt" / "release_v0.pt"
 
@@ -37,41 +40,6 @@ DEFAULT_NUM_STEPS = 25
 # Controls GPU memory: batch_size = max_batch_tokens // (seq_len^2)
 # 400k works for 32GB GPUs (RTX 5090): ~16 samples/batch for 154-aa, ~4 for 300-aa
 DEFAULT_MAX_BATCH_TOKENS = 400_000
-
-
-def report_gpu() -> None:
-    try:
-        out = subprocess.run(
-            ["nvidia-smi", "--query-gpu=index,name,utilization.gpu,memory.used,memory.total",
-             "--format=csv,noheader,nounits"],
-            capture_output=True, text=True, timeout=5,
-        )
-        if out.returncode == 0 and out.stdout.strip():
-            for line in out.stdout.strip().split("\n"):
-                parts = [p.strip() for p in line.split(",")]
-                if len(parts) >= 5:
-                    print(f"  GPU {parts[0]}: {parts[1]} | util {parts[2]}% | mem {parts[3]}/{parts[4]} MiB")
-    except (FileNotFoundError, subprocess.TimeoutExpired):
-        print("  (nvidia-smi not available)")
-
-
-def load_input_csv(path: Path) -> list[dict]:
-    rows = []
-    with open(path, newline="") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            eid = (
-                row.get("ensemble_ID")
-                or row.get("ensemble_id")
-                or row.get("uniprot", "")
-            ).strip()
-            seq = (
-                row.get("ref_sequence")
-                or row.get("sequence", "")
-            ).strip()
-            if eid and seq:
-                rows.append({"ensemble_ID": eid, "ref_sequence": seq})
-    return rows
 
 
 def find_input_pdb(input_pdbs_dir: Path, ensemble_id: str) -> Path | None:

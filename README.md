@@ -52,6 +52,7 @@ data/outputs/<your_model>/UNICORNE_BENCH/output_pdbs/<UniProt>/<any_name>.pdb   
 - Single-chain protein models of the full reference sequence. Only C-alpha atoms are used.
 - The paper uses 1,000 samples per sequence. Recall rises with the number of samples (paper Fig. 9), so compare tools at the same budget.
 - Ensembles with fewer than 250 samples are skipped by default (`compute_metrics.py --min-preds`).
+- To run your model through the same launcher, add `pipeline/02_compute_predictions/configs/<your_model>.yaml` pointing at a runner that takes `<input_dir> <DATASET>` and writes this layout (see [02 - Predictions](#02---predictions)).
 
 ### Score
 
@@ -158,6 +159,7 @@ python -m pytest
 | `tests/test_metrics_from_structures.py` | Recall@0.9, full recovery and mean best TM recomputed from the fixture structures equal the published `results.csv` rows, including best TMs of 0.8996 (missed) and 0.9004 (recovered). |
 | `tests/test_metric_definitions.py` | The metric definitions on hand-built TM matrices: inclusive 0.9 threshold, full recovery, failed pairs, recall@k, EMD. |
 | `tests/test_headline_results.py` | Table 4 (N, Recall@0.9, FRR, TM-bar, EMD for all eight tools) from the shipped results, including the 8.2% full-recovery rate (68 of 828 ensembles for AFsample2 and AFsample3), and agreement between `results.csv` and the per-GT best scores for all 829 evaluated ensembles. |
+| `tests/test_launcher.py` | Every prediction config builds the command used for the paper runs; runners exist, compile and use the shared helpers. |
 
 `tests/data/` holds six ensembles chosen to cover full recovery, partial recall, best TMs on either side of 0.9, mixed mmCIF/PDB ground truths, and GTs shorter than the predictions (where normalizing by GT or prediction length changes which states count as recovered). For every tool it keeps each GT's best prediction from the full run, with the stored TM-align output for every GT x prediction pair; `tests/build_fixtures.py` regenerates it from the full output. Tests that need TM-align are skipped when it is not installed.
 
@@ -189,29 +191,49 @@ The filters keep sequences of at most 300 residues, merge GT structures at TM �
 
 #### 02 - Predictions
 
-Every tool writes `data/outputs/<tool>/UNICORNE_BENCH/output_pdbs/<UniProt>/*.pdb` with 1,000 samples per ensemble. All launchers accept `--resume` and `--gpu-shard i/N`. The MSA-based tools read ColabFold a3m files from `data/msas/<DATASET>/<UniProt>/a3m/`; generate them with
+Every tool runs through one launcher, configured by a YAML file per tool in `pipeline/02_compute_predictions/configs/`:
+
+```bash
+python pipeline/02_compute_predictions/launch.py <tool> --dataset UNICORNE_BENCH [--resume] [--gpu-shard i/N]
+```
+
+with `<tool>` one of `bioemu`, `esmflow`, `esmdiff`, `alphaflow`, `cfrandom`, `speach_af`, `afsample2`, `afsample3`. Each writes `data/outputs/<tool>/UNICORNE_BENCH/output_pdbs/<UniProt>/*.pdb`, 1,000 samples per ensemble. A config names the interpreter of the tool's environment, its runner script, whether it reads MSAs, and the parameters used in the paper:
+
+```yaml
+# configs/speach_af.yaml
+tool: speach_af
+python: ~/localcolabfold/.pixi/envs/default/bin/python
+script: pipeline/02_compute_predictions/runners/run_speach_af.py
+msa: true                 # passes --msa-dir data/msas/<DATASET>
+params:                   # passed to the runner as --<key> <value>
+  num-samples: 1000
+  seeds-per-set: 9
+  seeds-base: 3
+```
+
+Override a parameter with `--set key=value` (e.g. `--set num-samples=250`), point at another environment with `--python`, pass runner-specific options after `--`, and print the command without running it with `--dry-run`. `tests/test_launcher.py` checks that every config builds the command used for the paper runs.
+
+The MSA-based tools read ColabFold a3m files from `data/msas/<DATASET>/<UniProt>/a3m/`; generate them with
 
 ```bash
 python pipeline/02_compute_predictions/generate_msas_local.py --dataset UNICORNE_BENCH
 ```
 
-| Tool | Command (from the repository root) |
+| Path (`pipeline/02_compute_predictions/`) | Contents |
 |---|---|
-| BioEMU | `~/bioemu_venv/bin/python pipeline/02_compute_predictions/run_bioemu.py data/inputs/UNICORNE_BENCH UNICORNE_BENCH --num-samples 1000` |
-| ESMFlow | `python pipeline/02_compute_predictions/run_esmflow.py data/inputs/UNICORNE_BENCH UNICORNE_BENCH --num-samples 1000` |
-| AlphaFlow | `bash pipeline/02_compute_predictions/run_alphaflow_pdb.sh UNICORNE_BENCH --num-samples 1000` |
-| ESMDiff | `python pipeline/02_compute_predictions/run_esmdiff.py data/inputs/UNICORNE_BENCH UNICORNE_BENCH --num-samples 1000` |
-| CFrandom | `~/localcolabfold/.pixi/envs/default/bin/python pipeline/02_compute_predictions/run_cfrandom.py data/inputs/UNICORNE_BENCH UNICORNE_BENCH --msa-dir data/msas/UNICORNE_BENCH --num-samples 1000` |
-| SPEACH_AF | `~/localcolabfold/.pixi/envs/default/bin/python pipeline/02_compute_predictions/run_speach_af.py data/inputs/UNICORNE_BENCH UNICORNE_BENCH --msa-dir data/msas/UNICORNE_BENCH --num-samples 1000 --seeds-per-set 9 --seeds-base 3` |
-| AFsample2 | `bash pipeline/02_compute_predictions/run_afsample2.sh UNICORNE_BENCH UNICORNE_BENCH --num-samples 1000` |
-| AFsample3 | `bash pipeline/02_compute_predictions/run_afsample3.sh UNICORNE_BENCH UNICORNE_BENCH --num-samples 1000 --tool afsample3_biorxiv --msa-fractions 0.0 0.1 0.2 0.3 0.4 0.5` |
+| `launch.py` | The launcher |
+| `configs/<tool>.yaml` | Per-tool environment, runner and paper parameters |
+| `runners/run_<tool>.py` | One runner per tool (AlphaFlow's is `tool_scripts/alphaflow/run_dataset.py`) |
+| `prediction_helpers.py` | Helpers shared by the runners: input CSV, resume counts, MSA loading, GPU report |
+| `generate_msas_local.py` | ColabFold MSAs for the MSA-based tools |
+| `slurm/` | SLURM array templates for SPEACH_AF and AFsample3 |
+| `runtime/` | The inference-timing benchmark behind the runtime figure |
 
 Notes:
 - AFsample2 rotates MSA-randomization fractions {0.05, …, 0.30}. AFsample3 is run at the masking sweep of its own paper ({0.0, …, 0.5}, Table 1 there), scored as `afsample3_biorxiv`. `reuse_fractions.py` can carve the overlapping fractions out of an earlier AFsample3 run instead of resampling them.
 - SPEACH_AF: see `SPEACH_AF_MASKING_FIX.md` for the alanine-masking convention.
-- SLURM array templates for SPEACH_AF and AFsample3 are in the same directory; adjust the account and partition lines for your cluster.
-- Default tool locations (virtual environments, checkpoints, containers under `~`) are listed in each launcher's header and can be overridden by flags or environment variables.
-- `runtime/` holds the inference-timing benchmark behind the runtime figure.
+- The SLURM templates need the account and partition lines adjusted for your cluster.
+- Default tool locations (checkpoints, containers under `~`) are listed in each runner's header and can be overridden by runner flags after `--` or environment variables.
 
 #### 03 - Scoring
 
@@ -238,7 +260,7 @@ bash reproduce_figures.sh
 pipeline/
   00_build_source/          curated CSV -> data/inputs/<DATASET>/input_pdbs/
   01_build_benchmark/       GT x GT TM-align, filtering, max displacement, OOD60/DOMAINMOTION setup
-  02_compute_predictions/   one launcher per tool, MSA generation, runtime benchmark
+  02_compute_predictions/   launcher + per-tool YAML configs and runners, MSA generation, runtime benchmark
   03_compute_results/       GT x prediction TM-align, per-ensemble metrics, per-GT summaries, tool summary
   04_build_figures/         every figure and table above
 src/conformation_benchmark/ structure parsing and TM-align helpers used by stages 01-03

@@ -1,0 +1,8 @@
+# AFsample2 (Kalakoti & Wallner, 2025): AlphaFold2 with MSA column randomization,
+# rotating fractions {0.05, ..., 0.30}. Runs in an Apptainer image (see the script's --sif).
+tool: afsample2
+python: python
+script: pipeline/02_compute_predictions/runners/run_afsample2.py
+msa: true
+params:
+  num-samples: 1000

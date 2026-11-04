@@ -1,0 +1,7 @@
+# ESMDiff (Lu et al., 2024): structure-token diffusion on ESM3.
+tool: esmdiff
+python: python
+script: pipeline/02_compute_predictions/runners/run_esmdiff.py
+msa: false
+params:
+  num-samples: 1000

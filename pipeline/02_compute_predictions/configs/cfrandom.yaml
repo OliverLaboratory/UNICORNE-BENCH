@@ -1,0 +1,7 @@
+# CFrandom: ColabFold with random MSA subsampling (AlphaFold2).
+tool: cfrandom
+python: ~/localcolabfold/.pixi/envs/default/bin/python
+script: pipeline/02_compute_predictions/runners/run_cfrandom.py
+msa: true
+params:
+  num-samples: 1000

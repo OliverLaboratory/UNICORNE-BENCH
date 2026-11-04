@@ -1,0 +1,10 @@
+# AlphaFlow (Jing et al., 2024): flow matching on an AlphaFold2 backbone (PDB-distilled weights).
+# The runner is AlphaFlow's own dataset script, see tool_scripts/alphaflow/.
+tool: alphaflow_pdb
+python: ~/alphaflow_venv/bin/python
+script: tool_scripts/alphaflow/run_dataset.py
+msa: true
+params:
+  model: af_pdb_distilled
+  output-base: data/outputs
+  num-samples: 1000

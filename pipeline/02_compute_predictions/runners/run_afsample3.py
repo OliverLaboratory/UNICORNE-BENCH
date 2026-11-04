@@ -42,11 +42,14 @@ import sys
 import time
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+# Shared helpers (02_compute_predictions/prediction_helpers.py).
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from prediction_helpers import count_existing_pdbs, load_input_csv
 
 # Runtime accounting (CSV row per ensemble at end). Import-safe failure if
 # the shared logger isn't available — predictions take precedence.
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 try:
     from _runtime_log import log_ensemble
 except Exception:
@@ -67,11 +70,6 @@ STRUCTURES_PER_RUN = SEEDS_PER_RUN * NUM_DIFFUSION_SAMPLES
 # ----------------------------------------------------------------------------
 # IO helpers
 # ----------------------------------------------------------------------------
-
-def load_input_csv(path: Path) -> list[dict]:
-    with path.open() as fh:
-        return list(csv.DictReader(fh))
-
 
 def load_a3m_text(msa_dir: Path, eid: str) -> str | None:
     for cand in (msa_dir / eid / "a3m" / f"{eid}.a3m",
@@ -99,10 +97,6 @@ def a3m_query(a3m_text: str) -> str:
         if seen:
             out.append(line.strip())
     return "".join(out).replace("-", "").replace(".", "").upper()
-
-
-def count_existing_pdbs(d: Path) -> int:
-    return len(list(d.glob("*.pdb")))
 
 
 # --- Shared work pool -------------------------------------------------------

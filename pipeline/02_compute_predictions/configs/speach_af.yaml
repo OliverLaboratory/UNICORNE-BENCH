@@ -1,0 +1,10 @@
+# SPEACH_AF (Stein & Mchaourab, 2022): AlphaFold2 with in-silico alanine scanning of the MSA.
+# Masking convention: see ../SPEACH_AF_MASKING_FIX.md.
+tool: speach_af
+python: ~/localcolabfold/.pixi/envs/default/bin/python
+script: pipeline/02_compute_predictions/runners/run_speach_af.py
+msa: true
+params:
+  num-samples: 1000
+  seeds-per-set: 9
+  seeds-base: 3

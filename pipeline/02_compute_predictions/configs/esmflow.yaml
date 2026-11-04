@@ -1,0 +1,7 @@
+# ESMFlow (Jing et al., 2024): flow matching on an ESMFold backbone (PDB-trained weights).
+tool: esmflow_pdb
+python: python
+script: pipeline/02_compute_predictions/runners/run_esmflow.py
+msa: false
+params:
+  num-samples: 1000

@@ -35,11 +35,15 @@ import sys
 import time
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+# Shared helpers (02_compute_predictions/prediction_helpers.py).
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from prediction_helpers import count_existing_pdbs, load_input_csv
+from prediction_helpers import load_a3m as load_a3m_text
 
 # Runtime accounting (CSV row per ensemble at end). Import-safe failure if
 # the shared logger isn't available — predictions take precedence.
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 try:
     from _runtime_log import log_ensemble
 except Exception:
@@ -59,27 +63,6 @@ NSTRUCT_PER_RUN = 25                # num_monomer_predictions_per_model = 5 (kep
 # ----------------------------------------------------------------------------
 # IO helpers
 # ----------------------------------------------------------------------------
-
-def load_input_csv(path: Path) -> list[dict]:
-    rows = []
-    with open(path, newline="") as f:
-        for row in csv.DictReader(f):
-            eid = (row.get("ensemble_ID") or row.get("ensemble_id")
-                   or row.get("uniprot", "")).strip()
-            seq = (row.get("ref_sequence") or row.get("sequence", "")).strip()
-            if eid and seq:
-                rows.append({"ensemble_ID": eid, "ref_sequence": seq})
-    return rows
-
-
-def load_a3m_text(msa_dir: Path, eid: str) -> str | None:
-    for cand in [msa_dir / eid / "a3m" / f"{eid}.a3m",
-                 msa_dir / f"{eid}-search" / "0.a3m",
-                 msa_dir / eid / "0.a3m"]:
-        if cand.exists():
-            return cand.read_text()
-    return None
-
 
 def a3m_to_stockholm(a3m_text: str) -> str:
     """Convert a colabfold a3m into a Stockholm alignment.
@@ -164,10 +147,6 @@ def make_af2_msa_layout(seq_name: str, seq: str, a3m_text: str, out_msa_dir: Pat
     )
     for sto in ("uniref90_hits.sto", "mgnify_hits.sto"):
         (out_msa_dir / sto).write_text(stockholm)
-
-
-def count_existing_pdbs(d: Path) -> int:
-    return len(list(d.glob("*.pdb"))) if d.exists() else 0
 
 
 # ----------------------------------------------------------------------------

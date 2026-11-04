@@ -1,0 +1,7 @@
+# BioEMU (Lewis et al., 2025): generative ensemble emulator.
+tool: bioemu                      # outputs: data/outputs/bioemu/<DATASET>/
+python: ~/bioemu_venv/bin/python  # interpreter of the tool's environment
+script: pipeline/02_compute_predictions/runners/run_bioemu.py
+msa: false                        # true: pass --msa-dir data/msas/<MSA_DATASET>
+params:                           # passed to the script as --<key> <value>
+  num-samples: 1000
