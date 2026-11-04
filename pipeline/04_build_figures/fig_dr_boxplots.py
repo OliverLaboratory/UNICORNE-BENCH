@@ -33,6 +33,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+import paper_style  # noqa: E402  (serif font; text sized for the paper)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
@@ -221,18 +222,18 @@ def line_plot(ax, vals_by_tool_bin, tools, bin_labels, title, x_label,
         ax.plot(
             x, ys,
             marker=TOOL_MARKER.get(tool, "o"),
-            markersize=8,
+            markersize=3.5,
             color=TOOL_COLOR.get(tool, "#444"),
-            linewidth=1.6,
+            linewidth=1.0,
             label=TOOL_DISPLAY.get(tool, tool),
             markeredgecolor="#222",
-            markeredgewidth=0.6,
+            markeredgewidth=0.4,
         )
 
     ax.set_xticks(x)
-    ax.set_xticklabels(bin_labels, rotation=15, ha="right")
+    ax.set_xticklabels(bin_labels, rotation=35, ha="right", rotation_mode="anchor")
     ax.set_xlabel(x_label)
-    ax.set_ylabel(getattr(line_plot, "y_label", "Ensemble Utility (EU)"))
+    ax.set_ylabel(getattr(line_plot, "y_label", "Mean best-match TM"))
     yscale = getattr(line_plot, "y_scale", "linear")
     if yscale == "logit":
         # Logit scale gives lots of vertical space to values near 0 *and* 1
@@ -491,30 +492,58 @@ def main():
          "reference sequence length (aa)"),
     ]
 
+    # Drawn at the size printed in the paper: (a) diversity and (b) ensemble
+    # size sit side by side with the mechanism panel, 1.76 in each, and share
+    # one legend row (written below); the length panel is a 4.1 in appendix
+    # figure with its own legend.
+    print_size = {"tm": (1.76, 1.45), "ngt": (1.76, 1.45), "len": (4.12, 2.4)}
+    short_x_label = {"tm": "min pairwise GT TM", "ngt": "number of GT conformations"}
     written: list[Path] = []
     for tag, vals, bin_labels, title, x_label in panels:
-        fig, ax = plt.subplots(figsize=(7.5, 5.5))
+        fig, ax = plt.subplots(figsize=print_size[tag])
+        if tag == "tm":
+            bin_labels = [b.strip("[]").replace("-", "–") for b in bin_labels]
         line_plot(ax, vals, tools_with_data, bin_labels=bin_labels,
-                  title=title, x_label=x_label)
-        # vs-GT-TM panel: lines descend left→right so lower-left is empty.
-        # vs-n_gt panel: lines descend left→right too but the upper-left
-        # corner is open, so put the legend up there instead.
-        leg_loc = "upper left" if tag == "ngt" else "lower left"
-        leg = ax.legend(loc=leg_loc, fontsize=16, frameon=True, ncol=2)
-        leg.get_frame().set_alpha(0.9)
-        # No suptitle: subcaptions in the manuscript handle it.
-        ax.tick_params(axis="both", labelsize=16)
-        ax.xaxis.label.set_size(13)
-        ax.yaxis.label.set_size(13)
-        fig.tight_layout()
+                  title=title, x_label=short_x_label.get(tag, x_label))
+        if tag == "ngt":
+            ax.set_xticklabels(bin_labels, rotation=0, ha="center")
+        if tag == "len":
+            ax.set_ylim(0, 0.75)   # headroom for the legend above the curves
+            leg = ax.legend(loc="upper center", frameon=True, ncol=4,
+                            handlelength=1.2, columnspacing=0.8, handletextpad=0.3)
+            leg.get_frame().set_alpha(0.9)
         scale_suffix = "" if args.y_scale == "linear" else f"_{args.y_scale}"
         out_path = (args.output if args.output and tag == "tm" else None) or (
             fig_dir / f"{args.metric}_lineplot_{tag}{scale_suffix}_{args.dataset}.png"
         )
-        fig.savefig(out_path, dpi=180, bbox_inches="tight")
-        fig.savefig(str(out_path).rsplit(".", 1)[0] + ".pdf", bbox_inches="tight")
+        if tag == "len":
+            paper_style.finalize(fig, print_size[tag][0])
+        else:
+            # Same margins as the mechanism panel so the three plot areas align.
+            paper_style.finalize(fig, print_size[tag][0], relayout=False)
+            fig.subplots_adjust(**paper_style.FIG3_MARGINS)
+        fig.savefig(out_path, dpi=300)
+        fig.savefig(str(out_path).rsplit(".", 1)[0] + ".pdf")
         plt.close(fig)
         written.append(out_path)
+
+    # Shared legend for the diversity, ensemble-size and mechanism panels.
+    fig = plt.figure(figsize=(5.5, 0.22))
+    handles = [plt.Line2D([], [], marker=TOOL_MARKER.get(t, "o"), markersize=3.5,
+                          color=TOOL_COLOR.get(t, "#444"), linewidth=1.0,
+                          markeredgecolor="#222", markeredgewidth=0.4,
+                          label=TOOL_DISPLAY.get(t, t)) for t in tools_with_data]
+    fig.legend(handles=handles, loc="center", ncol=len(handles), frameon=False,
+               fontsize=7.5, handlelength=1.1, handletextpad=0.3, columnspacing=0.7,
+               borderaxespad=0.0)
+    fig.canvas.draw()
+    leg_w = fig.legends[0].get_window_extent().width / fig.dpi
+    assert leg_w <= 5.5, f"legend is {leg_w:.2f} in wide; it must fit the 5.5 in text width"
+    out_path = fig_dir / f"{args.metric}_lineplot_legend_{args.dataset}.png"
+    fig.savefig(out_path, dpi=300)
+    fig.savefig(str(out_path).rsplit(".", 1)[0] + ".pdf")
+    plt.close(fig)
+    written.append(out_path)
 
     print("\nWrote:")
     for p in written:

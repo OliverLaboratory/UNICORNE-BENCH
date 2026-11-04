@@ -30,6 +30,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+import paper_style  # noqa: E402  (serif font; text sized for the paper)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
@@ -144,82 +145,80 @@ def main():
     # Plot
     # ------------------------------------------------------------------
     plt.rcParams.update({
-        "font.family": "sans-serif",
-        "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans"],
         "font.size": 16,
         "axes.spines.top": False,
         "axes.spines.right": False,
     })
 
     # ----- (a) Co-failure Jaccard heatmap (own figure) -----
-    fig_h, ax_h = plt.subplots(figsize=(7, 6))
+    # Drawn at its printed size (3.4 in, appendix).
+    fig_h, ax_h = plt.subplots(figsize=(3.41, 3.0))
     cmap = plt.get_cmap("RdPu")
     im = ax_h.imshow(J, cmap=cmap, vmin=0.0, vmax=1.0,
                      interpolation="nearest")
     ax_h.set_xticks(range(n))
     ax_h.set_yticks(range(n))
     labels = [TOOL_DISPLAY[t] for t in TOOLS]
-    ax_h.set_xticklabels(labels, rotation=30, ha="right", fontsize=16)
-    ax_h.set_yticklabels(labels, fontsize=16)
+    ax_h.set_xticklabels(labels, rotation=45, ha="right", rotation_mode="anchor")
+    ax_h.set_yticklabels(labels)
     for i in range(n):
         for j in range(n):
             if not np.isnan(J[i, j]):
                 ax_h.text(j, i, f"{J[i, j]:.2f}",
                           ha="center", va="center",
                           color="black" if J[i, j] < 0.55 else "white",
-                          fontsize=11, fontweight="bold")
+                          fontsize=7)
     cbar = fig_h.colorbar(im, ax=ax_h, fraction=0.046, pad=0.04)
-    cbar.set_label("Jaccard(failure sets)", fontsize=16)
-    cbar.ax.tick_params(labelsize=16)
+    cbar.set_label("Jaccard (failure sets)")
 
     fig_h.tight_layout()
     out_h = FIGURES / "unicorne_cofail.png"
-    fig_h.savefig(out_h, dpi=300, bbox_inches="tight", facecolor="white")
-    fig_h.savefig(str(out_h).rsplit(".", 1)[0] + ".pdf", bbox_inches="tight")
+    paper_style.finalize(fig_h, 3.41, median_pt=7.0, max_pt=8.0)
+    fig_h.savefig(out_h, dpi=300, facecolor="white")
+    fig_h.savefig(str(out_h).rsplit(".", 1)[0] + ".pdf")
     plt.close(fig_h)
     print(f"Saved {out_h}")
 
     # ----- (b) Recall_{0.9} stratified by motion amplitude (own figure) -----
-    fig_b, ax_b = plt.subplots(figsize=(7, 6))
+    # Drawn at its printed size (1.76 in, next to the two recall panels);
+    # the shared legend comes from fig_dr_boxplots.py, so colors match it.
+    fig_b, ax_b = plt.subplots(figsize=(1.76, 1.45))
     bin_labels = [b[2] for b in BINS]
     x = np.arange(len(BINS))
     bar_w = 0.10
     palette = {
-        "bioemu":        "#d62728",
-        "esmflow_pdb":   "#ff9800",
-        "esmdiff":       "#f1c40f",
-        "alphaflow_pdb": "#e84a72",
-        "cfrandom":      "#1f77b4",
-        "afsample2":     "#56a3df",
+        "bioemu":        "#C0392B",
+        "esmflow_pdb":   "#E67E22",
+        "esmdiff":       "#F1C40F",
+        "alphaflow_pdb": "#E74C3C",
+        "cfrandom":      "#1F4E79",
+        "afsample2":     "#2980B9",
         "afsample3_biorxiv": "#17A589",
-        "speach_af":     "#7faec0",
+        "speach_af":     "#5DADE2",
     }
     for ti, t in enumerate(TOOLS):
         means = [float(np.mean(v)) if v else 0.0 for v in bin_recall[t]]
         offset = (ti - (len(TOOLS) - 1) / 2) * bar_w
         ax_b.bar(x + offset, means, width=bar_w,
-                 color=palette[t], edgecolor="#222", linewidth=0.4,
+                 color=palette[t], edgecolor="#222", linewidth=0.3,
                  label=TOOL_DISPLAY[t])
 
     ax_b.set_xticks(x)
-    # Three short lines per bin so the labels don't collide at this font size.
-    ax_b.set_xticklabels([lab.replace(" ", "\n", 1) for lab in bin_labels], fontsize=14)
-    ax_b.tick_params(axis="y", labelsize=16)
-    ax_b.set_ylabel("Mean $\\text{Recall}_{0.9}$", fontsize=16)
+    # Bin names and ensemble counts are in the figure caption.
+    ax_b.set_xticklabels(["<8", "8–15", ">15"])
+    ax_b.set_xlabel("GT motion amplitude (Å)")
+    ax_b.set_ylabel("Recall")
     ax_b.set_ylim(0, 0.5)
+    ax_b.set_yticks([0.0, 0.2, 0.4])
     ax_b.grid(axis="y", linestyle=":", alpha=0.5)
-    ax_b.legend(loc="upper left", bbox_to_anchor=(1.02, 1.0),
-                fontsize=11, ncol=1, framealpha=0.95,
-                handlelength=1.2, handletextpad=0.4,
-                borderaxespad=0.2)
-    for xi, bc in enumerate(bin_count):
-        ax_b.text(xi, ax_b.get_ylim()[1] * 0.97, f"$n$ = {bc}",
-                  ha="center", va="top", fontsize=16, color="#555")
+    print("mechanism bins:", ", ".join(f"{lab.splitlines()[0]} n={bc}" for lab, bc in zip(bin_labels, bin_count)))
 
     fig_b.tight_layout()
     out_b = FIGURES / "unicorne_mechanism.png"
-    fig_b.savefig(out_b, dpi=300, bbox_inches="tight", facecolor="white")
-    fig_b.savefig(str(out_b).rsplit(".", 1)[0] + ".pdf", bbox_inches="tight")
+    paper_style.finalize(fig_b, 1.76, relayout=False)
+    fig_b.subplots_adjust(**paper_style.FIG3_MARGINS)
+    fig_b.savefig(out_b, dpi=300, facecolor="white")
+    fig_b.savefig(str(out_b).rsplit(".", 1)[0] + ".pdf")
     plt.close(fig_b)
     print(f"Saved {out_b}")
 

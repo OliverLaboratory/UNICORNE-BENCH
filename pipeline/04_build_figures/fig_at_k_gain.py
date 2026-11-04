@@ -28,6 +28,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+import paper_style  # noqa: E402  (serif font; text sized for the paper)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
@@ -145,7 +146,9 @@ def main():
     else:
         anchors = list(K_VALUES)
 
-    fig, ax = plt.subplots(figsize=(7.5, 5.5))
+    # Drawn at its printed size (2.7 in, side by side with its pair; the shared
+    # tool legend is a separate file, see fig_dr_boxplots.py).
+    fig, ax = plt.subplots(figsize=(2.70, 2.1))
     x = np.array(anchors[1:], dtype=float)   # gain is from anchor[i-1] → anchor[i]
 
     for tool in args.tools:
@@ -168,24 +171,23 @@ def main():
         # Mark every point in doubling mode (sparse anyway), every 12th otherwise.
         markevery = 1 if args.doubling else max(1, len(x) // 12)
         ax.plot(x, gains,
-                marker=TOOL_MARKER.get(tool, "o"), markersize=7,
+                marker=TOOL_MARKER.get(tool, "o"), markersize=3.5,
                 markevery=markevery,
-                color=TOOL_COLOR.get(tool, "#444"), linewidth=1.6,
+                color=TOOL_COLOR.get(tool, "#444"), linewidth=1.0,
                 label=TOOL_DISPLAY.get(tool, tool),
-                markeredgecolor="#222", markeredgewidth=0.6)
+                markeredgecolor="#222", markeredgewidth=0.4)
 
     ax.axhline(0, color="#888", linewidth=0.7, linestyle="--")
     unit = "Δ pp" if args.absolute else "% gain"
     metric_short = METRIC_DISPLAY[args.metric]
     if args.doubling:
-        ax.set_xlabel("budget k  (gain from doubling the budget vs previous k)", fontsize=16)
-        ax.set_ylabel(f"{unit} in {metric_short}@k from doubling k", fontsize=16)
+        ax.set_xlabel("budget k (each step doubles k)")
+        ax.set_ylabel(f"{unit} in {metric_short}@k")
         title_suffix = " (per doubling of k)"
     else:
-        ax.set_xlabel("budget k  (gain at step k vs previous step)", fontsize=16)
-        ax.set_ylabel(f"{unit} in {metric_short}@k vs previous k", fontsize=16)
+        ax.set_xlabel("budget k")
+        ax.set_ylabel(f"{unit} in {metric_short}@k")
         title_suffix = ""
-    ax.tick_params(axis="both", labelsize=16)
     abs_suffix = " — absolute Δ (pp)" if args.absolute else ""
     # No title: subcaption in the manuscript handles it.
     ax.set_xscale("log")
@@ -203,7 +205,8 @@ def main():
     label_ticks = [k for k in label_candidates
                    if (args.xmax is None or k <= args.xmax)]
     ax.set_xticks(label_ticks)
-    ax.set_xticklabels([str(k) for k in label_ticks])
+    ax.set_xticklabels([str(k) for k in label_ticks], rotation=45, ha="right",
+                       rotation_mode="anchor")
     if args.doubling:
         # Suppress log-scale minor ticks at 2,3,…,9 per decade — in doubling
         # mode the only meaningful x positions are the doubling anchors.
@@ -211,11 +214,8 @@ def main():
     if args.y_lim:
         ax.set_ylim(*args.y_lim)
     ax.grid(True, linestyle=":", alpha=0.5, which="both")
-    leg = ax.legend(loc="best", fontsize=16, frameon=True, ncol=2)
-    leg.get_frame().set_alpha(0.9)
     # Match fig_dr_at_k axes position so the two panels render at
     # identical plot-area dimensions when placed side-by-side.
-    fig.subplots_adjust(left=0.10, right=0.97, top=0.97, bottom=0.13)
 
     suffix = ""
     if args.doubling:
@@ -227,6 +227,8 @@ def main():
         PROJECT_ROOT / "figures" / f"{args.metric}_at_k_{stem}{suffix}_{args.dataset}.png"
     )
     out.parent.mkdir(parents=True, exist_ok=True)
+    paper_style.finalize(fig, 2.70, relayout=False)
+    fig.subplots_adjust(**paper_style.AT_K_MARGINS)
     fig.savefig(out, dpi=180)
     fig.savefig(str(out).rsplit(".", 1)[0] + ".pdf")
     print(f"\nWrote {out}")

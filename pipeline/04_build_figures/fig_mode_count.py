@@ -40,6 +40,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.cluster.hierarchy import fcluster, linkage
 from scipy.spatial.distance import pdist
+import paper_style  # noqa: E402  (serif font; text sized for the paper)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DATASET = "UNICORNE_BENCH"
@@ -275,27 +276,28 @@ def main():
     # Plot — strip + box per tool
     # ------------------------------------------------------------------
     plt.rcParams.update({
-        "font.family": "sans-serif",
-        "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans"],
         "font.size": 12,
         "axes.spines.top": False,
         "axes.spines.right": False,
     })
 
-    fig, ax = plt.subplots(figsize=(11.0, 5.5))
+    # Drawn at its printed size (2.75 in, above the UMAP panel): one row per
+    # tool, effective mode count on x, each tool's mean EMD on the right axis.
+    fig, ax = plt.subplots(figsize=(2.75, 1.75))
     rng = np.random.default_rng(0)
-    positions = list(range(1, len(TOOLS) + 1))
+    positions = list(range(len(TOOLS), 0, -1))      # first tool on top
     box_data = [per_tool_modes[t] for t in TOOLS]
     bp = ax.boxplot(
         box_data,
         positions=positions,
-        widths=0.5,
+        vert=False,
+        widths=0.55,
         patch_artist=True,
         showfliers=False,
-        medianprops=dict(color="black", linewidth=1.6),
-        boxprops=dict(linewidth=0.9),
-        whiskerprops=dict(color="#444"),
-        capprops=dict(color="#444"),
+        medianprops=dict(color="black", linewidth=1.0),
+        boxprops=dict(linewidth=0.6),
+        whiskerprops=dict(color="#444", linewidth=0.6),
+        capprops=dict(color="#444", linewidth=0.6),
         zorder=2,
     )
     for patch, t in zip(bp["boxes"], TOOLS):
@@ -307,36 +309,37 @@ def main():
         ys = per_tool_modes[t]
         if not ys:
             continue
-        x_jit = positions[ti] + rng.uniform(-0.18, 0.18, size=len(ys))
-        ax.scatter(x_jit, ys, s=8, alpha=0.35,
-                   facecolor="white", edgecolor=PALETTE[t], linewidth=0.6,
+        y_jit = positions[ti] + rng.uniform(-0.18, 0.18, size=len(ys))
+        ax.scatter(ys, y_jit, s=1.5, alpha=0.35,
+                   facecolor="white", edgecolor=PALETTE[t], linewidth=0.3,
                    zorder=1)
 
-    ax.set_xticks(positions)
-    labels = []
-    for t in TOOLS:
-        emd = emd_means.get(t, float("nan"))
-        emd_txt = f"EMD = {emd:.3f}" if not np.isnan(emd) else "EMD = --"
-        labels.append(f"{TOOL_DISPLAY[t]}\n{emd_txt}")
-    ax.set_xticklabels(labels, fontsize=12)
-    ax.tick_params(axis="y", labelsize=12)
-    ax.set_ylabel("Effective mode count $M_{\\mathrm{eff}}$", fontsize=12)
-    ax.axhline(1.0, color="#444", linestyle=":", linewidth=0.9)
-    ax.text(0.01, 1.0, " perfect unimodality ($M_{\\mathrm{eff}}=1$)",
-            fontsize=10, color="#444", va="bottom",
-            transform=ax.get_yaxis_transform(),
-            bbox=dict(boxstyle="round,pad=0.15", facecolor="white",
-                      edgecolor="none", alpha=0.85))
-    # Cap y so the small per-tool boxes stay readable; outliers above 6
+    ax.set_yticks(positions)
+    ax.set_yticklabels([TOOL_DISPLAY[t] for t in TOOLS])
+    ax.set_xlabel("Effective mode count $M_{\\mathrm{eff}}$")
+    ax.axvline(1.0, color="#444", linestyle=":", linewidth=0.7)
+    # Cap x so the small per-tool boxes stay readable; outliers above 6
     # (a handful per tool) are still represented by jittered points but
     # don't dominate the axis.
-    ax.set_ylim(0.95, 6.0)
-    ax.grid(axis="y", linestyle=":", alpha=0.4)
+    ax.set_xlim(0.9, 6.0)
+    ax.set_ylim(0.4, len(TOOLS) + 0.6)
+    ax.grid(axis="x", linestyle=":", alpha=0.4)
 
-    fig.tight_layout()
+    emd_ax = ax.twinx()
+    emd_ax.set_ylim(ax.get_ylim())
+    emd_ax.set_yticks(positions)
+    emd_ax.set_yticklabels([f"{emd_means[t]:.3f}" if not np.isnan(emd_means.get(t, np.nan)) else "--"
+                            for t in TOOLS])
+    emd_ax.tick_params(axis="y", length=0)
+    emd_ax.set_ylabel("EMD", rotation=0, va="bottom", ha="center")
+    emd_ax.yaxis.set_label_coords(1.08, 1.0)
+    for spine in ("top", "right"):
+        emd_ax.spines[spine].set_visible(False)
+
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(args.output, dpi=300, bbox_inches="tight", facecolor="white")
-    fig.savefig(str(args.output).rsplit(".", 1)[0] + ".pdf", bbox_inches="tight")
+    paper_style.finalize(fig, 2.75, median_pt=7.5)
+    fig.savefig(args.output, dpi=300, facecolor="white")
+    fig.savefig(str(args.output).rsplit(".", 1)[0] + ".pdf")
     plt.close(fig)
     print(f"\nSaved {args.output}")
 

@@ -28,6 +28,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+import paper_style  # noqa: E402  (serif font; text sized for the paper)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
@@ -95,9 +96,9 @@ METRIC_COLUMN = {
     "tm_bar": "tm_bar_at_k_{k}_mean",
 }
 METRIC_LABEL = {
-    "dr": "Recall@k  (fraction of GT states recovered at TM ≥ 0.9, top-k preds)",
-    "cr": "FRR@k  (fraction of ensembles with Recall=1 at top-k)",
-    "tm_bar": "TM@k  (mean best-match TM, top-k preds)",
+    "dr": "Recall@k",
+    "cr": "FRR@k",
+    "tm_bar": r"$\overline{\mathrm{TM}}$@k",
 }
 METRIC_TITLE = {
     "dr": "Recall vs sample budget",
@@ -151,7 +152,9 @@ def main():
     if keep is not None:
         print(f"filter: {len(keep)} ensembles")
 
-    fig, ax = plt.subplots(figsize=(7.5, 5.5))
+    # Drawn at its printed size (2.7 in, side by side with its pair; the shared
+    # tool legend is a separate file, see fig_dr_boxplots.py).
+    fig, ax = plt.subplots(figsize=(2.70, 2.1))
     x = np.array(K_VALUES, dtype=float)
     for tool in args.tools:
         by_k = load_metric_at_k(args.dataset, tool, args.metric, keep)
@@ -173,20 +176,19 @@ def main():
         # mark every Nth point — picks roughly 10-15 markers across the curve.
         markevery = max(1, len(K_VALUES) // 12)
         ax.plot(x, means,
-                marker=TOOL_MARKER.get(tool, "o"), markersize=7,
+                marker=TOOL_MARKER.get(tool, "o"), markersize=3.5,
                 markevery=markevery,
                 color=TOOL_COLOR.get(tool, "#444"),
-                linewidth=1.6,
+                linewidth=1.0,
                 label=TOOL_DISPLAY.get(tool, tool),
-                markeredgecolor="#222", markeredgewidth=0.6)
+                markeredgecolor="#222", markeredgewidth=0.4)
         if args.show_band:
             ax.fill_between(x, means - sems, means + sems,
                             color=TOOL_COLOR.get(tool, "#444"), alpha=0.12,
                             linewidth=0)
 
-    ax.set_xlabel("prediction budget k  (# samples kept)", fontsize=16)
-    ax.tick_params(axis="both", labelsize=16)
-    ax.set_ylabel(METRIC_LABEL[args.metric], fontsize=16)
+    ax.set_xlabel("budget k (samples)")
+    ax.set_ylabel(METRIC_LABEL[args.metric])
     # No title: subcaption in the manuscript handles it.
     ax.set_xscale("log")
     if args.xmax:
@@ -206,18 +208,17 @@ def main():
     # plotted data — works well for these monotone-rising @k curves where
     # the lower-right corner is open for DR/CR (low ceilings) and the
     # upper-left is open for EU (lines fill the upper half).
-    leg = ax.legend(loc="best", fontsize=16, frameon=True, ncol=2)
-    leg.get_frame().set_alpha(0.9)
     # Pin axes to identical fractional position across the panel pair so
     # the side-by-side rendering in the manuscript has matching plot
     # areas (saved without bbox_inches='tight' to preserve the canvas).
-    fig.subplots_adjust(left=0.10, right=0.97, top=0.97, bottom=0.13)
 
     suffix = f"_xmax{args.xmax}" if args.xmax else ""
     out = args.output or (
         PROJECT_ROOT / "figures" / f"{args.metric}_at_k_lineplot{suffix}_{args.dataset}.png"
     )
     out.parent.mkdir(parents=True, exist_ok=True)
+    paper_style.finalize(fig, 2.70, relayout=False)
+    fig.subplots_adjust(**paper_style.AT_K_MARGINS)
     fig.savefig(out, dpi=180)
     fig.savefig(str(out).rsplit(".", 1)[0] + ".pdf")
     print(f"\nWrote {out}")

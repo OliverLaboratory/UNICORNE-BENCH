@@ -15,6 +15,7 @@ import csv
 from pathlib import Path
 
 import numpy as np
+import paper_style  # noqa: E402  (serif font; text sized for the paper)
 
 BASE = Path(__file__).resolve().parents[2]
 RESULTS = BASE / "results"
@@ -125,8 +126,6 @@ def _load_sim(eid_dir: Path, prefix: str,
 def _nature_rc():
     import matplotlib.pyplot as plt
     plt.rcParams.update({
-        "font.family": "sans-serif",
-        "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans"],
         "font.size": 16,
         "axes.titlesize": 10,
         "axes.labelsize": 9,
@@ -401,6 +400,26 @@ def collect_data(diversity: str = "min_tm", metric: str = "tm_bar", tools=None):
     return records
 
 
+def _add_marginal_kdes(fig, ax, xs, ys, color="#777777") -> None:
+    """Narrow KDE strips along the top (x) and right (y) edges of ax."""
+    from scipy.stats import gaussian_kde
+    pos = ax.get_position()
+    top = fig.add_axes([pos.x0, pos.y1 + 0.01, pos.width, 0.11])
+    right = fig.add_axes([pos.x1 + 0.012, pos.y0, 0.1, pos.height])
+    gx = np.linspace(*ax.get_xlim(), 300)
+    kx = gaussian_kde(xs)(gx)
+    top.fill_between(gx, kx, color=color, alpha=0.35, linewidth=0)
+    top.plot(gx, kx, color=color, linewidth=0.7)
+    top.set_xlim(ax.get_xlim()); top.set_ylim(0, kx.max() * 1.05)
+    gy = np.linspace(*ax.get_ylim(), 300)
+    ky = gaussian_kde(ys)(gy)
+    right.fill_betweenx(gy, ky, color=color, alpha=0.35, linewidth=0)
+    right.plot(ky, gy, color=color, linewidth=0.7)
+    right.set_ylim(ax.get_ylim()); right.set_xlim(0, ky.max() * 1.05)
+    for a in (top, right):
+        a.axis("off")
+
+
 def plot_scatter(records, output_path=None, diversity: str = "min_tm",
                  metric: str = "tm_bar", ood_only: bool = False):
     """Scatter: GT diversity vs best per-tool metric.
@@ -429,7 +448,13 @@ def plot_scatter(records, output_path=None, diversity: str = "min_tm",
         ys = np.array([_y_with_jitter(r) for r in rec_list])
         return xs, ys
 
-    fig, ax = plt.subplots(figsize=(7, 7))
+    # Drawn at its printed size: the AF2-OOD panel is about 2 in wide in the
+    # main text (no callouts or legend; tool colors and markers as in the
+    # recall figure), the all-protein version fills the appendix text width.
+    print_w = 2.2 if ood_only else 5.5
+    fig, ax = plt.subplots(figsize=(print_w, 2.3 if ood_only else 6.3))
+    marker_size = 12 if ood_only else 40
+    callout_scale = print_w / 7.0          # offsets were tuned on a 7 in canvas
 
     def _draw(rec_subset, color, marker, *, size, alpha, lw, zorder, label=None):
         if not rec_subset:
@@ -452,14 +477,15 @@ def plot_scatter(records, output_path=None, diversity: str = "min_tm",
         marker = _TOOL_MARKER.get(tool, "o")
         in_train = [r for r in tool_recs if not r["af2_ood"]]
         ood      = [r for r in tool_recs if r["af2_ood"]]
-        tool_label = f"{TOOL_DISPLAY[tool]} (n={len(tool_recs)})"
+        tool_label = (f"{TOOL_DISPLAY[tool]} ({len(tool_recs)})" if ood_only
+                      else f"{TOOL_DISPLAY[tool]} (n={len(tool_recs)})")
         if ood_only:
-            _draw(ood, color, marker, size=90, alpha=0.95, lw=0.5, zorder=3,
+            _draw(ood, color, marker, size=marker_size, alpha=0.95, lw=0.3, zorder=3,
                   label=tool_label)
         else:
-            _draw(in_train, color, marker, size=90, alpha=0.30, lw=0.5,
+            _draw(in_train, color, marker, size=marker_size, alpha=0.30, lw=0.3,
                   zorder=2, label=tool_label)
-            _draw(ood, color, marker, size=90, alpha=0.95, lw=0.5, zorder=3)
+            _draw(ood, color, marker, size=marker_size, alpha=0.95, lw=0.3, zorder=3)
 
 
     # Tie/zero-recall ties: any record where all tools tied (e.g. all 0). Already
@@ -479,19 +505,19 @@ def plot_scatter(records, output_path=None, diversity: str = "min_tm",
         "Q5SL35": (-25, 18),      # CMP kinase
         "P02693": (-15, 20),      # FABP
         "Q02MM2": (-70, -18),     # Cas6/Csy4
-        "P74903": (-70, -5),      # V-ATPase F
+        "P74903": (-40, -40),     # V-ATPase F
         "P61626": (15, 18),       # Lysozyme C
-        "P0A7M6": (20, -20),      # uL29
+        "P0A7M6": (45, -45),      # uL29
         "O06976": (-80, 8),       # HPr-like Crh
     }
     for r in records:
-        if not r["highlight"]:
+        if not r["highlight"] or ood_only:
             continue
         ox, oy = offsets.get(r["uid"], (15, 0))
         ax.annotate(
             r["name"], (r["diversity"], r["best_value"]),
-            xytext=(ox, oy), textcoords="offset points",
-            fontsize=13, color="#222222",
+            xytext=(ox * callout_scale, oy * callout_scale), textcoords="offset points",
+            fontsize=7, color="#222222",
             bbox=dict(boxstyle="round,pad=0.25", facecolor="#fffde7",
                       edgecolor="#ccc59e", linewidth=0.5, alpha=0.95),
             arrowprops=dict(
@@ -503,9 +529,33 @@ def plot_scatter(records, output_path=None, diversity: str = "min_tm",
             zorder=10,
         )
 
-    # In OOD-only mode, label a curated handful of interesting OOD proteins
-    # with the same yellow-callout style as the main highlight set.
+    # AF2-OOD panel: label the curated OOD proteins (plus Troponin C, the one
+    # gold-standard table protein that is AF2-OOD) with text placed by hand in
+    # the empty regions of the small panel, joined by thin leader lines.
     if ood_only:
+        label_pos = {   # uid: (label, text x, text y, horizontal alignment)
+            "O95563":     ("Pyruvate carrier", 0.02, 0.985, "left"),
+            "O60925":     ("Prefoldin",        0.02, 0.915, "left"),
+            "P06899":     ("Histone H2B",      0.02, 0.845, "left"),
+            "P62877":     ("RBX1",             0.02, 0.765, "left"),
+            "P63317":     ("Troponin C",       0.02, 0.665, "left"),
+            "A0A125YJ71": ("PDCD5",            0.40, 0.345, "left"),
+            "P33187":     ("Metallothionein",  0.98, 0.475, "right"),
+            "Q6INL9":     ("HAUS augmin",      0.98, 0.405, "right"),
+            "Q9H3R5":     ("CENP-H",           0.98, 0.335, "right"),
+        }
+        for r in records:
+            if r["uid"] not in label_pos:
+                continue
+            label, tx, ty, ha = label_pos[r["uid"]]
+            ax.annotate(label, (r["diversity"], r["best_value"]), xytext=(tx, ty),
+                        textcoords="data", ha=ha, va="center", fontsize=7, color="#222222",
+                        bbox=dict(boxstyle="round,pad=0.12", facecolor="#fffde7",
+                                  edgecolor="#ccc59e", linewidth=0.4, alpha=0.95),
+                        arrowprops=dict(arrowstyle="-", color="black", lw=0.4,
+                                        shrinkA=0, shrinkB=2),
+                        zorder=10)
+    if False:
         # Manually-tuned offsets so the callouts don't collide.
         ood_offsets = {
             "A0A125YJ71": (32,  10),     # bottom-left
@@ -545,10 +595,11 @@ def plot_scatter(records, output_path=None, diversity: str = "min_tm",
                    alpha=1.0, zorder=0)
         ax.axhline(0.9, ls=":", color="#888888", lw=0.6, alpha=0.6)
         ax.axhline(0.85, ls="--", color="#888888", lw=0.7, alpha=0.7)
-        ax.text(0.01, 0.857, "GT-GT max TM = 0.85", fontsize=16,
-                color="#555555", alpha=0.85,
-                transform=ax.get_yaxis_transform())
-        ax.set_ylabel("Best mean best-match TM across tools")
+        if not ood_only:   # the small panel explains the lines in its caption
+            ax.text(0.01, 0.857, "GT-GT max TM = 0.85", fontsize=7,
+                    color="#555555", alpha=0.85,
+                    transform=ax.get_yaxis_transform())
+        ax.set_ylabel(r"Best $\overline{\mathrm{TM}}$ across tools")
         ax.set_ylim(0.3, 1.02)
     elif metric == "dr":
         ax.set_ylabel("Best Recall (fraction of GT states recovered) across tools")
@@ -582,11 +633,10 @@ def plot_scatter(records, output_path=None, diversity: str = "min_tm",
         ax.text(0.02, 0.907, "TM = 0.9", fontsize=16, color="#555555", alpha=0.8,
                 transform=ax.get_yaxis_transform())
     else:
-        ax.set_xlabel("GT diversity (min pairwise TM)", fontsize=16)
+        ax.set_xlabel("min pairwise GT TM" if ood_only else "GT diversity (min pairwise TM)")
         ax.set_xlim(-0.02, 1.02)
-        ax.text(0.01, 0.907, "TM = 0.9", fontsize=16, color="#555555", alpha=0.8)
-    ax.tick_params(axis="both", labelsize=16)
-    ax.yaxis.label.set_size(13)
+        if not ood_only:
+            ax.text(0.01, 0.907, "TM = 0.9", fontsize=7, color="#555555", alpha=0.8)
 
     # Combined legend: per-tool marker shape (color + symbol), plus
     # solid-vs-light fill key for AF2-OOD.
@@ -608,18 +658,40 @@ def plot_scatter(records, output_path=None, diversity: str = "min_tm",
     # Legend wraps across multiple rows so it fits under the square axes
     # without stretching the figure horizontally. With 8 tools (+ the two
     # AF2-OOD fill keys) that's 3 cols × 3-4 rows; 4 cols overflow the canvas.
-    ax.legend(handles=handles, loc="upper center",
-              bbox_to_anchor=(0.5, -0.13),
-              ncol=3, frameon=True, framealpha=0.95, fontsize=12,
-              borderaxespad=0.4, columnspacing=1.0,
-              handletextpad=0.4)
-
-    # Reserve room for the legend inside the 7x7 canvas so the saved PNG
-    # has a 1:1 aspect ratio (matches Fig 8b).  We deliberately do NOT use
-    # bbox_inches='tight' on save — that would re-crop and make the
-    # canvas non-square.
-    fig.subplots_adjust(left=0.11, right=0.97, top=0.97, bottom=0.32)
+    if ood_only:
+        # The legend sits under the table beside this panel in the paper, so
+        # it is written as its own file (3.2 in wide, two rows).
+        leg_fig = plt.figure(figsize=(3.19, 0.32))
+        leg = leg_fig.legend(handles=handles, loc="center", ncol=4, frameon=False,
+                             fontsize=7, columnspacing=0.5, handletextpad=0.1,
+                             handlelength=1.0, borderaxespad=0.0)
+        leg_fig.canvas.draw()
+        leg_w = leg.get_window_extent().width / leg_fig.dpi
+        assert leg_w <= 3.19, f"legend is {leg_w:.2f} in wide; it must fit under the table (3.19 in)"
+        leg_out = str(output_path or FIGURES / "unicorne_gold_standard.png").rsplit(".", 1)[0] + "_legend"
+        leg_fig.savefig(leg_out + ".png", dpi=300)
+        leg_fig.savefig(leg_out + ".pdf")
+        plt.close(leg_fig)
+    else:
+        ax.legend(handles=handles, loc="upper center",
+                  bbox_to_anchor=(0.5, -0.12),
+                  ncol=4, frameon=True, framealpha=0.95, fontsize=7,
+                  borderaxespad=0.4, columnspacing=1.0,
+                  handletextpad=0.3)
     out = output_path or FIGURES / "unicorne_gold_standard.png"
+    if ood_only:
+        # Small panel: every text 7 pt, fixed margins so the square plot keeps
+        # its size and the legend band below it.
+        paper_style.finalize(fig, print_w, median_pt=7.0, max_pt=7.0, relayout=False)
+        # Square plot area (1.43 in) with room above and to the right for the
+        # marginal densities of the plotted (AF2-OOD) ensembles.
+        ax.set_box_aspect(None)
+        fig.subplots_adjust(left=0.2, right=0.85, top=0.782, bottom=0.16)
+        ood_recs = [r for r in records if r["af2_ood"]]
+        _add_marginal_kdes(fig, ax, [r["diversity"] for r in ood_recs],
+                           [r["best_value"] for r in ood_recs])
+    else:
+        paper_style.finalize(fig, print_w)
     fig.savefig(str(out), dpi=300, facecolor="white")
     fig.savefig(str(out).rsplit(".", 1)[0] + ".pdf")
     plt.close(fig)

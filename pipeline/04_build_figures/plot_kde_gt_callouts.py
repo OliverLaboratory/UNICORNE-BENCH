@@ -40,6 +40,8 @@ from matplotlib.offsetbox import AnnotationBbox, OffsetImage
 from PIL import Image
 from scipy.stats import gaussian_kde
 
+import paper_style  # noqa: E402  (serif font; text sized for the paper)
+
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DATASET = "UNICORNE_BENCH"
 
@@ -99,7 +101,7 @@ def _pymol_color_name(hex_color: str) -> str:
 
 
 def render_ribbon_pymol(pdb_path: Path, color_hex: str, out_png: Path,
-                         size: int = 600) -> None:
+                         size: int = 1600) -> None:
     """Render a structure as a clean cartoon ribbon with PyMOL."""
     out_png.parent.mkdir(parents=True, exist_ok=True)
     color_cmd = _pymol_color_name(color_hex)
@@ -564,7 +566,8 @@ def plot_protein_tsne(eid: str, name: str, tools: list[str],
                       out_dir: Path, ribbon_dir: Path,
                       n_per_tool: int = 80, perplexity: float = 30.0,
                       seed: int = 42, workers: int = 16,
-                      max_extras: int = 50) -> Path | None:
+                      max_extras: int = 50,
+                      embedding_cache: Path | None = None) -> Path | None:
     """t-SNE embedding of GTs + subsampled predictions, KDE per tool.
 
     Builds a full pairwise TM-distance matrix over (GTs ∪ subsampled preds)
@@ -636,12 +639,19 @@ def plot_protein_tsne(eid: str, name: str, tools: list[str],
     cache_dir = out_dir / "_cache"
     cache_dir.mkdir(parents=True, exist_ok=True)
     cache_path = cache_dir / f"{eid}_{cache_key}.npz"
+    if embedding_cache is not None:
+        # An explicit cache (e.g. the one behind the published figure) whose
+        # key was computed from different absolute paths; rows are the GTs
+        # followed by each tool's subsampled predictions, in --tools order.
+        cache_path = Path(embedding_cache)
 
     if cache_path.exists():
         print(f"  [{eid}] cache hit: {cache_path.name}")
         cached = np.load(cache_path)
         tm = cached["tm"]
         embed = cached["embed"]
+        if embed.shape[0] != n_total:
+            raise SystemExit(f"{cache_path.name}: {embed.shape[0]} points, expected {n_total}")
     else:
         print(f"  [{eid}] embedding {n_canonical} canonical GTs + "
               f"{n_pred} preds ({n_total} total)")
@@ -729,17 +739,17 @@ def plot_protein_tsne(eid: str, name: str, tools: list[str],
             render_ribbon_pymol(Path(g), GT_COLOR_HEX[k], out_png)
         ribbon_imgs.append(crop_to_content(out_png))
 
-    # 6) Plot — one panel per tool, side-by-side, sharing the same UMAP
-    #    coordinate system. Each panel: KDE+scatter for that tool's preds,
-    #    plus all GT stars (no PyMOL callouts inside the panels — those
-    #    sit in a shared row across the top of the figure).
+    # 6) Plot at the printed size (2.75 in wide in the paper): the GT ribbons
+    #    in a row across the top, then one panel per tool sharing the same
+    #    UMAP coordinates. Each panel: KDE + scatter of that tool's preds and
+    #    the GT stars.
     n_tools = len(tools)
-    fig = plt.figure(figsize=(7.0 * n_tools, 7.5))
-    panel_h = 0.62
-    panel_y = 0.06
-    ribbon_y = 0.74
-    ribbon_h = 0.18
-    panel_w = 0.96 / n_tools - 0.04
+    fig_w, fig_h = 2.75, 2.0
+    fig = plt.figure(figsize=(fig_w, fig_h))
+    margin, gap = 0.015, 0.03
+    ribbon_y, ribbon_h = 0.645, 0.29         # figure fractions
+    panel_y, panel_h = 0.01, 0.555
+    panel_w = (1 - 2 * margin - gap * (n_tools - 1)) / n_tools
 
     pad_x = (embed[:, 0].max() - embed[:, 0].min()) * 0.08
     pad_y = (embed[:, 1].max() - embed[:, 1].min()) * 0.08
@@ -751,28 +761,27 @@ def plot_protein_tsne(eid: str, name: str, tools: list[str],
     xx, yy = np.meshgrid(xs, ys)
     grid = np.vstack([xx.ravel(), yy.ravel()])
 
-    # Top row: PyMOL ribbon callouts spanning both panels.
+    # Top row: PyMOL ribbons, as large as the row allows, labelled in the
+    # GT's color.
+    slot_w = (1 - 2 * margin) / max(1, n_canonical)
     for k in range(n_canonical):
-        rx = 0.04 + (k + 0.5) * (0.96 / max(1, n_canonical)) - 0.08
-        rx = min(0.96 - 0.16, max(0.04, rx))
-        ax_r = fig.add_axes([rx, ribbon_y, 0.16, ribbon_h])
+        ax_r = fig.add_axes([margin + k * slot_w, ribbon_y, slot_w, ribbon_h])
         ax_r.imshow(ribbon_imgs[k], interpolation="bilinear")
         ax_r.set_xticks([]); ax_r.set_yticks([])
         for sp in ax_r.spines.values():
             sp.set_visible(False)
+        # Labels at one height for all ribbons (image boxes differ in aspect).
+        fig.text(margin + (k + 0.5) * slot_w, ribbon_y + ribbon_h + 0.01,
+                 f"GT {chr(65 + k)} ({_gt_label(canonical_gt_paths[k])})",
+                 ha="center", va="bottom", fontsize=7, color=GT_COLOR_HEX[k])
 
-    # Two side-by-side data axes
-    panel_axes = []
     for ti, tool in enumerate(tools):
-        ax = fig.add_axes([0.04 + ti * (panel_w + 0.04), panel_y,
-                           panel_w, panel_h])
+        ax = fig.add_axes([margin + ti * (panel_w + gap), panel_y, panel_w, panel_h])
         ax.set_xlim(*xlim); ax.set_ylim(*ylim)
         ax.set_xticks([]); ax.set_yticks([])
-        c = TOOL_COLOR[tool]
 
         # Pred KDE colored by density — energy-style: blue = high density
         # (low energy / stable), red = low density (high energy / unstable).
-        # cmap RdBu maps low values → red, high values → blue, which matches.
         mask = np.array([tt == tool for (tt, _) in pred_records])
         if mask.any():
             xy = pred_xy[mask]
@@ -780,42 +789,31 @@ def plot_protein_tsne(eid: str, name: str, tools: list[str],
                 kde = gaussian_kde(xy.T, bw_method=0.30)
                 zz = kde(grid).reshape(xx.shape)
                 levels = np.linspace(zz.min(), zz.max(), 14)
-                ax.contourf(xx, yy, zz, levels=levels, cmap="RdBu",
-                            alpha=0.85)
+                ax.contourf(xx, yy, zz, levels=levels, cmap="RdBu", alpha=0.85)
                 ax.contour(xx, yy, zz, levels=levels[2::3], colors="#222222",
-                           alpha=0.30, linewidths=0.4)
+                           alpha=0.30, linewidths=0.3)
             except Exception:
                 pass
-            # Black scatter dots stay visible against any colormap
-            ax.scatter(xy[:, 0], xy[:, 1], s=10, c="#111111", alpha=0.55,
-                       edgecolors="white", linewidths=0.25, zorder=5,
-                       label=f"{TOOL_DISPLAY.get(tool, tool)} preds (n={len(xy)})")
+            ax.scatter(xy[:, 0], xy[:, 1], s=0.6, c="#111111", alpha=0.55,
+                       linewidths=0, zorder=5)
 
-        # GT stars — same positions in both panels (shared embedding).
-        # Solid colored fill with a yellow outline (higher contrast than
-        # black against the blue high-density centers of the heat KDE).
         for k in range(n_gt):
             ax.scatter([canonical_xy[k, 0]], [canonical_xy[k, 1]],
-                       marker="*", s=380, c=GT_COLOR_HEX[k],
-                       edgecolors="black", linewidths=1.4, zorder=10,
-                       label=f"GT {chr(65+k)}" if ti == 0 else None)
+                       marker="*", s=45, c=GT_COLOR_HEX[k],
+                       edgecolors="black", linewidths=0.5, zorder=10)
 
-        ax.set_xlabel("UMAP dim 1", fontsize=16)
-        if ti == 0:
-            ax.set_ylabel("UMAP dim 2", fontsize=16)
-        # Title shows tool name + the ensemble's per-tool EMD so readers can
-        # correlate the visual KDE shape with the macro metric.
+        # Title: tool name and the ensemble's per-tool EMD, so readers can
+        # relate the density shape to the macro metric.
         emd_v = _ensemble_metric(eid, tool, "emd")
-        emd_str = f"  EMD = {emd_v:.3f}" if emd_v is not None else ""
-        ax.tick_params(axis="both", labelsize=16)
-        ax.grid(True, linestyle=":", linewidth=0.5, alpha=0.3)
-        panel_axes.append(ax)
-
+        emd_str = f", EMD {emd_v:.3f}" if emd_v is not None else ""
+        ax.set_title(f"{TOOL_DISPLAY.get(tool, tool)}{emd_str}", fontsize=7,
+                     color=TOOL_COLOR[tool], pad=2)
 
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / f"{eid}_{name.lower().replace(' ', '_')}_tsne.png"
-    fig.savefig(out_path, dpi=180, bbox_inches="tight")
-    fig.savefig(str(out_path).rsplit(".", 1)[0] + ".pdf", bbox_inches="tight")
+    fig.savefig(out_path, dpi=300)
+    # dpi sets the resolution of the embedded ribbon images in the PDF
+    fig.savefig(str(out_path).rsplit(".", 1)[0] + ".pdf", dpi=600)
     plt.close(fig)
     print(f"  wrote {out_path}")
     return out_path

@@ -28,6 +28,7 @@ from pathlib import Path
 import numpy as np
 import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import paper_style  # noqa: E402  (serif font; text sized for the paper)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DATASETS = ["OOD60", "DOMAINMOTION"]
@@ -180,45 +181,38 @@ def main():
             break
         threshold_tm = float(tms[idx])
 
-    fig, ax = plt.subplots(1, 1, figsize=(8, 6))
-    y_top = 8.0
+    # Drawn at its printed size (2.7 in, wrapped beside the text). Title, n and
+    # the marker-size key are in the figure caption.
+    fig, ax = plt.subplots(1, 1, figsize=(2.70, 1.95))
+    y_top = 9.0   # headroom for the legend above the data
     ax.axhspan(0, avg_gt_rmsd, xmin=(threshold_tm - 0.25) / (1.02 - 0.25),
                xmax=1.0, color="#2CA02C", alpha=0.08)
     DS_COLORS = {"OOD60": "#4878CF", "DOMAINMOTION": "#EE854A"}
     dsets_arr = np.array(dsets)
-    sizes = np.array([max(10, s * 0.15) for s in lengths])
+    sizes = np.array([max(3, s * 0.03) for s in lengths])   # marker area ~ sequence length
     for ds, color in DS_COLORS.items():
         mask = dsets_arr == ds
         if not mask.any():
             continue
-        ax.scatter(tms[mask], rmsds[mask], s=sizes[mask], c=color, alpha=0.5,
-                   edgecolors="white", linewidth=0.3, label=ds)
-    ax.axhline(avg_gt_rmsd, color="#2CA02C", linestyle="--", alpha=0.7, linewidth=1.5)
-    ax.text(0.26, avg_gt_rmsd + 0.15, f"GT min global RMSD = {avg_gt_rmsd:.1f} Å",
-            color="#2CA02C", fontsize=10)
-    ax.axvline(threshold_tm, color="#D65F5F", linestyle="-", alpha=0.8, linewidth=1.5)
-    ax.text(threshold_tm - 0.005, y_top * 0.95, f"TM = {threshold_tm:.2f}", color="#D65F5F",
-            fontsize=10, va="top", ha="right")
-    ax.set_xlabel("TM-score (best prediction)", fontsize=13)
-    ax.set_ylabel("C$\\alpha$ RMSD (Å) of best-TM prediction", fontsize=13)
-    ax.set_title(f"OOD60 + DOMAINMOTION: TM vs RMSD ($n = {len(tms)}$)", fontsize=14)
-
-    # Dataset legend (colors) + sequence-length legend (sizes) as separate legends
-    ds_legend = ax.legend(fontsize=10, loc="upper right", title="Dataset", title_fontsize=10)
-    ax.add_artist(ds_legend)
-    size_handles = [
-        ax.scatter([], [], s=s*0.15, c="#888888", alpha=0.5, edgecolors="white", label=f"{s} aa")
-        for s in [100, 300, 600]
-    ]
-    ax.legend(handles=size_handles, fontsize=10, loc="lower right",
-              title="Seq. length", title_fontsize=10)
+        ax.scatter(tms[mask], rmsds[mask], s=sizes[mask], c=color, alpha=0.55,
+                   edgecolors="white", linewidth=0.2, label=ds)
+    ax.axhline(avg_gt_rmsd, color="#2CA02C", linestyle="--", alpha=0.8, linewidth=0.9)
+    ax.text(0.27, avg_gt_rmsd + 0.35, f"min GT RMSD = {avg_gt_rmsd:.1f} Å",
+            color="#2CA02C", fontsize=7)
+    ax.axvline(threshold_tm, color="#D65F5F", linestyle="-", alpha=0.9, linewidth=0.9)
+    ax.text(threshold_tm + 0.01, 6.3, f"TM =\n{threshold_tm:.2f}", color="#D65F5F",
+            fontsize=7, va="center", ha="left")
+    ax.set_xlabel("TM-score of best prediction")
+    ax.set_ylabel("C$\\alpha$ RMSD (Å)")
+    ax.legend(loc="upper left", ncol=2, markerscale=1.5, handletextpad=0.1,
+              columnspacing=0.8, borderpad=0.3, framealpha=0.9)
     ax.set_xlim(0.25, 1.02); ax.set_ylim(0, y_top)
     ax.spines["top"].set_visible(False); ax.spines["right"].set_visible(False)
     ax.grid(True, alpha=0.15)
-    plt.tight_layout()
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(args.output, dpi=200, bbox_inches="tight")
-    fig.savefig(str(args.output).rsplit(".", 1)[0] + ".pdf", bbox_inches="tight")
+    paper_style.finalize(fig, 2.70)
+    fig.savefig(args.output, dpi=300)
+    fig.savefig(str(args.output).rsplit(".", 1)[0] + ".pdf")
     plt.close()
     print(f"Saved {args.output} ({len(tms)} points, threshold TM={threshold_tm:.3f})")
 

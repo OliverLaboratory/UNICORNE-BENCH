@@ -32,6 +32,7 @@ import numpy as np
 # one place.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from fig_unicorne_gold_standard import collect_data, AF2_OOD_TOOLS, FIGURES  # noqa: E402
+import paper_style  # noqa: E402  (serif font; text sized for the paper)
 
 
 IN_TRAIN_COLOR = "#cad8e6"
@@ -48,8 +49,6 @@ def main():
           f"mean={np.mean(ood):.3f}")
 
     plt.rcParams.update({
-        "font.family": "sans-serif",
-        "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans"],
         "font.size": 16,
         "axes.spines.top": False,
         "axes.spines.right": False,
@@ -58,13 +57,14 @@ def main():
     # 7x7 to match the scatter (fig_unicorne_gold_standard.py uses 7x7),
     # so that when the manuscript places the two panels side-by-side at
     # equal widths their plot areas match.
-    fig, ax = plt.subplots(figsize=(7, 7))
+    # Drawn at its printed size (half the text width, appendix).
+    fig, ax = plt.subplots(figsize=(2.75, 2.75))
     bp = ax.boxplot(
         [in_train, ood],
         widths=0.55,
         patch_artist=True,
         showfliers=False,           # outliers redundant with strip points
-        medianprops=dict(color="black", linewidth=1.8),
+        medianprops=dict(color="black", linewidth=1.2),
         whiskerprops=dict(color="#444"),
         capprops=dict(color="#444"),
         boxprops=dict(linewidth=1.0),
@@ -85,8 +85,8 @@ def main():
         jitter = rng.uniform(-0.18, 0.18, size=len(ys))
         ax.scatter(
             x_center + jitter, ys,
-            s=14, alpha=0.55,
-            facecolor="white", edgecolor=edge, linewidth=0.7,
+            s=3, alpha=0.55,
+            facecolor="white", edgecolor=edge, linewidth=0.4,
             zorder=1,
         )
 
@@ -97,15 +97,12 @@ def main():
 
     ax.set_ylabel(r"Best $\overline{\mathrm{TM}}$ across tools", fontsize=16)
     ax.set_ylim(0.3, 1.02)
+    # Dotted: TM = 0.9; dashed: maximum GT-GT TM (0.85) -- explained in the caption.
     ax.axhline(0.9, ls=":", color="#888", lw=0.6, alpha=0.7)
-    ax.text(0.02, 0.905, "TM = 0.9", fontsize=16, color="#666",
-            transform=ax.get_yaxis_transform())
     ax.axhline(0.85, ls="--", color="#888", lw=0.7, alpha=0.7)
-    ax.text(0.02, 0.857, "GT-GT max TM = 0.85", fontsize=16, color="#666",
-            transform=ax.get_yaxis_transform())
 
-    fig.subplots_adjust(left=0.17, right=0.97, top=0.97, bottom=0.13)
     out = FIGURES / "unicorne_ood_boxplot.png"
+    paper_style.finalize(fig, 2.75)
     fig.savefig(out, dpi=300, facecolor="white")
     fig.savefig(str(out).rsplit(".", 1)[0] + ".pdf")
     plt.close(fig)

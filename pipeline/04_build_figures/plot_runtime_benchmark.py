@@ -8,6 +8,7 @@ import statistics
 
 import matplotlib.pyplot as plt
 import numpy as np
+import paper_style  # noqa: E402  (serif font; text sized for the paper)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 FIGURES_DIR = PROJECT_ROOT / "figures"
@@ -133,6 +134,7 @@ def main():
     plt.tight_layout()
 
     # Save
+    paper_style.finalize(fig, 5.5)
     for outdir in [FIGURES_DIR]:
         outdir.mkdir(parents=True, exist_ok=True)
         outpath = outdir / "runtime_benchmark.pdf"

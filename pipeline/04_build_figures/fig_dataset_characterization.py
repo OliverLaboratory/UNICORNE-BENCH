@@ -30,6 +30,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+import paper_style  # noqa: E402  (serif font; text sized for the paper)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
@@ -109,8 +110,6 @@ def main():
     args = parser.parse_args()
 
     plt.rcParams.update({
-        "font.family": "sans-serif",
-        "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans"],
         "font.size": 16,
         "axes.spines.top": False,
         "axes.spines.right": False,
@@ -171,14 +170,15 @@ def main():
               f"median={np.median(sims):.4f}")
 
     ax.set_xlabel(f"{KMER_K}-mer Jaccard threshold (%)")
-    ax.set_ylabel("Pairs above threshold (%)")
+    ax.set_ylabel("Pairs above\nthreshold (%)")
     ax.set_xlim(0, 100)
     ax.set_yscale("log")
     ax.set_ylim(0.01, 110)
-    ax.legend(loc="upper right", frameon=True, framealpha=0.9, fontsize=12)
+    ax.legend(loc="upper right", frameon=True, framealpha=0.9, fontsize=9)
 
     fig.tight_layout()
     args.output.parent.mkdir(parents=True, exist_ok=True)
+    paper_style.finalize(fig, 5.5)
     fig.savefig(args.output, dpi=300, bbox_inches="tight", facecolor="white")
     pdf_out = str(args.output).rsplit(".", 1)[0] + ".pdf"
     fig.savefig(pdf_out, bbox_inches="tight")
