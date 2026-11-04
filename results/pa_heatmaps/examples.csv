@@ -1,0 +1,5 @@
+uniprot,tool,gt_x,gt_y,gt_gt_tm,principal_angle,pa_group
+P02911,bioemu,1LAF_E,2LAO_A,0.7171,86.71,high
+G3XD64,cfrandom,5J1J_A,5JVF_A,0.7851,84.34,high
+O66490,esmdiff,2RGX_A,2RH5_A,0.6979,44.54,low
+P15454,afsample2,1EX6_A,1EX7_A,0.8194,40.69,low

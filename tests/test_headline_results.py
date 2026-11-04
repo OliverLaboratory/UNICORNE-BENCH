@@ -1,5 +1,5 @@
 """
-The published Table 4 numbers (Recall@0.9, FRR, TM-bar, EMD) from the shipped
+The published Table 5 numbers (Recall@0.9, FRR, TM-bar, EMD) from the shipped
 per-ensemble results, and their consistency with the per-GT best-prediction
 scores (no TM-align needed).
 """
@@ -15,7 +15,7 @@ from conftest import REPO
 
 DATASET = "UNICORNE_BENCH"
 
-# Paper Table 4: N, Recall@0.9 % (mean, SD), FRR %, TM-bar (mean, SD), EMD (mean, SD).
+# Paper Table 5: N, Recall@0.9 % (mean, SD), FRR %, TM-bar (mean, SD), EMD (mean, SD).
 TABLE4 = {
     "bioemu":            (823, 30.1, 29.2, 6.1, 0.814, 0.099, 0.384, 0.170),
     "esmflow_pdb":       (829, 23.3, 27.1, 3.4, 0.775, 0.121, 0.382, 0.192),

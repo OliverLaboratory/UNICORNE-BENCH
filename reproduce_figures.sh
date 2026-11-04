@@ -25,6 +25,9 @@ run $F/fig_mode_count.py
 run $F/fig_dr_at_k.py --metric dr
 run $F/fig_at_k_gain.py --metric dr --doubling --absolute
 
+# Section 4.5: principal angle examples
+run $F/fig_pa_heatmaps.py
+
 # Section 4.6: gold-standard panel and AF2-OOD
 run $F/fig_unicorne_gold_standard.py --output figures/unicorne_gold_standard.png
 run $F/fig_unicorne_gold_standard.py --metric tm_bar --ood-only --output figures/unicorne_gold_standard_ood.png

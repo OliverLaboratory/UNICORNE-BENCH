@@ -69,7 +69,7 @@ python pipeline/03_compute_results/compute_metrics.py UNICORNE_BENCH <your_model
 python pipeline/03_compute_results/summarize_tools.py <your_model>
 ```
 
-prints Table 4's metrics for your model next to the eight published tools:
+prints Table 5's metrics for your model next to the eight published tools:
 
 ```
 Tool                    N   Recall@0.9 %  FRR %         TM-bar            EMD
@@ -111,22 +111,23 @@ No GPU, TM-align binary or large download is needed for this step. The repositor
 | Paper item | Script (`pipeline/04_build_figures/`) | Output (`figures/`) |
 |---|---|---|
 | Fig. 2: TM vs. RMSD, TM ≥ 0.9 threshold | `fig_tm_vs_rmsd_scatter.py` | `tm_vs_rmsd_scatter.{png,pdf}` |
-| Table 4: overall performance | `tab_overall_performance.py` | `tab_overall_performance.tex` |
+| Table 5: overall performance | `tab_overall_performance.py` | `tab_overall_performance.tex` |
 | Fig. 3a–b: recall vs. diversity, ensemble size | `fig_dr_boxplots.py` | `dr_lineplot_{tm,ngt}_UNICORNE_BENCH.*` |
 | Fig. 3c: recall vs. motion amplitude | `fig_cofail_mechanism.py` | `unicorne_mechanism.*` |
 | Fig. 4a: effective mode count | `fig_mode_count.py` | `unicorne_mode_count.*` |
+| Fig. 5: free-energy landscapes, high vs. low principal angle | `fig_pa_heatmaps.py` | `pa_heatmaps.*` |
 | Fig. 6a: best TM on AF2-OOD ensembles | `fig_unicorne_gold_standard.py --ood-only` | `unicorne_gold_standard_ood.*` |
 | Fig. 6b: gold-standard panel (BioEMU, AFsample2) | `tab_unicorne_gold_standard.py --tools bioemu afsample2` | `tab_unicorne_gold_standard_reduced.tex` |
-| Tables 10–11: OOD60 / DOMAINMOTION per protein | `tab_ood60_domainmotion.py` | `tab_{ood60,domainmotion}_full.tex` |
+| Tables 11–12: OOD60 / DOMAINMOTION per protein | `tab_ood60_domainmotion.py` | `tab_{ood60,domainmotion}_full.tex` |
 | Fig. 8: dataset characterization | `fig_dataset_characterization.py` | `fig_dataset_characterization.*` |
 | Fig. 9: sample efficiency | `fig_dr_at_k.py`, `fig_at_k_gain.py` | `dr_at_k_*` |
 | Fig. 10: recall vs. sequence length | `fig_dr_boxplots.py` | `dr_lineplot_len_UNICORNE_BENCH.*` |
-| Tables 6–9: Wilcoxon signed-rank tests | `tab_wilcoxon_pvalues.py` | `tab_wilcoxon_pvalues.tex` |
+| Tables 7–10: Wilcoxon signed-rank tests | `tab_wilcoxon_pvalues.py` | `tab_wilcoxon_pvalues.tex` |
 | Fig. 12: inference runtime | `plot_runtime_benchmark.py` | `runtime_benchmark.*` |
 | Fig. 13: best TM vs. diversity, all proteins | `fig_unicorne_gold_standard.py` | `unicorne_gold_standard.*` |
 | Fig. 14: in-train vs. AF2-OOD | `fig_ood_boxplot.py` | `unicorne_ood_boxplot.*` |
 | Fig. 15: co-failure and motion amplitude | `fig_cofail_mechanism.py` | `unicorne_cofail.*` |
-| Table 12: gold-standard panel, all tools | `tab_unicorne_gold_standard.py` | `tab_unicorne_gold_standard.tex` |
+| Table 13: gold-standard panel, all tools | `tab_unicorne_gold_standard.py` | `tab_unicorne_gold_standard.tex` |
 
 AF2-OOD panels (Fig. 6a and the in-train vs. AF2-OOD boxplot) leave out AFsample3: they are defined by AlphaFold2's training cutoff (2018-05-01), and AFsample3 runs AlphaFold3.
 
@@ -138,12 +139,12 @@ These paper items come from outside this pipeline. Their final versions are in `
 |---|---|
 | Fig. 1: curation diagram | Drawn by hand |
 | Fig. 4b: P49258 UMAP | Needs the predicted structures. The script (`plot_kde_gt_callouts.py`) is included and runs once the predictions are in `data/outputs/` |
-| Fig. 5: principal-angle heatmaps | Produced by the UNICORNEdb database pipeline |
 | Fig. 7: Q5U925 case study | Rendered in PyMOL |
 | Table 1: UNICORNEdb statistics | Produced by the UNICORNEdb database pipeline |
 | Table 2: dataset comparison | Compiled from the cited datasets' publications |
 | Table 3: prediction tools | Written by hand |
-| Table 5: training-set overlap | Computed separately (release-date and sequence-identity partitions) |
+| Table 4: evaluation metrics | Definitions, written by hand |
+| Table 6: training-set overlap | Computed separately (release-date and sequence-identity partitions) |
 
 ### Tests
 
@@ -158,7 +159,7 @@ python -m pytest
 | `tests/test_tmalign_scoring.py` | Re-running TM-align on the shipped GT and prediction structures reproduces the stored scores (both normalizations, RMSD, lengths) exactly. Chain 1 is the GT, so the benchmark's TM-score is normalized by GT length; an independent C-alpha reader and the TM-score formula recompute both normalizations from TM-align's superposition. |
 | `tests/test_metrics_from_structures.py` | Recall@0.9, full recovery and mean best TM recomputed from the fixture structures equal the published `results.csv` rows, including best TMs of 0.8996 (missed) and 0.9004 (recovered). |
 | `tests/test_metric_definitions.py` | The metric definitions on hand-built TM matrices: inclusive 0.9 threshold, full recovery, failed pairs, recall@k, EMD. |
-| `tests/test_headline_results.py` | Table 4 (N, Recall@0.9, FRR, TM-bar, EMD for all eight tools) from the shipped results, including the 8.2% full-recovery rate (68 of 828 ensembles for AFsample2 and AFsample3), and agreement between `results.csv` and the per-GT best scores for all 829 evaluated ensembles. |
+| `tests/test_headline_results.py` | Table 5 (N, Recall@0.9, FRR, TM-bar, EMD for all eight tools) from the shipped results, including the 8.2% full-recovery rate (68 of 828 ensembles for AFsample2 and AFsample3), and agreement between `results.csv` and the per-GT best scores for all 829 evaluated ensembles. |
 | `tests/test_launcher.py` | Every prediction config builds the command used for the paper runs; runners exist, compile and use the shared helpers. |
 
 `tests/data/` holds six ensembles chosen to cover full recovery, partial recall, best TMs on either side of 0.9, mixed mmCIF/PDB ground truths, and GTs shorter than the predictions (where normalizing by GT or prediction length changes which states count as recovered). For every tool it keeps each GT's best prediction from the full run, with the stored TM-align output for every GT x prediction pair; `tests/build_fixtures.py` regenerates it from the full output. Tests that need TM-align are skipped when it is not installed.
@@ -295,6 +296,7 @@ reproduce_figures.sh        stage 04 end to end
 | `results/runtime_benchmark*.csv` | Wall-clock measurements for the runtime figure |
 | `results/tm_rmsd/tm_rmsd_scatter_points.csv` | Every point in Fig. 2: best prediction per GT conformation, with its TM and RMSD |
 | `results/tm_rmsd/tm_rmsd_sample_counts.csv` | Scored predictions per OOD60 / DOMAINMOTION ensemble and tool (78–1,000, median 250) |
+| `results/pa_heatmaps/` | Fig. 5: TM-scores of each tool's predictions to the two GTs for the four example ensembles, with their principal angles |
 
 `per_gt_summary.csv` and `_mode_count_cache.npz` are condensed from the full GT x prediction TM-align output (about 85 GB). The figure scripts read the full output when it is present and fall back to these files otherwise; both give identical results. `pipeline/03_compute_results/export_per_gt_summary.py` and `fig_mode_count.py --rebuild` regenerate them from the full output. `export_tm_rmsd_points.py` regenerates `results/tm_rmsd/` the same way.
 

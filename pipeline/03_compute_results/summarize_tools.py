@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Print the Table 4 metrics for any scored tool, next to the published tools.
+Print the Table 5 metrics for any scored tool, next to the published tools.
 
 Reads results/<DATASET>/<TOOL>/results.csv (written by compute_metrics.py) and
 averages over the evaluated ensembles (filtered_ensembles_v2.csv minus the
