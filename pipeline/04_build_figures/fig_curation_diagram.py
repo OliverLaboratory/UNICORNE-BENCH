@@ -4,7 +4,8 @@ Figure 1 (curation diagram): redraw the labels of the hand-drawn diagram in
 the paper's serif font at a readable size.
 
 The artwork (external/curation_diagram/curation_diagram_source.png,
-the Inkscape export) is kept; each label box listed in label_boxes.json (pixel
+the Inkscape export) is kept, without its dashed panel dividers (panels are
+labelled (a)-(f)); each label box listed in label_boxes.json (pixel
 box, fill and edge color, text) and each ensemble label is cleared and redrawn
 at the same place. The small ensemble thumbnails are moved outward so the
 larger labels fit.
@@ -35,6 +36,12 @@ BOX_PT, LABEL_PT = 6.0, 6.0
 img = np.asarray(Image.open(SRC / "curation_diagram_source.png").convert("RGB")).copy()
 H, W = img.shape[:2]
 boxes = json.loads((SRC / "label_boxes.json").read_text())
+# Remove the dashed panel dividers; panels are labelled (a)-(f) instead.
+for x0, x1 in ((1350, 1381), (2690, 2721)):
+    img[:, x0:x1] = 255
+img[1128:1149, :] = 255
+img[:2, :] = 255; img[:, -4:] = 255      # frame lines along the top and right edges
+PANEL_ORIGINS = [(0, 0), (1381, 0), (2721, 0), (0, 1149), (1381, 1149), (2721, 1149)]   # (x, y) top-left
 # Ensemble thumbnails moved outward to make room for the larger labels:
 # (search x0, x1, y0, y1, dx). The thumbnail is the ink inside the search box.
 THUMBS = {
@@ -109,6 +116,9 @@ for ax_x, ax_y, ha, lines in LABELS:
     t = ax.text(ax_x, ax_y, "\n".join(parts), ha=ha, va="center", fontsize=LABEL_PT,
                 linespacing=1.05, multialignment=ha if ha != "center" else "center")
     artists.append(("label", t))
+
+for letter, (px, py) in zip("abcdef", PANEL_ORIGINS):
+    ax.text(px + 30, py + 30, f"({letter})", ha="left", va="top", fontsize=8, fontweight="bold")
 
 fig.canvas.draw()
 r = fig.canvas.get_renderer()
