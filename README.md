@@ -177,7 +177,7 @@ python pipeline/00_build_source/build_inputs_from_csv.py \
 python pipeline/01_build_benchmark/setup_bioemu_benchmarks.py --datasets OOD60 DOMAINMOTION
 ```
 
-`--source-root` points at the UNICORNEdb structure tree (one directory of aligned PDB/mmCIF files per UniProt). The Zenodo archive already contains the result of this step for UNICORNE-BENCH-1.
+`--source-root` points at the UNICORNEdb structure tree (one directory of aligned PDB/mmCIF files per UniProt); it defaults to `$UNICORNE_DB`, else `data/unicorne_db/`. The figure scripts read the same variable for the full set of deposited structures per UniProt (Fig. 4b's ground-truth density) and fall back to the benchmark GTs without it. The Zenodo archive already contains the result of this step for UNICORNE-BENCH-1.
 
 #### 01 - Benchmark construction
 

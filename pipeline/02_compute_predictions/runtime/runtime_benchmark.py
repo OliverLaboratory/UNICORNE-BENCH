@@ -27,7 +27,7 @@ import time
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
-SCRIPTS_DIR = PROJECT_ROOT / "scripts"
+SCRIPTS_DIR = Path(__file__).resolve().parent
 
 # ---------------------------------------------------------------------------
 # Protein selection: 10 per size bin from UNICORNE
@@ -106,11 +106,11 @@ def run_tool_benchmark(tool: str, proteins: list[dict], results_csv: Path) -> No
         cwd = str(Path.home() / "esmdiff")
 
     elif tool == "cfrandom":
-        # CFrandom uses ColabFold from vanderw's installation
-        colabfold_python = str(Path("/home/vanderw/benchmarking/cfrandom/localcolabfold/colabfold-conda/bin/python"))
+        # ColabFold's environment, as in configs/cfrandom.yaml
+        colabfold_python = str(Path.home() / "localcolabfold" / ".pixi" / "envs" / "default" / "bin" / "python")
         script = str(SCRIPTS_DIR / "runtime_benchmark_cfrandom.py")
         cmd = [colabfold_python, script, str(config_path), str(results_csv)]
-        cwd = str(Path("/home/vanderw/benchmarking/cfrandom"))
+        cwd = str(PROJECT_ROOT)
 
     else:
         raise ValueError(f"Unknown tool: {tool}")

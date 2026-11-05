@@ -17,7 +17,6 @@ ALPHAFLOW_DIR="$HOME/alphaflow"
 ALPHAFLOW_PYTHON="$HOME/alphaflow_venv/bin/python"
 MSA_BASE="$PROJECT_ROOT/data/msas"
 MSA_DIR="$MSA_BASE/$DATASET"
-CFRANDOM_BASE="/home/vanderw/benchmarking/cfrandom"
 
 mkdir -p "$MSA_DIR"
 
@@ -33,6 +32,7 @@ echo "MSA output: $MSA_DIR"
 if [ "$DATASET" = "UNICORNE" ]; then
     echo ""
     echo "=== Symlinking UNICORNE MSAs from cfrandom ==="
+    CFRANDOM_BASE="${CFRANDOM_BASE:?set CFRANDOM_BASE to the cfrandom MSA directory}"
     # UNICORNE uses uniprot IDs as ensemble names; cfrandom has MSAs for these
     # AlphaFlow expects: {msa_dir}/{name}/a3m/{name}.a3m
     # cfrandom has: {cfrandom_base}/{uid}/{uid}-search/{uid}.a3m

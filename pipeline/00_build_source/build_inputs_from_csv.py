@@ -24,7 +24,8 @@ Usage:
 
 Options:
   --copy             Copy files instead of symlinking (slower, ~MB per file)
-  --source-root PATH Override default `/home/vanderw/.../aligned-pdbs-new/`
+  --source-root PATH UNICORNEdb structure tree (default: $UNICORNE_DB, else
+                     data/unicorne_db/)
   --overwrite        Replace existing input_pdbs/<eid>/ contents
   --exclude-dataset  Repeatable. Skip ensembles whose ensemble_ID is already
                      present in data/inputs/<NAME>/input_dataset.csv. Use this
@@ -42,9 +43,7 @@ import sys
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_SOURCE_ROOT = Path(
-    "/home/vanderw/conformational-ensemble-database/databaseV1/aligned-pdbs-new"
-)
+DEFAULT_SOURCE_ROOT = Path(os.environ.get("UNICORNE_DB", PROJECT_ROOT / "data" / "unicorne_db"))
 
 
 def parse_reps(s: str) -> list[str]:

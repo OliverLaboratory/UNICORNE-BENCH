@@ -12,6 +12,7 @@ Usage:
 from __future__ import annotations
 
 import csv
+import os
 from pathlib import Path
 
 import numpy as np
@@ -159,9 +160,8 @@ def _tm_bar_from_xy(sim_xy: np.ndarray) -> float:
 
 
 AF2_CUTOFF = "2018-05-01"  # AlphaFold2 PDB training-set cutoff
-UNICORNE_SOURCE = Path(
-    "/home/vanderw/conformational-ensemble-database/databaseV1/aligned-pdbs-new"
-)
+# UNICORNEdb structure tree ($UNICORNE_DB); optional, see _deposited_pdb_ids.
+UNICORNE_SOURCE = Path(os.environ.get("UNICORNE_DB", DATA / "unicorne_db"))
 
 
 UNIPROT_PDB_IDS = DATA / "inputs" / DATASET / "uniprot_pdb_ids.csv"

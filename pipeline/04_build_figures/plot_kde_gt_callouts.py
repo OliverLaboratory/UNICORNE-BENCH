@@ -27,6 +27,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import os
 import subprocess
 import sys
 from multiprocessing import Pool
@@ -47,9 +48,9 @@ DATASET = "UNICORNE_BENCH"
 
 # Upstream "all-PDB-per-UniProt" mirror — every deposited structure for the
 # UniProt, not just the 2-3 dedupped representatives in our benchmark. Used
-# to build a richer GT-density landscape for the t-SNE KDE.
-UPSTREAM_GT_DB = Path("/home/vanderw/conformational-ensemble-database/"
-                     "databaseV1/aligned-pdbs-new")
+# to build a richer GT-density landscape for the t-SNE KDE. Set $UNICORNE_DB
+# to the UNICORNEdb structure tree; without it only the benchmark GTs are used.
+UPSTREAM_GT_DB = Path(os.environ.get("UNICORNE_DB", PROJECT_ROOT / "data" / "unicorne_db"))
 
 # Curated multi-state proteins with n_gt=2 in the dataset.
 # Names match the gold-standard table.

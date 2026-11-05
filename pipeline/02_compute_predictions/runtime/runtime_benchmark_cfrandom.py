@@ -22,8 +22,11 @@ import tempfile
 import time
 from pathlib import Path
 
-COLABFOLD_BIN = Path("/home/vanderw/benchmarking/cfrandom/localcolabfold/colabfold-conda/bin/colabfold_batch")
-CFRANDOM_BASE = Path("/home/vanderw/benchmarking/cfrandom")
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+COLABFOLD_BIN = Path(os.path.expanduser(os.environ.get(
+    "COLABFOLD_BATCH", "~/localcolabfold/.pixi/envs/default/bin/colabfold_batch")))
+# Precomputed MSAs: <MSA_DIR>/<UniProt>/a3m/<UniProt>.a3m (generate_msas_local.py)
+MSA_DIR = Path(os.environ.get("MSA_DIR", PROJECT_ROOT / "data" / "msas" / "UNICORNE_BENCH"))
 SAMPLE_COUNTS = [20, 40, 60, 100]
 NUM_MODELS = 5
 # Use shallow random MSA (max_seq=8, max_extra_seq=16) — this is the core
@@ -31,6 +34,10 @@ NUM_MODELS = 5
 MAX_SEQ = 8
 MAX_EXTRA_SEQ = 16
 MODEL_TYPE = "alphafold2_ptm"
+
+
+def a3m_path(uid: str) -> Path:
+    return MSA_DIR / uid / "a3m" / f"{uid}.a3m"
 
 
 def run_colabfold(msa_dir: Path, output_dir: Path, num_seeds: int, random_seed: int = 42) -> float:
@@ -81,7 +88,7 @@ def main():
 
     # Warmup: run one small prediction to load models into GPU cache
     warmup_protein = proteins[0]
-    warmup_msa = CFRANDOM_BASE / warmup_protein["uniprot"] / f"{warmup_protein['uniprot']}-search"
+    warmup_msa = a3m_path(warmup_protein["uniprot"])
     warmup_out = Path(tempfile.mkdtemp(prefix="cfrandom_warmup_", dir=str(Path.home())))
     print(f"Warmup: {warmup_protein['uniprot']} ({warmup_protein['length']}aa), 1 seed...", flush=True)
     run_colabfold(warmup_msa, warmup_out, num_seeds=1)
@@ -99,7 +106,7 @@ def main():
         uid = p["uniprot"]
         seq_len = p["length"]
         size_bin = p["size_bin"]
-        msa_dir = CFRANDOM_BASE / uid / f"{uid}-search"
+        msa_dir = a3m_path(uid)
 
         for n_samples in SAMPLE_COUNTS:
             run_idx += 1
