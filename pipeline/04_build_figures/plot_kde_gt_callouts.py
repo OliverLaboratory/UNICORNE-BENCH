@@ -37,7 +37,9 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.offsetbox import AnnotationBbox, OffsetImage
+from matplotlib.lines import Line2D
+from matplotlib.offsetbox import (AnchoredOffsetbox, AnnotationBbox, DrawingArea,
+                                  HPacker, OffsetImage, TextArea)
 from PIL import Image
 from scipy.stats import gaussian_kde
 
@@ -97,6 +99,9 @@ GT_COLOR_HEX = [
     "#1F4FFF",   # cobalt blue
     "#A0522D",   # sienna (last resort, brown — distinct from above)
 ]
+# Marker per GT on the density panels, repeated next to its ribbon label;
+# (marker, size in points^2 on the panels).
+GT_MARKERS = [("*", 70), ("D", 26), ("^", 36), ("s", 26), ("p", 36), ("o", 30), ("v", 36)]
 
 
 def _pymol_color_name(hex_color: str) -> str:
@@ -777,10 +782,19 @@ def plot_protein_tsne(eid: str, name: str, tools: list[str],
         ax_r.set_xticks([]); ax_r.set_yticks([])
         for sp in ax_r.spines.values():
             sp.set_visible(False)
-        # Labels at one height for all ribbons (image boxes differ in aspect).
-        fig.text(margin + (k + 0.5) * slot_w, ribbon_y + ribbon_h + 0.01,
-                 f"GT {chr(65 + k)} ({_gt_label(canonical_gt_paths[k])})",
-                 ha="center", va="bottom", fontsize=7, color=GT_COLOR_HEX[k])
+        # Labels at one height for all ribbons (image boxes differ in aspect),
+        # led by the GT's marker so it can be matched to the density panels.
+        marker, msize = GT_MARKERS[k]
+        icon = DrawingArea(9, 7)
+        icon.add_artist(Line2D([4.5], [3.5], marker=marker, markersize=np.sqrt(msize) * 0.85,
+                               color=GT_COLOR_HEX[k], markeredgecolor="white",
+                               markeredgewidth=0.5, linestyle=""))
+        text = TextArea(f"GT {chr(65 + k)} ({_gt_label(canonical_gt_paths[k])})",
+                        textprops=dict(fontsize=7, color=GT_COLOR_HEX[k]))
+        fig.add_artist(AnchoredOffsetbox(
+            loc="lower center", child=HPacker(children=[icon, text], align="center", pad=0, sep=2),
+            bbox_to_anchor=(margin + (k + 0.5) * slot_w, ribbon_y + ribbon_h + 0.005),
+            bbox_transform=fig.transFigure, frameon=False, pad=0, borderpad=0))
 
     for ti, tool in enumerate(tools):
         ax = fig.add_axes([margin + ti * (panel_w + gap), panel_y, panel_w, panel_h])
@@ -805,7 +819,7 @@ def plot_protein_tsne(eid: str, name: str, tools: list[str],
 
         for k in range(n_gt):
             ax.scatter([canonical_xy[k, 0]], [canonical_xy[k, 1]],
-                       marker="*", s=70, c=GT_COLOR_HEX[k],
+                       marker=GT_MARKERS[k][0], s=GT_MARKERS[k][1], c=GT_COLOR_HEX[k],
                        edgecolors="white", linewidths=0.9, zorder=10)
 
         # Title: tool name and the ensemble's per-tool EMD, so readers can
