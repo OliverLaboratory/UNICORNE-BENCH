@@ -52,6 +52,11 @@ DATASET = "UNICORNE_BENCH"
 # to the UNICORNEdb structure tree; without it only the benchmark GTs are used.
 UPSTREAM_GT_DB = Path(os.environ.get("UNICORNE_DB", PROJECT_ROOT / "data" / "unicorne_db"))
 
+# Density colouring of the UMAP panels, matching the PA heatmaps (Fig. 5):
+# free energy in kT on turbo, white above KDE_MAX_ENERGY.
+KDE_MAX_ENERGY = 6.0
+KDE_CMAP = matplotlib.colormaps["turbo"].with_extremes(over="white")
+
 # Curated multi-state proteins with n_gt=2 in the dataset.
 # Names match the gold-standard table.
 PROTEINS_DEFAULT = [
@@ -781,18 +786,17 @@ def plot_protein_tsne(eid: str, name: str, tools: list[str],
         ax.set_xlim(*xlim); ax.set_ylim(*ylim)
         ax.set_xticks([]); ax.set_yticks([])
 
-        # Pred KDE colored by density — energy-style: blue = high density
-        # (low energy / stable), red = low density (high energy / unstable).
+        # Pred KDE as a free energy F = -log(density / max), as in the PA
+        # heatmaps (Fig. 5): turbo, blue = high density, white beyond the cap.
         mask = np.array([tt == tool for (tt, _) in pred_records])
         if mask.any():
             xy = pred_xy[mask]
             try:
                 kde = gaussian_kde(xy.T, bw_method=0.30)
                 zz = kde(grid).reshape(xx.shape)
-                levels = np.linspace(zz.min(), zz.max(), 14)
-                ax.contourf(xx, yy, zz, levels=levels, cmap="RdBu", alpha=0.85)
-                ax.contour(xx, yy, zz, levels=levels[2::3], colors="#222222",
-                           alpha=0.30, linewidths=0.3)
+                energy = np.minimum(-np.log(zz / zz.max() + 1e-12), KDE_MAX_ENERGY + 1)
+                ax.contourf(xx, yy, energy, levels=np.linspace(0, KDE_MAX_ENERGY, 21),
+                            cmap=KDE_CMAP, vmin=0.0, vmax=KDE_MAX_ENERGY, extend="max")
             except Exception:
                 pass
             ax.scatter(xy[:, 0], xy[:, 1], s=0.6, c="#111111", alpha=0.55,
