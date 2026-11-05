@@ -101,7 +101,7 @@ GT_COLOR_HEX = [
 ]
 # Marker per GT on the density panels, repeated next to its ribbon label;
 # (marker, size in points^2 on the panels).
-GT_MARKER_FILL = "white"   # the shape identifies the GT
+GT_MARKER_FILL = "#FFF59D"   # light yellow; the shape identifies the GT
 GT_MARKERS = [("*", 70), ("D", 26), ("^", 36), ("s", 26), ("p", 36), ("o", 30), ("v", 36)]
 
 
