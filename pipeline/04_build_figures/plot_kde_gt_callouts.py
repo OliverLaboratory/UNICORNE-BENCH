@@ -88,8 +88,9 @@ TOOL_COLOR = {
 # a yellow border for contrast.
 GT_COLOR_HEX = [
     "#FF00B4",   # fuchsia
-    "#8A2BE2",   # bright purple
-    "#00C5FF",   # bright cyan
+    "#000000",   # black
+    "#8C8C8C",   # grey (black, grey and fuchsia are not in turbo, so the
+                 # GT stars stand out on the density panels)
     "#32D04A",   # lime green
     "#FF7000",   # vivid orange
     "#FF1F4F",   # hot red-pink
@@ -739,7 +740,7 @@ def plot_protein_tsne(eid: str, name: str, tools: list[str],
     ribbon_imgs: list[np.ndarray] = []
     for k in range(n_canonical):
         g = canonical_gt_paths[k]
-        out_png = ribbon_dir / f"{eid}_GT{k}_{Path(g).stem}.png"
+        out_png = ribbon_dir / f"{eid}_GT{k}_{Path(g).stem}_{GT_COLOR_HEX[k][1:]}.png"
         if not out_png.exists():
             print(f"    rendering {out_png.name}")
             render_ribbon_pymol(Path(g), GT_COLOR_HEX[k], out_png)
@@ -804,8 +805,8 @@ def plot_protein_tsne(eid: str, name: str, tools: list[str],
 
         for k in range(n_gt):
             ax.scatter([canonical_xy[k, 0]], [canonical_xy[k, 1]],
-                       marker="*", s=45, c=GT_COLOR_HEX[k],
-                       edgecolors="black", linewidths=0.5, zorder=10)
+                       marker="*", s=70, c=GT_COLOR_HEX[k],
+                       edgecolors="white", linewidths=0.9, zorder=10)
 
         # Title: tool name and the ensemble's per-tool EMD, so readers can
         # relate the density shape to the macro metric.
