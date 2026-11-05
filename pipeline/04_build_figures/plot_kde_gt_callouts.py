@@ -101,6 +101,7 @@ GT_COLOR_HEX = [
 ]
 # Marker per GT on the density panels, repeated next to its ribbon label;
 # (marker, size in points^2 on the panels).
+GT_MARKER_FILL = "white"   # the shape identifies the GT
 GT_MARKERS = [("*", 70), ("D", 26), ("^", 36), ("s", 26), ("p", 36), ("o", 30), ("v", 36)]
 
 
@@ -787,7 +788,7 @@ def plot_protein_tsne(eid: str, name: str, tools: list[str],
         marker, msize = GT_MARKERS[k]
         icon = DrawingArea(9, 7)
         icon.add_artist(Line2D([4.5], [3.5], marker=marker, markersize=np.sqrt(msize) * 0.85,
-                               color=GT_COLOR_HEX[k], markeredgecolor="black",
+                               color=GT_MARKER_FILL, markeredgecolor="black",
                                markeredgewidth=0.5, linestyle=""))
         text = TextArea(f"GT {chr(65 + k)} ({_gt_label(canonical_gt_paths[k])})",
                         textprops=dict(fontsize=7, color=GT_COLOR_HEX[k]))
@@ -819,7 +820,7 @@ def plot_protein_tsne(eid: str, name: str, tools: list[str],
 
         for k in range(n_gt):
             ax.scatter([canonical_xy[k, 0]], [canonical_xy[k, 1]],
-                       marker=GT_MARKERS[k][0], s=GT_MARKERS[k][1], c=GT_COLOR_HEX[k],
+                       marker=GT_MARKERS[k][0], s=GT_MARKERS[k][1], c=GT_MARKER_FILL,
                        edgecolors="black", linewidths=0.6, zorder=10)
 
         # Title: tool name and the ensemble's per-tool EMD, so readers can
