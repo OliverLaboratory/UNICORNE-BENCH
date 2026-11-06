@@ -492,12 +492,12 @@ def main():
          "reference sequence length (aa)"),
     ]
 
-    # Drawn at the size printed in the paper: (a) diversity and (b) ensemble
-    # size sit side by side with the mechanism panel, 1.76 in each, and share
-    # one legend row (written below); the length panel is a 4.1 in appendix
-    # figure with its own legend.
-    print_size = {"tm": (1.76, 1.45), "ngt": (1.76, 1.45), "len": (4.12, 2.4)}
-    short_x_label = {"tm": "min pairwise GT TM", "ngt": "number of GT conformations"}
+    # Drawn at the size printed in the paper: (a) diversity, (b) ensemble
+    # size and (c) sequence length sit side by side, 1.76 in each, and share
+    # one legend row (written below).
+    print_size = {"tm": (1.76, 1.45), "ngt": (1.76, 1.45), "len": (1.76, 1.45)}
+    short_x_label = {"tm": "min pairwise GT TM", "ngt": "number of GT conformations",
+                     "len": "sequence length (aa)"}
     written: list[Path] = []
     for tag, vals, bin_labels, title, x_label in panels:
         fig, ax = plt.subplots(figsize=print_size[tag])
@@ -507,21 +507,13 @@ def main():
                   title=title, x_label=short_x_label.get(tag, x_label))
         if tag == "ngt":
             ax.set_xticklabels(bin_labels, rotation=0, ha="center")
-        if tag == "len":
-            ax.set_ylim(0, 0.75)   # headroom for the legend above the curves
-            leg = ax.legend(loc="upper center", frameon=True, ncol=4,
-                            handlelength=1.2, columnspacing=0.8, handletextpad=0.3)
-            leg.get_frame().set_alpha(0.9)
         scale_suffix = "" if args.y_scale == "linear" else f"_{args.y_scale}"
         out_path = (args.output if args.output and tag == "tm" else None) or (
             fig_dir / f"{args.metric}_lineplot_{tag}{scale_suffix}_{args.dataset}.png"
         )
-        if tag == "len":
-            paper_style.finalize(fig, print_size[tag][0])
-        else:
-            # Same margins as the mechanism panel so the three plot areas align.
-            paper_style.finalize(fig, print_size[tag][0], relayout=False)
-            fig.subplots_adjust(**paper_style.FIG3_MARGINS)
+        # Same margins for all three panels so the plot areas align.
+        paper_style.finalize(fig, print_size[tag][0], relayout=False)
+        fig.subplots_adjust(**paper_style.FIG3_MARGINS)
         fig.savefig(out_path, dpi=300)
         fig.savefig(str(out_path).rsplit(".", 1)[0] + ".pdf")
         plt.close(fig)

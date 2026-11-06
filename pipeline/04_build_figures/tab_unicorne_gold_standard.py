@@ -69,7 +69,7 @@ GOLD_PROTEINS = [
     # both states (AlphaFlow's alt-state TM drops to ~0.78).
     ("Amino-acid bind.\\ prot.", "Q5F9M1", 274),
     # Cited in the Discussion as the BioEMU/ESMFlow > MSA-perturbation example.
-    ("Q5U925", "Q5U925", 266),
+    ("Dehydratase activator", "Q5U925", 266),
     # Bacteriorhodopsin (7TM, light-activated) — every tool fails the
     # conformational transition.
     ("Bacteriorhodopsin", "P02945", 262),
@@ -138,7 +138,7 @@ def load_gt_tm(eid: str) -> float | None:
 
 
 def load_gt_max_disp(eid: str) -> float | None:
-    """Max over all GT pairs of max per-residue CA displacement after Kabsch (Å)."""
+    """Max over all GT pairs of max per-residue CA displacement after TM-align superposition (Å)."""
     f = RESULTS_DIR / "gt_matrices_tmalign" / eid / "max_disp_xx.npy"
     if not f.exists():
         return None

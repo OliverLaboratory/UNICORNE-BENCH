@@ -4,4 +4,5 @@ python: python
 script: pipeline/02_compute_predictions/runners/run_esmflow.py
 msa: false
 params:
+  model: pdb_distilled   # esmflow_pdb_distilled.pt (the runner's default is md_distilled)
   num-samples: 1000

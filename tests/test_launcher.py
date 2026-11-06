@@ -32,7 +32,7 @@ RUNNERS = "pipeline/02_compute_predictions/runners"
 # The commands used for the paper's UNICORNE-BENCH-1 runs (1,000 samples per ensemble).
 PAPER_COMMANDS = {
     "bioemu": ["~/bioemu_venv/bin/python", f"{RUNNERS}/run_bioemu.py", *DATA, "--num-samples", "1000"],
-    "esmflow": ["python", f"{RUNNERS}/run_esmflow.py", *DATA, "--num-samples", "1000"],
+    "esmflow": ["python", f"{RUNNERS}/run_esmflow.py", *DATA, "--model", "pdb_distilled", "--num-samples", "1000"],
     "esmdiff": ["python", f"{RUNNERS}/run_esmdiff.py", *DATA, "--num-samples", "1000"],
     "alphaflow": ["~/alphaflow_venv/bin/python", "tool_scripts/alphaflow/run_dataset.py", *DATA, *MSA,
                   "--model", "af_pdb_distilled", "--output-base", "data/outputs", "--num-samples", "1000"],

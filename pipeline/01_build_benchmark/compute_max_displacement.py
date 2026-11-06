@@ -4,8 +4,9 @@ Compute per-ensemble max CA displacement matrix using TMalign's structural
 alignment.
 
 For each pair (i, j) of GT conformations:
-  1. Run TMalign (default output) to get:
-     - the rotation+translation matrix rotating chain_j onto chain_i, and
+  1. Run TMalign with ``-m`` to get:
+     - the rotation+translation matrix rotating Chain_1 onto Chain_2 (TM-align
+       only writes it when ``-m <file>`` is given; default stdout has none), and
      - the per-residue alignment markers (":", "." for aligned pairs; "-" for
        indels/unaligned residues).
   2. Apply the TMalign transform to chain_j's CA coords -> chain_j' in chain_i's frame.
@@ -153,18 +154,26 @@ def tmalign_max_displacement(ca_i: np.ndarray, ca_j: np.ndarray, tmalign_exe: st
         pdb_j = tmp / "j.pdb"
         _coords_to_pdb(ca_i, "A" * ca_i.shape[0], pdb_i)
         _coords_to_pdb(ca_j, "A" * ca_j.shape[0], pdb_j)
+        matrix_file = tmp / "matrix.txt"
         try:
             result = subprocess.run(
-                [tmalign_exe, str(pdb_i), str(pdb_j)],
+                [tmalign_exe, str(pdb_i), str(pdb_j), "-m", str(matrix_file)],
                 capture_output=True, text=True, timeout=60,
             )
         except subprocess.TimeoutExpired:
             return float("nan")
-        if result.returncode != 0:
+        if result.returncode != 0 or not matrix_file.exists():
             return float("nan")
+        # The -m file has the layout the parser expects (header line,
+        # column-name line, three "m t u u u" rows); prepend it to stdout.
+        matrix_text = matrix_file.read_text()
 
-    rot_t, rot_u, aligned_pairs = _parse_tmalign_output(result.stdout)
+    rot_t, rot_u, aligned_pairs = _parse_tmalign_output(matrix_text + "\n" + result.stdout)
     if not aligned_pairs:
+        return float("nan")
+    if np.allclose(rot_u, np.eye(3)) and np.allclose(rot_t, 0.0):
+        # No superposition parsed: would silently measure in the raw file
+        # frames (the pre-fix behaviour). Treat as a failure instead.
         return float("nan")
 
     # TMalign's "rotate Chain_1 to Chain_2": y = u @ x + t gives chain_1
@@ -216,6 +225,9 @@ def main():
                         help="Skip ensembles whose max_disp_xx.npy already exists")
     parser.add_argument("--offset", type=int, default=0)
     parser.add_argument("--limit", type=int, default=None)
+    parser.add_argument("--gt-dir", type=Path, default=None,
+                        help="Directory of per-ensemble GT structures "
+                             "(default: data/inputs/<dataset>/input_pdbs)")
     args = parser.parse_args()
 
     tmalign_exe = _get_tmalign_exe()
@@ -223,7 +235,7 @@ def main():
         print(f"Error: TMalign executable not found at {tmalign_exe}", file=sys.stderr)
         sys.exit(1)
 
-    gt_pdbs_dir = PROJECT_ROOT / "data" / "inputs" / args.dataset / "input_pdbs"
+    gt_pdbs_dir = args.gt_dir or (PROJECT_ROOT / "data" / "inputs" / args.dataset / "input_pdbs")
     out_dir = PROJECT_ROOT / "results" / args.dataset / "gt_matrices_tmalign"
     out_dir.mkdir(parents=True, exist_ok=True)
 

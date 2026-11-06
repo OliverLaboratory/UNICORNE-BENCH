@@ -69,6 +69,22 @@ def load_recall(tool: str) -> dict[str, float]:
     return out
 
 
+def _benchmark_eids() -> set[str]:
+    inputs = PROJECT_ROOT / "data" / "inputs" / DATASET
+    eids: set[str] = set()
+    with open(inputs / "filtered_ensembles_v2.csv") as fh:
+        for row in csv.DictReader(fh):
+            eid = (row.get("ensemble_ID") or row.get("uniprot") or "").strip()
+            if eid:
+                eids.add(eid)
+    bl = inputs / "fold_quality_blacklist.csv"
+    if bl.exists():
+        with open(bl) as fh:
+            for row in csv.DictReader(fh):
+                eids.discard((row.get("uniprot") or "").strip())
+    return eids
+
+
 def load_max_disp(eid: str) -> float | None:
     f = GT_ROOT / eid / "max_disp_xx.npy"
     if not f.exists():
@@ -86,10 +102,13 @@ def main():
     # ------------------------------------------------------------------
     recall_per_tool = {t: load_recall(t) for t in TOOLS}
 
-    # Common ensemble universe = union of evaluated ensembles across tools.
+    # Common ensemble universe = union of evaluated ensembles across tools,
+    # restricted to the benchmark set (filtered ensembles minus the
+    # fold-quality blacklist), as in every other figure script.
     universe = set()
     for d in recall_per_tool.values():
         universe.update(d.keys())
+    universe &= _benchmark_eids()
     print(f"Universe size: {len(universe)}")
 
     fail_sets: dict[str, set[str]] = {}
@@ -118,13 +137,12 @@ def main():
             eid_disp[eid] = d
     print(f"Ensembles with max-disp: {len(eid_disp)}")
 
-    # Three bins, biologically motivated:
-    #   ≤8 Å    : local refold / loop motion
-    #   8-15 Å  : hinge / domain motion
-    #   >15 Å   : large-amplitude / state switch (often disorder-to-order)
-    BINS = [(0, 8, "Local refold\n(<8 Å)"),
-            (8, 15, "Hinge / domain\n(8–15 Å)"),
-            (15, 1e6, "Large amplitude\n(>15 Å)")]
+    # Three bins at rounded tertile cuts of the superposed max displacement
+    # over the 829 benchmark ensembles (median 9.4 Å; 33rd/67th percentiles
+    # 8.6/10.1 Å). Counts at these cuts: 203 / 327 / 299.
+    BINS = [(0, 8, "<8 Å"),
+            (8, 10, "8–10 Å"),
+            (10, 1e6, ">10 Å")]
 
     bin_recall: dict[str, list[list[float]]] = {t: [[] for _ in BINS]
                                                 for t in TOOLS}
@@ -205,7 +223,7 @@ def main():
 
     ax_b.set_xticks(x)
     # Bin names and ensemble counts are in the figure caption.
-    ax_b.set_xticklabels(["<8", "8–15", ">15"])
+    ax_b.set_xticklabels(["<8", "8–10", ">10"])
     ax_b.set_xlabel("GT motion amplitude (Å)")
     ax_b.set_ylabel("Recall")
     ax_b.set_ylim(0, 0.5)

@@ -425,7 +425,7 @@ def plot_scatter(records, output_path=None, diversity: str = "min_tm",
     """Scatter: GT diversity vs best per-tool metric.
 
     diversity='min_tm': x-axis is min pairwise TM (normalized to shorter chain).
-    diversity='max_disp': x-axis is max CA displacement after Kabsch (Å).
+    diversity='max_disp': x-axis is max CA displacement after TM-align superposition (Å).
     metric ∈ {tm_bar, dr, cr}: y-axis metric (best across tools).
     """
     import matplotlib.pyplot as plt

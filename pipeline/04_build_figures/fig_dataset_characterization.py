@@ -119,6 +119,14 @@ def main():
 
     # ---- Panel (a): UNICORNE min pairwise GT TM ----
     rows = load_filtered(UNICORNE_FILTERED)
+    # Restrict to the evaluated benchmark set (minus the fold-quality blacklist).
+    bl_path = UNICORNE_FILTERED.parent / "fold_quality_blacklist.csv"
+    if bl_path.exists():
+        import csv as _csv
+        with open(bl_path) as fh:
+            blacklist = {(r.get("uniprot") or "").strip() for r in _csv.DictReader(fh)}
+        rows = [r for r in rows if r["ensemble_ID"].strip() not in blacklist]
+    print(f"panel (a)/(b): {len(rows)} ensembles, {sum(int(r['n_gt_dedup']) >= 3 for r in rows)} with n_gt >= 3")
     min_tms = [float(r["min_pairwise_tm"]) for r in rows]
     n_gts = [int(r["n_gt_dedup"]) for r in rows]
 
