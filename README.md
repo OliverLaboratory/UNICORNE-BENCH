@@ -7,7 +7,7 @@ Code and data for the benchmark in
 
 UNICORNE-BENCH-1 is a set of 839 multi-conformation proteins (829 after a fold-quality review), each a single UniProt entry with at least two experimentally resolved conformations. Eight sequence-to-ensemble predictors are scored on it: four generative models (BioEMU, ESMFlow, ESMDiff, AlphaFlow) and four MSA-perturbation methods (CFrandom, AFsample2, AFsample3, SPEACH_AF). The `-1` marks the first release of the benchmark; later releases will be numbered as the PDB grows. In paths and command-line arguments the dataset is called `UNICORNE_BENCH`.
 
-The benchmark data, including the ground-truth structures, is archived at <https://doi.org/10.5281/zenodo.23928693>. The database itself is browsable at <https://unicornedb.org>.
+The benchmark data, including the ground-truth structures, is archived on Zenodo at <https://doi.org/10.5281/zenodo.23928692> (this DOI always resolves to the latest version; the current one is 1.1, which corrects the maximum-displacement matrices in 1). The database itself is browsable at <https://unicornedb.org>.
 
 This README has two parts:
 
@@ -29,7 +29,7 @@ export TMALIGN_EXE=~/bin/TMalign
 
 # Ground-truth structures (116 MB) into data/inputs/UNICORNE_BENCH/input_pdbs/
 curl -L -o UNICORNE-BENCH-1.tar.gz \
-  "https://zenodo.org/records/23928693/files/UNICORNE-BENCH-1.tar.gz?download=1"
+  "https://zenodo.org/records/24026394/files/UNICORNE-BENCH-1.tar.gz?download=1"
 tar -xzf UNICORNE-BENCH-1.tar.gz --strip-components=1
 ```
 
